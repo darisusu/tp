@@ -33,7 +33,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Arun Ayyappan Vellaiyan
 
-![img.png](img.png)
+<img src="images/arunv2048.png" width="200px">
 
 [[github](http://github.com/ArunV2048)] [[portfolio](team/johndoe.md)]
 
