@@ -42,7 +42,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Adib
 
-<img src="docs/images/adibice1.png" width="200px">
+<img src="images/adibice1.png" width="200px">
 
 [[github](http://github.com/adibice1)]
 [[portfolio](team/johndoe.md)]
