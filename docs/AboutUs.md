@@ -11,40 +11,40 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Eldridge Ng
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/eltry42.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[homepage](https://ay2526s1-cs2103t-f09-4.github.io/tp/)]
+[[github](https://github.com/eltry42)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Project Advisor
 
-### Jane Doe
+### Harun Abdullah Bin Mohd Jufri
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/harun-abdullah.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/harun-abdullah)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
 
-### Johnny Doe
+### Arun Ayyappan Vellaiyan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/arunv2048.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/ArunV2048)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Adib
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/adibice1.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/adibice1)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
