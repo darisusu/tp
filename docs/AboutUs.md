@@ -17,6 +17,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[homepage](https://ay2526s1-cs2103t-f09-4.github.io/tp/)]
 [[github](https://github.com/eltry42)]
+[[portfolio](team/johndoe.md)]
 
 * Role: Project Advisor
 
