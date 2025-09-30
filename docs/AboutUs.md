@@ -11,13 +11,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Eldridge Ng
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/eldridge.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[homepage](https://ay2526s1-cs2103t-f09-4.github.io/tp/)]
+[[github](https://github.com/eltry42)]
 
 * Role: Project Advisor
 
