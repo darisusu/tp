@@ -13,7 +13,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Eldridge Ng
 
-<img src="images/eldridge.png" width="200px">
+<img src="images/eltry42.png" width="200px">
 
 [[homepage](https://ay2526s1-cs2103t-f09-4.github.io/tp/)]
 [[github](https://github.com/eltry42)]
