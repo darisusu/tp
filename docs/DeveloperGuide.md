@@ -274,71 +274,194 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* is a **personal trainer** or **fitness coach**
+* has a need to manage a **significant number of clients**
+* needs to record and access **client session schedules, payments, body stats, and medical notes**
+* prefers a **desktop app** for better data visibility and keyboard efficiency
+* can type fast and prefers **CLI commands** to mouse-driven GUIs
+* is reasonably comfortable with technology and command-based workflows
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition:**
+Manage client information, sessions, and progress more efficiently than with typical spreadsheet or GUI apps, improving organization and reducing admin time.
 
+---
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​ | I want to …​ | So that I can…​ |
+|-----------|----------|---------------|------------------|
+| `* * *` | new user | see usage instructions | learn how to navigate and use the app effectively |
+| `* * *` | trainer | add a new client | record details of a new client for tracking |
+| `* * *` | trainer | delete a client | remove clients I no longer manage |
+| `* * *` | trainer | edit a client’s information | update details such as contact, weight, or payment status |
+| `* * *` | trainer | view a client’s full profile | review all details before or during a session |
+| `* * *` | trainer | schedule a new training session | plan my workday and avoid double-booking |
+| `* *` | trainer | receive reminders for upcoming sessions | stay aware of upcoming commitments |
+| `* *` | trainer | record a client’s payment | track who has paid and who still owes fees |
+| `* *` | trainer | log a client’s progress (e.g., weight, strength stats) | monitor their improvement over time |
+| `* *` | trainer | search clients by name or medical condition | locate specific clients easily |
+| `* *` | organised trainer | categorise clients by fitness goals | segment clients for tailored programs |
+| `* *` | analytical trainer | generate reports of client progress | evaluate training effectiveness |
+| `* *` | busy trainer | quickly view today’s sessions | save time checking the schedule |
+| `* *` | safety-conscious trainer | encrypt sensitive medical info | keep client data secure |
+| `* *` | current user | duplicate a client’s plan template | save time creating similar plans for others |
+| `* *` | organised trainer | archive inactive clients | keep my main list clutter-free |
+| `* *` | analytical user | view income summary per month | analyse business growth |
+| `* *` | beginner user | have access to helpful command suggestions | reduce typing errors while learning |
+| `* *` | busy trainer | add sessions via a single-line command | input faster during a packed day |
+| `* *` | money-minded trainer | see total pending payments | track finances effectively |
+| `* *` | analytical user | export client data to CSV | perform deeper analysis in spreadsheets |
+| `* *` | organised trainer | assign tags (e.g., “rehab”, “weight loss”) | filter clients by goals |
+| `* *` | safe user | back up all data automatically | prevent data loss |
+| `*` | trainer | customise the theme or font of the app | work in a visually comfortable environment |
+| `*` | trainer | set recurring sessions | avoid manual re-entry of weekly appointments |
+| `*` | organised trainer | attach notes or documents to sessions | keep relevant information handy |
+| `*` | analytical user | compare before/after progress charts | demonstrate results to clients |
+| `*` | busy trainer | integrate with Google Calendar | sync session schedules easily |
+| `*` | current user | view quick stats summary on startup | get an overview without typing commands |
+| `*` | beginner user | undo the last action | correct mistakes easily |
 
-*{More to be added}*
+---
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `FitBook` and the **Actor** is the `Trainer`.)
 
-**Use case: Delete a person**
+---
+
+#### **Use case: UC01 – Add a client**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. Trainer enters the `add` command with client details.
+2. FitBook validates the input fields.
+3. FitBook adds the new client and displays a confirmation message.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Input format is invalid.
+    * 2a1. FitBook shows an error message and the correct usage format.
+    * 2a2. Trainer re-enters the details.
+      Use case resumes at step 2.
+
+---
+
+#### **Use case: UC02 – Delete a client**
+
+**MSS**
+
+1. Trainer requests to list clients.
+2. FitBook shows a list of clients.
+3. Trainer requests to delete a specific client in the list.
+4. FitBook deletes the client and confirms the deletion.
 
     Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
-
-  Use case ends.
+  * Use case ends.
 
 * 3a. The given index is invalid.
+  * 3a1. FitBook shows an error message.
+    Use case resumes at step 2.
 
-    * 3a1. AddressBook shows an error message.
+---
 
-      Use case resumes at step 2.
+#### **Use case: UC03 – Schedule a training session**
 
-*{More to be added}*
+**MSS**
+
+1. Trainer enters the `addsession` command with client name, date, and time.
+2. FitBook checks for scheduling conflicts.
+3. FitBook adds the session to the client’s record and confirms.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The given client does not exist.
+  * 2a1. FitBook shows an error message.
+  * Use case ends.
+
+* 2b. The session conflicts with another scheduled session.
+  * 2b1. FitBook shows a warning and asks for confirmation.
+  * 2b2. Trainer confirms to override or cancels.
+  * Use case resumes at step 3.
+
+---
+
+#### **Use case: UC04 – Record a payment**
+
+**MSS**
+
+1. Trainer enters the `pay` command with client name and payment details.
+2. FitBook updates the client’s payment history.
+3. FitBook displays updated balance or confirmation.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Invalid payment amount or format.
+  * 2a1. FitBook shows an error message.
+  * Use case resumes at step 1.
+
+---
+
+#### **Use case: UC05 – View client’s progress**
+
+**MSS**
+
+1. Trainer enters the `view` command with client name.
+2. FitBook displays the client’s recorded stats and past sessions.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Client name not found.
+  * 1a1. FitBook displays an error message.
+  * Use case ends.
+
+---
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. Should work on any mainstream OS with Java `17` or above installed.
+2. Should be able to handle at least **1,000 client records** without performance degradation.
+3. Commands should execute and update the interface in **under 1 second** under normal usage.
+4. Should be usable entirely via the **keyboard (CLI)** without requiring the mouse.
+5. The application should store data **locally** in a human-readable JSON format for easy backup.
+6. The app should automatically save data after each command to prevent data loss.
+7. Codebase should follow **OOP and modular design principles** to allow future scalability (e.g., adding session reminders).
+8. Should maintain full functionality offline (no dependency on internet).
+9. The system should be easy to set up — requiring no additional dependencies beyond Java.
+10. The UI should remain readable and usable across different screen resolutions.
+11. System logs should record errors and commands for debugging and maintenance.
+12. FitBook should start within **3 seconds** on a standard machine.
+13. Data integrity must be preserved — no corrupted entries even after forced shutdown.
+14. The design should allow easy integration with potential future APIs (e.g., fitness tracking).
+15. Backup files should not exceed 5MB per 1,000 clients.
 
-*{More to be added}*
+---
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+| Term | Definition                                                                                                                                |
+|------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| **CLI (Command-Line Interface)** | A text-based interface where users type commands instead of using graphical buttons.                                                      |
+| **Client** | A person managed by the trainer, whose data includes personal info, sessions, payments, and stats. May be referred to as trainee as well. |
+| **Session** | A scheduled training appointment between the trainer and a client. Each session should take up a few hours in a day.                      |
+| **Payment Record** | A log of transactions between a client and the trainer. Currently recorded on a monthly basis.                                            |
+| **Body Stats** | Measurable fitness indicators like weight, BMI, and strength level.                                                                       |
+| **JSON** | JavaScript Object Notation — the format used to store FitBook data.                                                                       |
+| **OOP** | Object-Oriented Programming — the coding paradigm used to structure the app.                                                              |
+| **FitBook** | The name of the system, a CLI-based desktop app for managing clients, sessions, and fitness data.                                         |
 
 --------------------------------------------------------------------------------------------------------------------
 
