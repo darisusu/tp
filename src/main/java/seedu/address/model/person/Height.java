@@ -33,7 +33,7 @@ public class Height {
     public static boolean isValidHeight(String heightInput) {
         try {
             int height = Integer.parseInt(heightInput);
-            return height > 0 && height < 300; // simple realistic range
+            return height > 0; // simple realistic range
         } catch (NumberFormatException e) {
             return false;
         }
