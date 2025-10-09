@@ -25,20 +25,32 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final String deadline;
+    private final String goal;
+    private final String height;
+    private final String paid; // New field for payment status
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address, @JsonProperty("deadline") String deadline,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedPerson(@JsonProperty("name") String name,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email,
+                             @JsonProperty("address") String address,
+                             @JsonProperty("height") String height,
+                             @JsonProperty("deadline") String deadline,
+                             @JsonProperty("paid") String paid,
+                             @JsonProperty("goal") String goal,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.deadline = deadline;
+        this.goal = goal;
+        this.height = height;
+        this.paid = paid;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -53,6 +65,9 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         deadline = source.getDeadline().getDateString();
+        goal = source.getGoal().value;
+        height = String.valueOf(source.getHeight().value); // convert int → String
+        paid = source.getPaymentStatus().toString(); // Convert Paid to String
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -111,6 +126,36 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelDeadline, modelTags);
-    }
+        if (goal == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Goal.class.getSimpleName()));
+        }
+        final Goal modelGoal = new Goal(goal);
 
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal, modelTags);
+        if (height == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Height.class.getSimpleName()));
+        }
+        if (!Height.isValidHeight(height)) {
+            throw new IllegalValueException(Height.MESSAGE_CONSTRAINTS);
+        }
+        final Height modelHeight = new Height(height);
+
+
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelHeight, modelTags);
+    }
+        if (paid == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Paid.class.getSimpleName()));
+        }
+        if (!Paid.isValidPaid(paid)) {
+            throw new IllegalValueException(Paid.MESSAGE_CONSTRAINTS);
+        }
+        final Paid modelPaid = new Paid(paid); // Convert string to Paid
+
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelPaid, modelTags);
+    }
 }

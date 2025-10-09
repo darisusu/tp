@@ -26,19 +26,26 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Goal goal;
+    private final Height height;
+
     private final Set<Tag> tags = new HashSet<>();
+    private Paid paid;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Deadline deadline, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Deadline deadline, Paid paid, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, goal, height, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.deadline = deadline;
+        this.goal = goal;
+        this.height = height;
         this.tags.addAll(tags);
+        this.paid = paid;
     }
 
     public Name getName() {
@@ -58,6 +65,16 @@ public class Person {
     }
 
     public Deadline getDeadline() { return deadline; }
+    public Goal getGoal() {
+        return goal;
+      
+    public Height getHeight() {
+        return height;
+    }
+
+    public Paid getPaymentStatus() {
+        return paid;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -101,13 +118,16 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && deadline.equals(otherPerson.deadline)
+                && goal.equals(otherPerson.goal)
+                && height.equals(otherPerson.height)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, deadline, tags);
+        return Objects.hash(name, phone, email, address, goal, height, deadline, paid, tags);
+
     }
 
     @Override
@@ -118,6 +138,9 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("deadline", deadline)
+                .add("goal", goal)
+                .add("height", height)
+                .add("paid", paid)
                 .add("tags", tags)
                 .toString();
     }

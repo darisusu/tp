@@ -108,6 +108,22 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String paid} into a {@code Paid}.
+     * Leading and trailing whitespaces will be trimmed.
+     * Accepts case-insensitive values such as "true" or "false".
+     *
+     * @throws ParseException if the given {@code paid} value is invalid.
+     */
+    public static Paid parsePaid(String paid) throws ParseException {
+        requireNonNull(paid);
+        String trimmedPaid = paid.trim().toLowerCase();
+        if (!Paid.isValidPaid(trimmedPaid)) {
+            throw new ParseException(Paid.MESSAGE_CONSTRAINTS);
+        }
+        return new Paid(trimmedPaid);
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
@@ -131,4 +147,25 @@ public class ParserUtil {
             throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
     }
+    /**
+     * Parses a {@code String height} into a {@code Height}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code height} is invalid.
+     */
+    public static Height parseHeight(String height) throws ParseException {
+        requireNonNull(height);
+        String trimmedHeight = height.trim();
+        if (!Height.isValidHeight(trimmedHeight)) {
+            throw new ParseException(Height.MESSAGE_CONSTRAINTS);
+        }
+        return new Height(trimmedHeight);
+    }
+
+
+
+
+
+
+
 }
