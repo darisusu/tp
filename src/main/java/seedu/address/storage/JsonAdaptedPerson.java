@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Goal;
 import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
@@ -30,6 +31,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final String goal;
     private final String height;
     private final String paid; // New field for payment status
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
@@ -44,11 +46,13 @@ class JsonAdaptedPerson {
                              @JsonProperty("address") String address,
                              @JsonProperty("height") String height,
                              @JsonProperty("paid") String paid,
+                             @JsonProperty("goal") String goal,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.goal = goal;
         this.height = height;
         this.paid = paid;
         if (tags != null) {
@@ -64,6 +68,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        goal = source.getGoal().value;
         height = String.valueOf(source.getHeight().value); // convert int → String
         paid = source.getPaymentStatus().toString(); // Convert Paid to String
         tags.addAll(source.getTags().stream()
@@ -114,6 +119,13 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (goal == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Goal.class.getSimpleName()));
+        }
+        final Goal modelGoal = new Goal(goal);
+
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal, modelTags);
         if (height == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Height.class.getSimpleName()));
         }

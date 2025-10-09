@@ -23,6 +23,7 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Goal goal;
     private final Height height;
 
     private final Set<Tag> tags = new HashSet<>();
@@ -31,12 +32,13 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Height height, Paid paid, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, height, paid, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Paid paid, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, goal, height, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.goal = goal;
         this.height = height;
         this.tags.addAll(tags);
         this.paid = paid;
@@ -58,6 +60,9 @@ public class Person {
         return address;
     }
 
+    public Goal getGoal() {
+        return goal;
+      
     public Height getHeight() {
         return height;
     }
@@ -107,6 +112,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && goal.equals(otherPerson.goal)
                 && height.equals(otherPerson.height)
                 && tags.equals(otherPerson.tags);
     }
@@ -114,7 +120,8 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, height, tags);
+        return Objects.hash(name, phone, email, address, goal, height, tags);
+
     }
 
     @Override
@@ -124,6 +131,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("goal", goal)
                 .add("height", height)
                 .add("paid", paid)
                 .add("tags", tags)
