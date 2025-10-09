@@ -24,19 +24,24 @@ public class Person {
     // Data fields
     private final Address address;
     private final Goal goal;
+    private final Height height;
+
     private final Set<Tag> tags = new HashSet<>();
+    private Paid paid;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, goal, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Paid paid, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, goal, height, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.goal = goal;
+        this.height = height;
         this.tags.addAll(tags);
+        this.paid = paid;
     }
 
     public Name getName() {
@@ -57,6 +62,13 @@ public class Person {
 
     public Goal getGoal() {
         return goal;
+      
+    public Height getHeight() {
+        return height;
+    }
+
+    public Paid getPaymentStatus() {
+        return paid;
     }
 
     /**
@@ -101,13 +113,15 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && goal.equals(otherPerson.goal)
+                && height.equals(otherPerson.height)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, goal, tags);
+        return Objects.hash(name, phone, email, address, goal, height, tags);
+
     }
 
     @Override
@@ -118,6 +132,8 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("goal", goal)
+                .add("height", height)
+                .add("paid", paid)
                 .add("tags", tags)
                 .toString();
     }

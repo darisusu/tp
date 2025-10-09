@@ -41,6 +41,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label goal;
     @FXML
+    private Label height;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -53,6 +55,7 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
+        height.setText(person.getHeight().value + " cm");
         email.setText(person.getEmail().value);
         goal.setText(person.getGoal().value);
         person.getTags().stream()
