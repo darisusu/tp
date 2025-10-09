@@ -18,7 +18,7 @@ public class Deadline {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private final LocalDate date;
+    public final LocalDate value;
 
     /**
      * Constructs a {@code Deadline}.
@@ -33,7 +33,7 @@ public class Deadline {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
         try {
-            this.date = LocalDate.parse(dateString, FORMATTER);
+            this.value = LocalDate.parse(dateString, FORMATTER);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
@@ -50,37 +50,41 @@ public class Deadline {
      * Returns the stored deadline as a {@code LocalDate}.
      */
     public LocalDate getDate() {
-        return date;
+        return value;
+    }
+
+    public String getDateString() {
+        return value.toString();
     }
 
     /**
      * Returns true if the deadline is before today.
      */
     public boolean isOverdue() {
-        return date.isBefore(LocalDate.now());
+        return value.isBefore(LocalDate.now());
     }
 
     /**
      * Returns true if the deadline is today.
      */
     public boolean isToday() {
-        return date.equals(LocalDate.now());
+        return value.equals(LocalDate.now());
     }
 
     @Override
     public String toString() {
-        return date.format(FORMATTER);
+        return value.format(FORMATTER);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof Deadline
-                && date.equals(((Deadline) other).date));
+                && value.equals(((Deadline) other).value));
     }
 
     @Override
     public int hashCode() {
-        return date.hashCode();
+        return value.hashCode();
     }
 }
