@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Goal;
 
 public class GoalCommand extends Command {
 
@@ -22,13 +23,13 @@ public class GoalCommand extends Command {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
 
     private final Index index;
-    private final String goal;
+    private final Goal goal;
 
     /**
      * @param index of the person in the filtered person list to edit the remark
      * @param goal of the person to be updated to
      */
-    public GoalCommand(Index index, String goal) {
+    public GoalCommand(Index index, Goal goal) {
         requireAllNonNull(index, goal);
 
         this.index = index;
