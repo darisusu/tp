@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -24,6 +25,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
@@ -45,6 +47,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_HEIGHT + "HEIGHT] "
             + "[" + PREFIX_PAID + "PAID] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -103,10 +106,11 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Height updatedHeight = editPersonDescriptor.getHeight().orElse(personToEdit.getHeight());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPaid, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedHeight, updatedPaid, updatedTags);
     }
 
     @Override
@@ -140,6 +144,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private Height height;
         private Paid paid;
         private Set<Tag> tags;
 
@@ -150,12 +155,13 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setHeight(toCopy.height);
             setPaid(toCopy.paid);
             setTags(toCopy.tags);
         }
 
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, paid);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, height, tags, paid);
         }
 
         public void setName(Name name) {
@@ -190,6 +196,19 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setHeight(Height height) {
+            this.height = height;
+        }
+
+        public Optional<Height> getHeight() {
+            return Optional.ofNullable(height);
+        }
+
+
+        /**
+         * Sets {@code tags} to this object's {@code tags}.
+         * A defensive copy of {@code tags} is used internally.
+         */
         public void setPaid(Paid paid) {
             this.paid = paid;
         }
@@ -221,6 +240,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(height, otherEditPersonDescriptor.height)
                     && Objects.equals(paid, otherEditPersonDescriptor.paid)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
@@ -232,6 +252,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("height", height)
                     .add("paid", paid)
                     .add("tags", tags)
                     .toString();
