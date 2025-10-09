@@ -39,6 +39,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label deadline;
+    @FXML
     private Label goal;
     @FXML
     private Label height;
@@ -57,6 +59,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         height.setText(person.getHeight().value + " cm");
         email.setText(person.getEmail().value);
+        deadline.setText(person.getDeadline().getDateString());
         goal.setText(person.getGoal().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

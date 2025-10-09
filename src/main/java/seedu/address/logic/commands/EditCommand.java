@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -31,6 +33,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -48,6 +51,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_DEADLINE + "DEADLINE(yyyy-MM-dd)]  "
             + "[" + PREFIX_HEIGHT + "HEIGHT] "
             + "[" + PREFIX_PAID + "PAID] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -107,13 +111,14 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         Goal updatedGoal = personToEdit.getGoal();
         Height updatedHeight = editPersonDescriptor.getHeight().orElse(personToEdit.getHeight());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
 
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal, updatedHeight, updatedPaid, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal, updatedHeight, updatedDeadline, updatedPaid, updatedTags);
     }
 
     @Override
@@ -147,6 +152,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private Deadline deadline;
         private Height height;
         private Paid paid;
         private Set<Tag> tags;
@@ -158,13 +164,14 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setDeadline(toCopy.deadline);
             setHeight(toCopy.height);
             setPaid(toCopy.paid);
             setTags(toCopy.tags);
         }
 
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, height, tags, paid);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, height, deadline, tags, paid);
         }
 
         public void setName(Name name) {
@@ -197,6 +204,14 @@ public class EditCommand extends Command {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setDeadline(Deadline deadline) {
+            this.deadline = deadline;
+        }
+
+        public Optional<Deadline> getDeadline() {
+            return Optional.ofNullable(deadline);
         }
 
         public void setHeight(Height height) {
@@ -243,6 +258,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(deadline, otherEditPersonDescriptor.deadline)
                     && Objects.equals(height, otherEditPersonDescriptor.height)
                     && Objects.equals(paid, otherEditPersonDescriptor.paid)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
@@ -255,6 +271,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("deadline", deadline)
                     .add("height", height)
                     .add("paid", paid)
                     .add("tags", tags)

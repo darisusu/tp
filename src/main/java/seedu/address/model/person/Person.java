@@ -21,6 +21,9 @@ public class Person {
     private final Phone phone;
     private final Email email;
 
+    // Payment fields
+    private final Deadline deadline;
+
     // Data fields
     private final Address address;
     private final Goal goal;
@@ -32,12 +35,13 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Paid paid, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Deadline deadline, Paid paid, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, goal, height, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.deadline = deadline;
         this.goal = goal;
         this.height = height;
         this.tags.addAll(tags);
@@ -60,6 +64,7 @@ public class Person {
         return address;
     }
 
+    public Deadline getDeadline() { return deadline; }
     public Goal getGoal() {
         return goal;
       
@@ -112,6 +117,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && deadline.equals(otherPerson.deadline)
                 && goal.equals(otherPerson.goal)
                 && height.equals(otherPerson.height)
                 && tags.equals(otherPerson.tags);
@@ -120,7 +126,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, goal, height, tags);
+        return Objects.hash(name, phone, email, address, goal, height, deadline, paid, tags);
 
     }
 
@@ -131,6 +137,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("deadline", deadline)
                 .add("goal", goal)
                 .add("height", height)
                 .add("paid", paid)

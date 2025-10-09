@@ -9,12 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Height;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Paid;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -140,6 +135,18 @@ public class ParserUtil {
         return tagSet;
     }
 
+    public static Deadline parseDeadline(String deadline) throws ParseException {
+        requireNonNull(deadline);
+        String trimmed = deadline.trim();
+        if (!Deadline.isValidDeadline(trimmed)) {
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+        }
+        try {
+            return new Deadline(trimmed);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+        }
+    }
     /**
      * Parses a {@code String height} into a {@code Height}.
      * Leading and trailing whitespaces will be trimmed.
