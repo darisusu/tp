@@ -12,6 +12,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Goal;
 import seedu.address.model.person.Person;
 
+/**
+ * Adds or removes a goal to/from a Person
+ */
 public class GoalCommand extends Command {
 
     public static final String COMMAND_WORD = "goal";

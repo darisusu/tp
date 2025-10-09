@@ -13,6 +13,11 @@ public class Goal {
     public static final int MAX_LENGTH = 100;
     public final String value;
 
+    /**
+     * Constructs a {@code Goal}.
+     *
+     * @param goal A valid goal.
+     */
     public Goal(String goal) {
         requireNonNull(goal);
         checkArgument(isValidGoal(goal), MESSAGE_CONSTRAINTS);
