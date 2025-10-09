@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -26,6 +27,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -46,10 +48,12 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_HEIGHT + "HEIGHT] "
+            + "[" + PREFIX_PAID + "PAID] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_PAID + "true";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -104,8 +108,9 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Height updatedHeight = editPersonDescriptor.getHeight().orElse(personToEdit.getHeight());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedHeight, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedHeight, updatedPaid, updatedTags);
     }
 
     @Override
@@ -114,7 +119,6 @@ public class EditCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof EditCommand)) {
             return false;
         }
@@ -133,8 +137,7 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the person with.
      */
     public static class EditPersonDescriptor {
         private Name name;
@@ -142,28 +145,23 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Height height;
+        private Paid paid;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
 
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setHeight(toCopy.height);
+            setPaid(toCopy.paid);
             setTags(toCopy.tags);
         }
 
-        /**
-         * Returns true if at least one field is edited.
-         */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, height, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, height, tags, paid);
         }
 
         public void setName(Name name) {
@@ -211,15 +209,18 @@ public class EditCommand extends Command {
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
          */
+        public void setPaid(Paid paid) {
+            this.paid = paid;
+        }
+
+        public Optional<Paid> getPaid() {
+            return Optional.ofNullable(paid);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
@@ -230,7 +231,6 @@ public class EditCommand extends Command {
                 return true;
             }
 
-            // instanceof handles nulls
             if (!(other instanceof EditPersonDescriptor)) {
                 return false;
             }
@@ -241,6 +241,7 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(height, otherEditPersonDescriptor.height)
+                    && Objects.equals(paid, otherEditPersonDescriptor.paid)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -252,6 +253,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("height", height)
+                    .add("paid", paid)
                     .add("tags", tags)
                     .toString();
         }

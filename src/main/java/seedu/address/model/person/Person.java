@@ -26,18 +26,20 @@ public class Person {
     private final Height height;
 
     private final Set<Tag> tags = new HashSet<>();
+    private Paid paid;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Height height, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, height, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Height height, Paid paid, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, height, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.height = height;
         this.tags.addAll(tags);
+        this.paid = paid;
     }
 
     public Name getName() {
@@ -60,7 +62,9 @@ public class Person {
         return height;
     }
 
-
+    public Paid getPaymentStatus() {
+        return paid;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -121,6 +125,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("height", height)
+                .add("paid", paid)
                 .add("tags", tags)
                 .toString();
     }
