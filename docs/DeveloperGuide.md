@@ -452,16 +452,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-| Term | Definition |
-|------|-------------|
-| **CLI (Command-Line Interface)** | A text-based interface where users type commands instead of using graphical buttons. |
-| **Client** | A person managed by the trainer, whose data includes personal info, sessions, payments, and stats. |
-| **Session** | A scheduled training appointment between the trainer and a client. |
-| **Payment Record** | A log of transactions between a client and the trainer. |
-| **Body Stats** | Measurable fitness indicators like weight, BMI, and strength level. |
-| **JSON** | JavaScript Object Notation — the format used to store FitBook data. |
-| **OOP** | Object-Oriented Programming — the coding paradigm used to structure the app. |
-| **FitBook** | The name of the system, a CLI-based desktop app for managing clients, sessions, and fitness data. |
+| Term | Definition                                                                                                                                |
+|------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| **CLI (Command-Line Interface)** | A text-based interface where users type commands instead of using graphical buttons.                                                      |
+| **Client** | A person managed by the trainer, whose data includes personal info, sessions, payments, and stats. May be referred to as trainee as well. |
+| **Session** | A scheduled training appointment between the trainer and a client. Each session should take up a few hours in a day.                      |
+| **Payment Record** | A log of transactions between a client and the trainer. Currently recorded on a monthly basis.                                            |
+| **Body Stats** | Measurable fitness indicators like weight, BMI, and strength level.                                                                       |
+| **JSON** | JavaScript Object Notation — the format used to store FitBook data.                                                                       |
+| **OOP** | Object-Oriented Programming — the coding paradigm used to structure the app.                                                              |
+| **FitBook** | The name of the system, a CLI-based desktop app for managing clients, sessions, and fitness data.                                         |
 
 --------------------------------------------------------------------------------------------------------------------
 
