@@ -65,8 +65,10 @@ public class Person {
     }
 
     public Deadline getDeadline() { return deadline; }
+
     public Goal getGoal() {
         return goal;
+    }
       
     public Height getHeight() {
         return height;
@@ -127,7 +129,6 @@ public class Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, goal, height, deadline, paid, tags);
-
     }
 
     @Override

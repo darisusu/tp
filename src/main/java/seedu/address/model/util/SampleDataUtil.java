@@ -14,50 +14,49 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
    public static Person[] getSamplePersons() {
-        public static final Goal EMPTY_GOAL = new Goal("");
         return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                         new Address("Blk 30 Geylang Street 29, #06-40"),
+                        new Goal(""),
                         new Height("170"), // added height
                         new Deadline("2025-11-15"),
                         new Paid("false"), // added Paid
-                        EMPTY_GOAL,
                         getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                         new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                        new Goal(""),
                         new Height("165"),
                         new Deadline("2025-11-15"),
                         new Paid("true"),
                         getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                         new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                        new Goal(""),
                         new Height("160"),
                         new Deadline("2025-11-15"),
                         new Paid("false"),
-                        EMPTY_GOAL,
                         getTagSet("neighbours")),
                 new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                         new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                        new Goal(""),
                         new Height("175"),
                         new Deadline("2025-11-15"),
                         new Paid("false"),
-                        EMPTY_GOAL,
                         getTagSet("family")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                         new Address("Blk 47 Tampines Street 20, #17-35"),
+                        new Goal(""),
                         new Height("180"),
                         new Deadline("2025-11-15"),
                         new Paid("true"),
-                        EMPTY_GOAL,
                         getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                         new Address("Blk 45 Aljunied Street 85, #11-31"),
+                        new Goal(""),
                         new Height("172"),
                         new Deadline("2025-11-15"),
                         new Paid("false"),
-                        EMPTY_GOAL,
                         getTagSet("colleagues"))
-
         };
     }
 
