@@ -38,10 +38,10 @@ class JsonAdaptedPerson {
                              @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email,
                              @JsonProperty("address") String address,
+                             @JsonProperty("goal") String goal,
                              @JsonProperty("height") String height,
                              @JsonProperty("deadline") String deadline,
                              @JsonProperty("paid") String paid,
-                             @JsonProperty("goal") String goal,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -124,15 +124,11 @@ class JsonAdaptedPerson {
         }
         final Deadline modelDeadline = new Deadline(deadline);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelDeadline, modelTags);
         if (goal == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Goal.class.getSimpleName()));
         }
         final Goal modelGoal = new Goal(goal);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal, modelTags);
         if (height == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Height.class.getSimpleName()));
         }
@@ -141,11 +137,6 @@ class JsonAdaptedPerson {
         }
         final Height modelHeight = new Height(height);
 
-
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelHeight, modelTags);
-    }
         if (paid == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Paid.class.getSimpleName()));
         }
@@ -154,8 +145,10 @@ class JsonAdaptedPerson {
         }
         final Paid modelPaid = new Paid(paid); // Convert string to Paid
 
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelPaid, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal, modelHeight, modelDeadline, modelPaid, modelTags);
     }
+
 }
