@@ -26,7 +26,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
-    private static final String INVALID_DEADLINE = "20"
+    private static final String INVALID_DEADLINE = "20";
     private static final String INVALID_HEIGHT = "-10"; // invalid height
     private static final String INVALID_PAID = "notaboolean";
 
@@ -111,8 +111,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_invalidHeight_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                        INVALID_HEIGHT, VALID_PAID, VALID_TAGS);
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_GOAL,
+                        INVALID_HEIGHT, VALID_DEADLINE, VALID_PAID, VALID_TAGS);
         String expectedMessage = Height.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -120,8 +120,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullHeight_throwsIllegalValueException() {
         JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                        null, VALID_PAID, VALID_TAGS);
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_GOAL,
+                        null, VALID_DEADLINE, VALID_PAID, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Height.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
