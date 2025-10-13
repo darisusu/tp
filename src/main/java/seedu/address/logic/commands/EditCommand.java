@@ -33,6 +33,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Age;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.tag.Tag;
 
@@ -118,7 +120,9 @@ public class EditCommand extends Command {
         Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
 
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal, updatedHeight, updatedDeadline, updatedPaid, updatedTags);
+        Age updatedAge = personToEdit.getAge(); // Keep existing age for now
+        Gender updatedGender = personToEdit.getGender(); // Keep existing gender for now
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal, updatedHeight, updatedAge, updatedGender, updatedDeadline, updatedPaid, updatedTags);
     }
 
     @Override

@@ -24,14 +24,14 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_PAID);
+                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_PAID)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_HEIGHT, PREFIX_PAID);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_HEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID);
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
@@ -42,9 +42,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         Paid paid = ParserUtil.parsePaid(argMultimap.getValue(PREFIX_PAID).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Height height = ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get());
+        Age age = ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE).get());
+        Gender gender = ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER).get());
 
-
-        Person person = new Person(name, phone, email, address, goal, height, deadline, paid, tagList);
+        Person person = new Person(name, phone, email, address, goal, height, age, gender, deadline, paid, tagList);
 
         return new AddCommand(person);
     }

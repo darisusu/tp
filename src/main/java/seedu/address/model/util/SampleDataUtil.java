@@ -19,6 +19,8 @@ public class SampleDataUtil {
                         new Address("Blk 30 Geylang Street 29, #06-40"),
                         new Goal(""),
                         new Height("170"), // added height
+                        new Age("25"), // added age
+                        new Gender("male"), // added gender
                         new Deadline("2025-11-15"),
                         new Paid("false"), // added Paid
                         getTagSet("friends")),
@@ -26,6 +28,8 @@ public class SampleDataUtil {
                         new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
                         new Goal(""),
                         new Height("165"),
+                        new Age("28"), // added age
+                        new Gender("female"), // added gender
                         new Deadline("2025-11-15"),
                         new Paid("true"),
                         getTagSet("colleagues", "friends")),
@@ -33,6 +37,8 @@ public class SampleDataUtil {
                         new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                         new Goal(""),
                         new Height("160"),
+                        new Age("22"), // added age
+                        new Gender("female"), // added gender
                         new Deadline("2025-11-15"),
                         new Paid("false"),
                         getTagSet("neighbours")),
@@ -40,6 +46,8 @@ public class SampleDataUtil {
                         new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                         new Goal(""),
                         new Height("175"),
+                        new Age("30"), // added age
+                        new Gender("male"), // added gender
                         new Deadline("2025-11-15"),
                         new Paid("false"),
                         getTagSet("family")),
@@ -47,6 +55,8 @@ public class SampleDataUtil {
                         new Address("Blk 47 Tampines Street 20, #17-35"),
                         new Goal(""),
                         new Height("180"),
+                        new Age("26"), // added age
+                        new Gender("male"), // added gender
                         new Deadline("2025-11-15"),
                         new Paid("true"),
                         getTagSet("classmates")),
@@ -54,6 +64,8 @@ public class SampleDataUtil {
                         new Address("Blk 45 Aljunied Street 85, #11-31"),
                         new Goal(""),
                         new Height("172"),
+                        new Age("24"), // added age
+                        new Gender("male"), // added gender
                         new Deadline("2025-11-15"),
                         new Paid("false"),
                         getTagSet("colleagues"))

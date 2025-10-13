@@ -162,6 +162,36 @@ public class ParserUtil {
         return new Height(trimmedHeight);
     }
 
+    /**
+     * Parses a {@code String age} into an {@code Age}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code age} is invalid.
+     */
+    public static Age parseAge(String age) throws ParseException {
+        requireNonNull(age);
+        String trimmedAge = age.trim();
+        if (!Age.isValidAge(trimmedAge)) {
+            throw new ParseException(Age.MESSAGE_CONSTRAINTS);
+        }
+        return new Age(trimmedAge);
+    }
+
+    /**
+     * Parses a {@code String gender} into a {@code Gender}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code gender} is invalid.
+     */
+    public static Gender parseGender(String gender) throws ParseException {
+        requireNonNull(gender);
+        String trimmedGender = gender.trim();
+        if (!Gender.isValidGender(trimmedGender)) {
+            throw new ParseException(Gender.MESSAGE_CONSTRAINTS);
+        }
+        return new Gender(trimmedGender);
+    }
+
 
 
 
