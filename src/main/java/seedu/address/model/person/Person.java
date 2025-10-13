@@ -23,6 +23,7 @@ public class Person {
 
     // Payment fields
     private final Deadline deadline;
+    private Paid paid;
 
     // Data fields
     private final Address address;
@@ -30,13 +31,13 @@ public class Person {
     private final Height height;
 
     private final Set<Tag> tags = new HashSet<>();
-    private Paid paid;
+
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Deadline deadline, Paid paid, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, goal, height, paid, tags);
+        requireAllNonNull(name, phone, email, address, goal, height, deadline, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -64,7 +65,9 @@ public class Person {
         return address;
     }
 
-    public Deadline getDeadline() { return deadline; }
+    public Deadline getDeadline() {
+        return deadline;
+    }
 
     public Goal getGoal() {
         return goal;

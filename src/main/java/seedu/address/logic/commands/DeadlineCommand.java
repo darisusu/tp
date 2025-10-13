@@ -1,52 +1,53 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Goal;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Person;
 
-/**
- * Adds or removes a goal to/from a Person
- */
-public class GoalCommand extends Command {
+import java.util.List;
 
-    public static final String COMMAND_WORD = "goal";
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+/**
+ * Changes the deadline of an existing person in the address book.
+ */
+public class DeadlineCommand extends Command {
+    public static final String COMMAND_WORD = "deadline";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the goal of the person identified "
+            + ": Edits the deadline of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing goal will be overwritten by the input.\n"
+            + "Existing deadline will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "goal/ [goal]\n"
+            + "d/ [DEADLINE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "goal/ Lose 10kg.";
+            + "d/ 2025-12-31 ";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Goal: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Deadline: %2$s";
 
-    public static final String MESSAGE_ADD_GOAL_SUCCESS = "Added goal to Person: %1$s";
-    public static final String MESSAGE_DELETE_GOAL_SUCCESS = "Removed goal from Person: %1$s";
+    public static final String MESSAGE_NOT_IMPLEMENTED_YET =
+            "Deadline command not implemented yet";
+
+    public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Person: %1$s";
+    public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed deadline from Person: %1$s";
 
     private final Index index;
-    private final Goal goal;
+    private final Deadline deadline;
 
     /**
-     * @param index of the person in the filtered person list to edit the goal
-     * @param goal of the person to be updated to
+     * @param index of the person in the filtered person list to edit the deadline
+     * @param deadline of the person to be updated to
      */
-    public GoalCommand(Index index, Goal goal) {
-        requireAllNonNull(index, goal);
+    public DeadlineCommand(Index index, Deadline deadline) {
+        requireAllNonNull(index, deadline);
 
         this.index = index;
-        this.goal = goal;
+        this.deadline = deadline;
     }
-
     @Override
     public CommandResult execute(Model model) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
@@ -57,13 +58,11 @@ public class GoalCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(
-                personToEdit.getName(),
-                personToEdit.getPhone(),
-                personToEdit.getEmail(),
+                personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(),
-                goal,
+                personToEdit.getGoal(),
                 personToEdit.getHeight(),
-                personToEdit.getDeadline(),
+                deadline,
                 personToEdit.getPaymentStatus(),
                 personToEdit.getTags());
 
@@ -75,11 +74,11 @@ public class GoalCommand extends Command {
 
     /**
      * Generates a command execution success message based on whether
-     * the goal is added to or removed from
+     * the deadline is added to or removed from
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !goal.value.isEmpty() ? MESSAGE_ADD_GOAL_SUCCESS : MESSAGE_DELETE_GOAL_SUCCESS;
+        String message = !deadline.getDateString().isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
@@ -90,12 +89,12 @@ public class GoalCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof GoalCommand)) {
+        if (!(other instanceof DeadlineCommand)) {
             return false;
         }
 
-        GoalCommand e = (GoalCommand) other;
+        DeadlineCommand e = (DeadlineCommand) other;
         return index.equals(e.index)
-                && goal.equals(e.goal);
+                && deadline.equals(e.deadline);
     }
 }
