@@ -28,10 +28,10 @@ public class GoalCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + "goal/ Lose 10kg.";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Goal: %2$s";
 
-    public static final String MESSAGE_ADD_GOAL_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DELETE_GOAL_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_ADD_GOAL_SUCCESS = "Added goal to Person: %1$s";
+    public static final String MESSAGE_DELETE_GOAL_SUCCESS = "Removed goal from Person: %1$s";
 
     private final Index index;
     private final Goal goal;
