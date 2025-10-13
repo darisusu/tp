@@ -10,7 +10,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
+import seedu.address.model.person.Goal;
+import seedu.address.model.person.Height;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Paid;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -125,7 +135,8 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         if (deadline == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Deadline.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Deadline.class.getSimpleName()));
         }
         if (!Address.isValidAddress(deadline)) {
             throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
@@ -171,7 +182,8 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal, modelHeight, modelAge, modelGender, modelDeadline, modelPaid, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal,
+                modelHeight, modelAge, modelGender, modelDeadline, modelPaid, modelTags);
     }
 
 }

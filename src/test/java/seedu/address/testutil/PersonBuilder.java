@@ -3,7 +3,17 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
+import seedu.address.model.person.Goal;
+import seedu.address.model.person.Height;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Paid;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -18,6 +28,8 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_GOAL = "Lose 5kg";
     public static final String DEFAULT_HEIGHT = "170";
+    public static final String DEFAULT_AGE = "25";
+    public static final String DEFAULT_GENDER = "female";
     public static final String DEFAULT_DEADLINE = "2025-12-31";
     public static final String DEFAULT_PAID = "true";
 
@@ -27,6 +39,8 @@ public class PersonBuilder {
     private Address address;
     private Goal goal;
     private Height height;
+    private Age age;
+    private Gender gender;
     private Deadline deadline;
     private Paid paid;
     private Set<Tag> tags;
@@ -41,6 +55,8 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         goal = new Goal(DEFAULT_GOAL);
         height = new Height(DEFAULT_HEIGHT);
+        age = new Age(DEFAULT_AGE);
+        gender = new Gender(DEFAULT_GENDER);
         deadline = new Deadline(DEFAULT_DEADLINE);
         paid = new Paid(DEFAULT_PAID);
         tags = new HashSet<>();
@@ -56,6 +72,8 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         goal = personToCopy.getGoal();
         height = personToCopy.getHeight();
+        age = personToCopy.getAge();
+        gender = personToCopy.getGender();
         deadline = personToCopy.getDeadline();
         paid = personToCopy.getPaymentStatus();
         tags = new HashSet<>(personToCopy.getTags());
@@ -117,18 +135,24 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Deadline} of the {@code Person} that we are building.
+     */
     public PersonBuilder withDeadline(String deadline) {
         this.deadline = new Deadline(deadline);
         return this;
     }
 
+    /**
+     * Sets the {@code Paid} of the {@code Person} that we are building.
+     */
     public PersonBuilder withPaid(String paid) {
         this.paid = new Paid(paid);
         return this;
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, goal, height, deadline, paid, tags);
+        return new Person(name, phone, email, address, goal, height, age, gender, deadline, paid, tags);
     }
 
 }

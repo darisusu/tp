@@ -12,7 +12,9 @@ public class Gender {
     /*
      * Error message if gender is in incorrect format.
      */
-    public static final String MESSAGE_CONSTRAINTS = "Gender must be one of: male, female, other, non-binary, prefer not to say (or m/f/o/nb/pns)";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Gender must be one of: male, female, other, non-binary, "
+            + "prefer not to say (or m/f/o/nb/pns)";
 
     public final String value; // the gender value
 
@@ -36,23 +38,23 @@ public class Gender {
         if (genderInput == null || genderInput.trim().isEmpty()) {
             return false;
         }
-        
+
         String normalized = genderInput.toLowerCase().trim();
-        
+
         // Full forms
-        if (normalized.equals("male") || normalized.equals("female") || 
-            normalized.equals("other") || normalized.equals("non-binary") || 
-            normalized.equals("prefer not to say")) {
+        if (normalized.equals("male") || normalized.equals("female")
+                || normalized.equals("other") || normalized.equals("non-binary")
+                || normalized.equals("prefer not to say")) {
             return true;
         }
-        
+
         // Abbreviations
-        if (normalized.equals("m") || normalized.equals("f") || 
-            normalized.equals("o") || normalized.equals("nb") || 
-            normalized.equals("pns")) {
+        if (normalized.equals("m") || normalized.equals("f")
+                || normalized.equals("o") || normalized.equals("nb")
+                || normalized.equals("pns")) {
             return true;
         }
-        
+
         return false;
     }
 

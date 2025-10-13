@@ -37,7 +37,8 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Age age, Gender gender, Deadline deadline, Paid paid, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height,
+            Age age, Gender gender, Deadline deadline, Paid paid, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, goal, height, age, gender, paid, tags);
         this.name = name;
         this.phone = phone;
@@ -68,12 +69,14 @@ public class Person {
         return address;
     }
 
-    public Deadline getDeadline() { return deadline; }
+    public Deadline getDeadline() {
+        return deadline;
+    }
 
     public Goal getGoal() {
         return goal;
     }
-      
+
     public Height getHeight() {
         return height;
     }
