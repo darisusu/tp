@@ -136,6 +136,22 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Age} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAge(String age) {
+        this.age = new Age(age);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Gender} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGender(String gender) {
+        this.gender = new Gender(gender);
+        return this;
+    }
+
+    /**
      * Sets the {@code Deadline} of the {@code Person} that we are building.
      */
     public PersonBuilder withDeadline(String deadline) {
