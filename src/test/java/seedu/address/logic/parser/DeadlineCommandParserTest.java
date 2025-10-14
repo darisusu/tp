@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeadlineCommand;
+import seedu.address.model.person.Deadline;
 
 public class DeadlineCommandParserTest {
     private DeadlineCommandParser parser = new DeadlineCommandParser();
@@ -20,12 +21,12 @@ public class DeadlineCommandParserTest {
         // have Deadline
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_DEADLINE + nonEmptyDeadline;
-        DeadlineCommand expectedCommand = new DeadlineCommand(INDEX_FIRST_PERSON, nonEmptyDeadline);
+        DeadlineCommand expectedCommand = new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(nonEmptyDeadline));
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // no Deadline
         userInput = targetIndex.getOneBased() + " " + PREFIX_DEADLINE;
-        expectedCommand = new DeadlineCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
