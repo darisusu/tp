@@ -115,7 +115,7 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
+        Deadline updatedDeadline = personToEdit.getDeadline();
         Goal updatedGoal = personToEdit.getGoal();
         Height updatedHeight = editPersonDescriptor.getHeight().orElse(personToEdit.getHeight());
         Weight updatedWeight = editPersonDescriptor.getWeight().orElse(personToEdit.getWeight());

@@ -10,6 +10,7 @@
     "weight": "60",
     "age": "25",
     "gender": "female",
+    "deadline": "2025-12-31",
     "paid": "true",
     "tags": [ "friends" ]
   }, {

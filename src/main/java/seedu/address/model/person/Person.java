@@ -23,6 +23,7 @@ public class Person {
 
     // Payment fields
     private final Deadline deadline;
+    private Paid paid;
 
     // Data fields
     private final Address address;
@@ -33,7 +34,7 @@ public class Person {
     private final Gender gender;
 
     private final Set<Tag> tags = new HashSet<>();
-    private Paid paid;
+
 
     /**
      * Every field must be present and not null.
