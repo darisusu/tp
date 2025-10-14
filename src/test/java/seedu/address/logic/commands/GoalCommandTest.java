@@ -25,14 +25,14 @@ import seedu.address.testutil.PersonBuilder;
 
 public class GoalCommandTest {
 
-    private static final String REMARK_STUB = "Some remark";
+    private static final String GOAL_STUB = "Fly in the sky";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_addRemarkUnfilteredList_success() {
+    public void execute_addGoalUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withGoal(REMARK_STUB).build();
+        Person editedPerson = new PersonBuilder(firstPerson).withGoal(GOAL_STUB).build();
 
         GoalCommand remarkCommand = new GoalCommand(INDEX_FIRST_PERSON, new Goal(editedPerson.getGoal().value));
 
@@ -45,11 +45,11 @@ public class GoalCommandTest {
     }
 
     @Test
-    public void execute_deleteRemarkUnfilteredList_success() {
+    public void execute_deleteGoalUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson).withGoal("").build();
 
-        GoalCommand remarkCommand = new GoalCommand(INDEX_FIRST_PERSON,
+        GoalCommand goalCommand = new GoalCommand(INDEX_FIRST_PERSON,
                 new Goal(editedPerson.getGoal().toString()));
 
         String expectedMessage = String.format(GoalCommand.MESSAGE_DELETE_GOAL_SUCCESS, editedPerson);
@@ -57,7 +57,7 @@ public class GoalCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
 
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(goalCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class GoalCommandTest {
 
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withGoal(REMARK_STUB).build();
+                .withGoal(GOAL_STUB).build();
 
         GoalCommand remarkCommand = new GoalCommand(INDEX_FIRST_PERSON, new Goal(editedPerson.getGoal().value));
 
