@@ -23,9 +23,9 @@ public class DeadlineCommand extends Command {
             + "by the index number used in the last person listing. "
             + "Existing deadline will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "d/ [DEADLINE]\n"
+            + "dl/ [DEADLINE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "d/ 2025-12-31 ";
+            + "dl/ 2025-12-31 ";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Deadline: %2$s";
 
