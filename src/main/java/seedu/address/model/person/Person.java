@@ -29,6 +29,8 @@ public class Person {
     private final Address address;
     private final Goal goal;
     private final Height height;
+    private final Age age;
+    private final Gender gender;
 
     private final Set<Tag> tags = new HashSet<>();
 
@@ -36,8 +38,9 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Deadline deadline, Paid paid, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, goal, height, deadline, paid, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height,
+            Age age, Gender gender, Deadline deadline, Paid paid, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, goal, height, age, gender, deadline, paid, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -45,6 +48,8 @@ public class Person {
         this.deadline = deadline;
         this.goal = goal;
         this.height = height;
+        this.age = age;
+        this.gender = gender;
         this.tags.addAll(tags);
         this.paid = paid;
     }
@@ -72,9 +77,17 @@ public class Person {
     public Goal getGoal() {
         return goal;
     }
-      
+
     public Height getHeight() {
         return height;
+    }
+
+    public Age getAge() {
+        return age;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public Paid getPaymentStatus() {
@@ -125,13 +138,15 @@ public class Person {
                 && deadline.equals(otherPerson.deadline)
                 && goal.equals(otherPerson.goal)
                 && height.equals(otherPerson.height)
+                && age.equals(otherPerson.age)
+                && gender.equals(otherPerson.gender)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, goal, height, deadline, paid, tags);
+        return Objects.hash(name, phone, email, address, goal, height, age, gender, deadline, paid, tags);
     }
 
     @Override
@@ -144,6 +159,8 @@ public class Person {
                 .add("deadline", deadline)
                 .add("goal", goal)
                 .add("height", height)
+                .add("age", age)
+                .add("gender", gender)
                 .add("paid", paid)
                 .add("tags", tags)
                 .toString();

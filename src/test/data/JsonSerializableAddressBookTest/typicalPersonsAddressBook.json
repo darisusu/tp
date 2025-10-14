@@ -6,15 +6,24 @@
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
     "goal": "Lose 5kg",
+    "height" : "165",
+    "age" : "25",
+    "gender" : "female",
     "deadline": "2025-12-31",
+    "paid" : "true",
     "tags" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
+    "deadline" : "2025-12-31",
     "goal": "Lose 5kg",
+    "height" : "175",
+    "age" : "30",
+    "gender" : "male",
     "deadline": "2025-12-31",
+    "paid" : "true",
     "tags" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
@@ -22,7 +31,11 @@
     "email" : "heinz@example.com",
     "address" : "wall street",
     "goal": "Lose 5kg",
+    "height" : "180",
+    "age" : "28",
+    "gender" : "male",
     "deadline": "2025-12-31",
+    "paid" : "true",
     "tags" : [ ]
   }, {
     "name" : "Daniel Meier",
@@ -30,7 +43,11 @@
     "email" : "cornelia@example.com",
     "address" : "10th street",
     "goal": "Lose 5kg",
+    "height" : "170",
+    "age" : "32",
+    "gender" : "male",
     "deadline": "2025-12-31",
+    "paid" : "true",
     "tags" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
@@ -38,7 +55,11 @@
     "email" : "werner@example.com",
     "address" : "michegan ave",
     "goal": "Lose 5kg",
-    "deadline": "2025-12-31",
+    "height" : "160",
+    "age" : "26",
+    "gender" : "female",
+    "deadline" : "2025-12-31",
+    "paid" : "true",
     "tags" : [ ]
   }, {
     "name" : "Fiona Kunz",
@@ -46,7 +67,11 @@
     "email" : "lydia@example.com",
     "address" : "little tokyo",
     "goal": "Lose 5kg",
-    "deadline": "2025-12-31",
+    "height" : "155",
+    "age" : "24",
+    "gender" : "female",
+    "deadline" : "2025-12-31",
+    "paid" : "true",
     "tags" : [ ]
   }, {
     "name" : "George Best",
@@ -54,7 +79,11 @@
     "email" : "anna@example.com",
     "address" : "4th street",
     "goal": "Lose 5kg",
-    "deadline": "2025-12-31",
+    "height" : "185",
+    "age" : "35",
+    "gender" : "male",
+    "deadline" : "2025-12-31",
+    "paid" : "true",
     "tags" : [ ]
   } ]
 }

@@ -1,12 +1,14 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
+/**
+ * Represents a Person's deadline in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
+ */
 public class Deadline {
 
     public static final String MESSAGE_CONSTRAINTS =
