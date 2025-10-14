@@ -4,13 +4,23 @@
     "phone": "94351253",
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
+    "deadline": "2025-12-31",
     "goal": "Lose 5kg",
+    "height": "165",
+    "age": "25",
+    "gender": "female",
+    "paid": "true",
     "tags": [ "friends" ]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
-    "goal": "Lose 5kg"
+    "deadline": "2025-12-31",
+    "goal": "Lose 5kg",
+    "height": "165",
+    "age": "25",
+    "gender": "female",
+    "paid": "true"
   } ]
 }

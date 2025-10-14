@@ -63,6 +63,8 @@ public class GoalCommand extends Command {
                 personToEdit.getAddress(),
                 goal,
                 personToEdit.getHeight(),
+                personToEdit.getAge(),
+                personToEdit.getGender(),
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
                 personToEdit.getTags());
