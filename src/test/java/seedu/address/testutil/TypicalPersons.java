@@ -26,12 +26,12 @@ public class TypicalPersons {
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253").withGoal("Lose 5kg")
-            .withHeight("165").withAge("25").withGender("female")
+            .withHeight("165").withAge("25").withGender("female").withDeadline("2025-12-31")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432").withGoal("Lose 5kg")
-            .withHeight("175").withAge("30").withGender("male")
+            .withHeight("175").withAge("30").withGender("male").withDeadline("2025-12-31")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
