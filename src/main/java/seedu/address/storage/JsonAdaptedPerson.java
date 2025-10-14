@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
+import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
@@ -39,6 +40,7 @@ class JsonAdaptedPerson {
     private final String height;
     private final String age;
     private final String gender;
+    private final String bodyfat;
     private final String paid; // New field for payment status
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -56,6 +58,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("gender") String gender,
                              @JsonProperty("deadline") String deadline,
                              @JsonProperty("paid") String paid,
+                             @JsonProperty("bodyfat") String bodyfat,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -67,6 +70,7 @@ class JsonAdaptedPerson {
         this.age = age;
         this.gender = gender;
         this.paid = paid;
+        this.bodyfat = bodyfat;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -86,6 +90,7 @@ class JsonAdaptedPerson {
         age = String.valueOf(source.getAge().value); // convert int → String
         gender = source.getGender().value; // convert Gender to String
         paid = source.getPaymentStatus().toString(); // Convert Paid to String
+        bodyfat = source.getBodyfat().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -180,10 +185,18 @@ class JsonAdaptedPerson {
         }
         final Paid modelPaid = new Paid(paid); // Convert string to Paid
 
+        if (bodyfat == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Bodyfat.class.getSimpleName()));
+        }
+        if (!Bodyfat.isValidBodyfat(bodyfat)) {
+            throw new IllegalValueException(Paid.MESSAGE_CONSTRAINTS);
+        }
+        final Bodyfat modelBodyfat = new Bodyfat(bodyfat);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal,
-                modelHeight, modelAge, modelGender, modelDeadline, modelPaid, modelTags);
+                modelHeight, modelAge, modelGender, modelDeadline, modelPaid, modelBodyfat, modelTags);
     }
 
 }

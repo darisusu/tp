@@ -9,46 +9,45 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Goal;
+import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Person;
 
 /**
- * Adds or removes a goal to/from a Person
+ * Edits the body fat percentage of an existing person in the address book.
  */
-public class GoalCommand extends Command {
+public class BodyfatCommand extends Command {
 
-    public static final String COMMAND_WORD = "goal";
+    public static final String COMMAND_WORD = "bodyfat";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the goal of the person identified "
+            + ": Edits the body fat percentage of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing goal will be overwritten by the input.\n"
+            + "Existing body fat value will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "goal/ [goal]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + "goal/ Lose 10kg.";
+            + "bf/BODYFAT\n"
+            + "Example: " + COMMAND_WORD + " 1 bf/18.5";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Goal: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Bodyfat: %2$s";
 
-    public static final String MESSAGE_ADD_GOAL_SUCCESS = "Added goal to Person: %1$s";
-    public static final String MESSAGE_DELETE_GOAL_SUCCESS = "Removed goal from Person: %1$s";
+    public static final String MESSAGE_ADD_BODYFAT_SUCCESS = "Updated body fat for Person: %1$s";
+    public static final String MESSAGE_DELETE_BODYFAT_SUCCESS = "Removed body fat from Person: %1$s";
 
     private final Index index;
-    private final Goal goal;
+    private final Bodyfat bodyfat;
 
     /**
-     * @param index of the person in the filtered person list to edit the remark
-     * @param goal of the person to be updated to
+     * @param index of the person in the filtered person list to edit the body fat
+     * @param bodyfat of the person to be updated to
      */
-    public GoalCommand(Index index, Goal goal) {
-        requireAllNonNull(index, goal);
-
+    public BodyfatCommand(Index index, Bodyfat bodyfat) {
+        requireAllNonNull(index, bodyfat);
         this.index = index;
-        this.goal = goal;
+        this.bodyfat = bodyfat;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireAllNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -61,14 +60,15 @@ public class GoalCommand extends Command {
                 personToEdit.getPhone(),
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
-                goal,
+                personToEdit.getGoal(),
                 personToEdit.getHeight(),
                 personToEdit.getAge(),
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
-                personToEdit.getBodyfat(),
-                personToEdit.getTags());
+                bodyfat,
+                personToEdit.getTags()
+        );
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -77,12 +77,10 @@ public class GoalCommand extends Command {
     }
 
     /**
-     * Generates a command execution success message based on whether
-     * the goal is added to or removed from
-     * {@code personToEdit}.
+     * Generates a command execution success message.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !goal.value.isEmpty() ? MESSAGE_ADD_GOAL_SUCCESS : MESSAGE_DELETE_GOAL_SUCCESS;
+        String message = (bodyfat != null) ? MESSAGE_ADD_BODYFAT_SUCCESS : MESSAGE_DELETE_BODYFAT_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
@@ -93,12 +91,12 @@ public class GoalCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof GoalCommand)) {
+        if (!(other instanceof BodyfatCommand)) {
             return false;
         }
 
-        GoalCommand e = (GoalCommand) other;
+        BodyfatCommand e = (BodyfatCommand) other;
         return index.equals(e.index)
-                && goal.equals(e.goal);
+                && bodyfat.equals(e.bodyfat);
     }
 }

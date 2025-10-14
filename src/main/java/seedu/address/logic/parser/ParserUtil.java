@@ -11,6 +11,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
+import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
@@ -206,10 +207,19 @@ public class ParserUtil {
         return new Gender(trimmedGender);
     }
 
-
-
-
-
-
+    /**
+     * Parses a {@code String bodyfat} into a {@code Bodyfat}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code bodyfat} is invalid.
+     */
+    public static Bodyfat parseBodyfat(String bodyfat) throws ParseException {
+        requireNonNull(bodyfat);
+        String trimmedBodyfat = bodyfat.trim();
+        if (!Bodyfat.isValidBodyfat(trimmedBodyfat)) {
+            throw new ParseException(Bodyfat.MESSAGE_CONSTRAINTS);
+        }
+        return new Bodyfat(trimmedBodyfat);
+    }
 
 }
