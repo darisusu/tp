@@ -2,14 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -26,14 +25,16 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Goal;
 import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Deadline;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -118,7 +119,10 @@ public class EditCommand extends Command {
         Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
 
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal, updatedHeight, updatedDeadline, updatedPaid, updatedTags);
+        Age updatedAge = personToEdit.getAge(); // Keep existing age for now
+        Gender updatedGender = personToEdit.getGender(); // Keep existing gender for now
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal,
+                updatedHeight, updatedAge, updatedGender, updatedDeadline, updatedPaid, updatedTags);
     }
 
     @Override
@@ -159,6 +163,9 @@ public class EditCommand extends Command {
 
         public EditPersonDescriptor() {}
 
+        /**
+         * Copy constructor.
+         */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);

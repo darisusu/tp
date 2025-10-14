@@ -10,7 +10,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
+import seedu.address.model.person.Goal;
+import seedu.address.model.person.Height;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Paid;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,6 +37,8 @@ class JsonAdaptedPerson {
     private final String deadline;
     private final String goal;
     private final String height;
+    private final String age;
+    private final String gender;
     private final String paid; // New field for payment status
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -40,6 +52,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("address") String address,
                              @JsonProperty("goal") String goal,
                              @JsonProperty("height") String height,
+                             @JsonProperty("age") String age,
+                             @JsonProperty("gender") String gender,
                              @JsonProperty("deadline") String deadline,
                              @JsonProperty("paid") String paid,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
@@ -50,6 +64,8 @@ class JsonAdaptedPerson {
         this.deadline = deadline;
         this.goal = goal;
         this.height = height;
+        this.age = age;
+        this.gender = gender;
         this.paid = paid;
         if (tags != null) {
             this.tags.addAll(tags);
@@ -67,6 +83,8 @@ class JsonAdaptedPerson {
         deadline = source.getDeadline().getDateString();
         goal = source.getGoal().value;
         height = String.valueOf(source.getHeight().value); // convert int → String
+        age = String.valueOf(source.getAge().value); // convert int → String
+        gender = source.getGender().value; // convert Gender to String
         paid = source.getPaymentStatus().toString(); // Convert Paid to String
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -117,7 +135,8 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         if (deadline == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Deadline.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Deadline.class.getSimpleName()));
         }
         if (!Address.isValidAddress(deadline)) {
             throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
@@ -137,6 +156,22 @@ class JsonAdaptedPerson {
         }
         final Height modelHeight = new Height(height);
 
+        if (age == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Age.class.getSimpleName()));
+        }
+        if (!Age.isValidAge(age)) {
+            throw new IllegalValueException(Age.MESSAGE_CONSTRAINTS);
+        }
+        final Age modelAge = new Age(age);
+
+        if (gender == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Gender.class.getSimpleName()));
+        }
+        if (!Gender.isValidGender(gender)) {
+            throw new IllegalValueException(Gender.MESSAGE_CONSTRAINTS);
+        }
+        final Gender modelGender = new Gender(gender);
+
         if (paid == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Paid.class.getSimpleName()));
         }
@@ -145,10 +180,10 @@ class JsonAdaptedPerson {
         }
         final Paid modelPaid = new Paid(paid); // Convert string to Paid
 
-
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal, modelHeight, modelDeadline, modelPaid, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal,
+                modelHeight, modelAge, modelGender, modelDeadline, modelPaid, modelTags);
     }
 
 }

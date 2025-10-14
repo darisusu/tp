@@ -16,7 +16,8 @@ public class Height {
 
     public final int value; // the height in cm and int
 
-    /* Constructs a {@code Height}.
+    /**
+     * Constructs an {@code Height}.
      *
      * @param height A valid height in cm.
      */
