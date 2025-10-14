@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 
 import java.util.Set;
 
@@ -40,6 +41,7 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_HEIGHT + String.valueOf(person.getHeight().value) + " ");
+        sb.append(PREFIX_WEIGHT + String.valueOf(person.getWeight().value) + " ");
         sb.append(PREFIX_AGE + String.valueOf(person.getAge().value) + " ");
         sb.append(PREFIX_GENDER + person.getGender().value + " ");
         sb.append(PREFIX_DEADLINE + person.getDeadline().getDateString() + " ");
