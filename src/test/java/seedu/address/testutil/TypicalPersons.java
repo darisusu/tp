@@ -26,62 +26,46 @@ public class TypicalPersons {
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253").withGoal("Lose 5kg")
-            .withHeight("165").withWeight("55").withAge("25").withGender("female")
-            .withDeadline("2025-12-31").withTags("friends").build();
-
+            .withHeight("165").withAge("25").withGender("female").withDeadline("2025-12-31")
+            .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432").withGoal("Lose 5kg")
-            .withHeight("175").withWeight("70").withAge("30").withGender("male")
-            .withDeadline("2025-12-31").withTags("owesMoney", "friends").build();
-
+            .withHeight("175").withAge("30").withGender("male").withDeadline("2025-12-31")
+            .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withHeight("180").withWeight("75").withAge("28").withGender("male")
-            .withDeadline("2025-12-31").build();
-
+            .withHeight("180").withAge("28").withGender("male").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
-            .withHeight("170").withWeight("68").withAge("32").withGender("male")
-            .withDeadline("2025-12-31").withTags("friends").build();
-
+            .withHeight("170").withAge("32").withGender("male").withTags("friends").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withHeight("160").withWeight("50").withAge("26").withGender("female")
-            .withDeadline("2025-12-31").build();
-
+            .withHeight("160").withAge("26").withGender("female").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withHeight("155").withWeight("48").withAge("24").withGender("female")
-            .withDeadline("2025-12-31").build();
-
+            .withHeight("155").withAge("24").withGender("female").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
-            .withHeight("185").withWeight("80").withAge("35").withGender("male")
-            .withDeadline("2025-12-31").build();
+            .withHeight("185").withAge("35").withGender("male").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@example.com").withAddress("little india")
-            .withHeight("175").withWeight("72").withAge("29").withGender("male")
-            .withDeadline("2025-12-31").build();
-
+            .withHeight("175").withAge("29").withGender("male").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave")
-            .withHeight("165").withWeight("55").withAge("27").withGender("female")
-            .withDeadline("2025-12-31").build();
+            .withHeight("165").withAge("27").withGender("female").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-            .withHeight("160").withWeight("50").withAge("25").withGender("female")
-            .withDeadline("2025-12-31").withTags(VALID_TAG_FRIEND).build();
-
+            .withHeight("160").withAge("25").withGender("female").withTags(VALID_TAG_FRIEND).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-            .withHeight("175").withWeight("70").withAge("30").withGender("male")
+            .withHeight("175").withAge("30").withGender("male")
             .withGoal("Lose 5kg").withPaid("true")
-            .withDeadline("2025-12-31").withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
@@ -100,6 +84,6 @@ public class TypicalPersons {
     }
 
     public static List<Person> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, AMY, BOB));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }
