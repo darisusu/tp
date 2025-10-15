@@ -64,6 +64,7 @@ public class DeadlineCommand extends Command {
                 personToEdit.getAddress(),
                 personToEdit.getGoal(),
                 personToEdit.getHeight(),
+                personToEdit.getWeight(),
                 personToEdit.getAge(),
                 personToEdit.getGender(),
                 deadline,

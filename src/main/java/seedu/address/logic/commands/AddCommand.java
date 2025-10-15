@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -32,6 +33,7 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_HEIGHT + "HEIGHT "
+            + PREFIX_WEIGHT + "WEIGHT "
             + PREFIX_AGE + "AGE "
             + PREFIX_GENDER + "GENDER "
             + PREFIX_DEADLINE + "DEADLINE(yyyy-MM-dd) "
@@ -43,6 +45,7 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_HEIGHT + "170 "
+            + PREFIX_WEIGHT + "70 "
             + PREFIX_AGE + "25 "
             + PREFIX_GENDER + "male "
             + PREFIX_DEADLINE + "2025-11-10 "
