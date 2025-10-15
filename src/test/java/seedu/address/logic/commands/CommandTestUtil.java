@@ -22,6 +22,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -45,8 +46,8 @@ public class CommandTestUtil {
     public static final String VALID_AGE_BOB = "30";
     public static final String VALID_GENDER_AMY = "female";
     public static final String VALID_GENDER_BOB = "male";
-    public static final String VALID_DEADLINE_AMY = "2025-12-31";
-    public static final String VALID_DEADLINE_BOB = "2025-12-31";
+    public static final Deadline VALID_DEADLINE_AMY = Deadline.fromString("2025-12-31");
+    public static final Deadline VALID_DEADLINE_BOB = Deadline.fromString("2025-12-31");
     public static final String VALID_PAID_AMY = "false";
     public static final String VALID_PAID_BOB = "false";
     public static final String VALID_TAG_HUSBAND = "husband";

@@ -57,7 +57,7 @@ public class PersonBuilder {
         height = new Height(DEFAULT_HEIGHT);
         age = new Age(DEFAULT_AGE);
         gender = new Gender(DEFAULT_GENDER);
-        deadline = new Deadline(DEFAULT_DEADLINE);
+        deadline = Deadline.fromString(DEFAULT_DEADLINE);
         paid = new Paid(DEFAULT_PAID);
         tags = new HashSet<>();
     }
@@ -155,7 +155,7 @@ public class PersonBuilder {
      * Sets the {@code Deadline} of the {@code Person} that we are building.
      */
     public PersonBuilder withDeadline(String deadline) {
-        this.deadline = new Deadline(deadline);
+        this.deadline = Deadline.fromString(deadline);
         return this;
     }
 

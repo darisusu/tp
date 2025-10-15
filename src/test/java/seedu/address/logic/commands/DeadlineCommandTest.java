@@ -7,14 +7,18 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.DeadlineCommand.MESSAGE_ARGUMENTS;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Deadline;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for DeadlineCommand.
@@ -24,34 +28,35 @@ public class DeadlineCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute() {
-        final String deadline = "2025-12-31";
+    void execute_invalidIndex_throwsCommandException() {
+        // Empty address book -> filtered list size = 0
+        Model model = new ModelManager(new AddressBook(), new UserPrefs());
 
-        assertCommandFailure(new DeadlineCommand(INDEX_FIRST_PERSON, deadline), model,
-                String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), deadline));
+        DeadlineCommand cmd = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.empty());
+
+        assertThrows(CommandException.class, () -> cmd.execute(model));
     }
 
     @Test
     public void equals() {
-        final DeadlineCommand standardCommand = new DeadlineCommand(INDEX_FIRST_PERSON, VALID_DEADLINE_AMY);
+        Deadline setA  = Deadline.fromString("2025-12-31");
+        Deadline setB  = Deadline.fromString("2026-01-01");
+        Deadline clear = Deadline.empty();
 
-        // same values -> returns true
-        DeadlineCommand commandWithSameValues = new DeadlineCommand(INDEX_FIRST_PERSON, VALID_DEADLINE_AMY);
-        assertTrue(standardCommand.equals(commandWithSameValues));
+        DeadlineCommand base = new DeadlineCommand(INDEX_FIRST_PERSON, setA);
 
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
+        // same values -> true
+        assertTrue(base.equals(new DeadlineCommand(INDEX_FIRST_PERSON, setA)));
 
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        // different index -> false
+        assertFalse(base.equals(new DeadlineCommand(INDEX_SECOND_PERSON, setA)));
 
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        // different payload -> false
+        assertFalse(base.equals(new DeadlineCommand(INDEX_FIRST_PERSON, setB)));
+        assertFalse(base.equals(new DeadlineCommand(INDEX_FIRST_PERSON, clear)));
 
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new DeadlineCommand(INDEX_SECOND_PERSON, VALID_DEADLINE_AMY)));
-
-        // different deadline -> returns false
-        assertFalse(standardCommand.equals(new DeadlineCommand(INDEX_FIRST_PERSON, VALID_DEADLINE_BOB)));
+        // null / different type -> false
+        assertFalse(base.equals(null));
+        assertFalse(base.equals(new ClearCommand()));
     }
 }
