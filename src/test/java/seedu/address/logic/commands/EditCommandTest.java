@@ -37,18 +37,11 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Person editedPerson = new PersonBuilder()
-                .withName("Alice Pauline")
-                .withAddress("123, Jurong West Ave 6, #08-111")
-                .withEmail("alice@example.com")
-                .withPhone("94351253")
-                .withGoal("Lose 5kg")
-                .withHeight("165")
-                .withWeight("48") // new field
-                .withAge("25")
-                .withGender("female")
-                .withTags("friends")
-                .build();
+        Person editedPerson = new PersonBuilder().withName("Alice Pauline")
+                .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+                .withPhone("94351253").withGoal("Lose 5kg")
+                .withHeight("165").withAge("25").withGender("female")
+                .withTags("friends").build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 

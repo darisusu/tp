@@ -1,4 +1,3 @@
-// java
 package seedu.address.storage;
 
 import java.util.ArrayList;
@@ -18,11 +17,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
 import seedu.address.model.person.Goal;
 import seedu.address.model.person.Height;
-import seedu.address.model.person.Weight;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Weight;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -42,9 +41,12 @@ class JsonAdaptedPerson {
     private final String weight;
     private final String age;
     private final String gender;
-    private final String paid;
+    private final String paid; // New field for payment status
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
+    /**
+     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name,
                              @JsonProperty("phone") String phone,
@@ -74,6 +76,9 @@ class JsonAdaptedPerson {
         }
     }
 
+    /**
+     * Converts a given {@code Person} into this class for Jackson use.
+     */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
@@ -81,16 +86,21 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         deadline = source.getDeadline().getDateString();
         goal = source.getGoal().value;
-        height = String.valueOf(source.getHeight().value);
-        weight = String.valueOf(source.getWeight().value);
-        age = String.valueOf(source.getAge().value);
-        gender = source.getGender().value;
-        paid = source.getPaymentStatus().toString();
+        height = String.valueOf(source.getHeight().value); // convert int → String
+        weight = String.valueOf(source.getWeight().value); // convert int → String
+        age = String.valueOf(source.getAge().value); // convert int → String
+        gender = source.getGender().value; // convert Gender to String
+        paid = source.getPaymentStatus().toString(); // Convert Paid to String
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
@@ -133,7 +143,7 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Deadline.class.getSimpleName()));
         }
-        if (!Deadline.isValidDeadline(deadline)) {
+        if (!Address.isValidAddress(deadline)) {
             throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
         }
         final Deadline modelDeadline = new Deadline(deadline);
@@ -151,16 +161,14 @@ class JsonAdaptedPerson {
         }
         final Height modelHeight = new Height(height);
 
-        // Allow missing weight from older JSON files; use default "70"
-        final Weight modelWeight;
         if (weight == null) {
-            modelWeight = new Weight("70");
-        } else {
-            if (!Weight.isValidWeight(weight)) {
-                throw new IllegalValueException(Weight.MESSAGE_CONSTRAINTS);
-            }
-            modelWeight = new Weight(weight);
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Weight.class.getSimpleName()));
         }
+        if (!Weight.isValidWeight(weight)) {
+            throw new IllegalValueException(Weight.MESSAGE_CONSTRAINTS);
+        }
+        final Weight modelWeight = new Weight(weight);
+
 
         if (age == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Age.class.getSimpleName()));
@@ -184,11 +192,12 @@ class JsonAdaptedPerson {
         if (!Paid.isValidPaid(paid)) {
             throw new IllegalValueException(Paid.MESSAGE_CONSTRAINTS);
         }
-        final Paid modelPaid = new Paid(paid);
+        final Paid modelPaid = new Paid(paid); // Convert string to Paid
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelGoal,
                 modelHeight, modelWeight, modelAge, modelGender, modelDeadline, modelPaid, modelTags);
     }
+
 }
