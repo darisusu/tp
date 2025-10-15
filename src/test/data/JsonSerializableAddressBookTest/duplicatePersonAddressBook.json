@@ -7,6 +7,7 @@
     "deadline": "2025-12-31",
     "goal": "Lose 5kg",
     "height": "165",
+    "weight": "60",
     "age": "25",
     "gender": "female",
     "deadline": "2025-12-31",
@@ -20,6 +21,7 @@
     "deadline": "2025-12-31",
     "goal": "Lose 5kg",
     "height": "165",
+    "weight": "70",
     "age": "25",
     "gender": "female",
     "paid": "true"

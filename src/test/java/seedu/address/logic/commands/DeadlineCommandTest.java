@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Deadline;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for DeadlineCommand.
@@ -27,16 +28,16 @@ public class DeadlineCommandTest {
     public void execute() {
         final String deadline = "2025-12-31";
 
-        assertCommandFailure(new DeadlineCommand(INDEX_FIRST_PERSON, deadline), model,
+        assertCommandFailure(new DeadlineCommand(INDEX_FIRST_PERSON,new Deadline(deadline)), model,
                 String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), deadline));
     }
 
     @Test
     public void equals() {
-        final DeadlineCommand standardCommand = new DeadlineCommand(INDEX_FIRST_PERSON, VALID_DEADLINE_AMY);
+        final DeadlineCommand standardCommand = new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(VALID_DEADLINE_AMY));
 
         // same values -> returns true
-        DeadlineCommand commandWithSameValues = new DeadlineCommand(INDEX_FIRST_PERSON, VALID_DEADLINE_AMY);
+        DeadlineCommand commandWithSameValues = new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(VALID_DEADLINE_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -49,9 +50,9 @@ public class DeadlineCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new DeadlineCommand(INDEX_SECOND_PERSON, VALID_DEADLINE_AMY)));
+        assertFalse(standardCommand.equals(new DeadlineCommand(INDEX_SECOND_PERSON, new Deadline(VALID_DEADLINE_AMY))));
 
         // different deadline -> returns false
-        assertFalse(standardCommand.equals(new DeadlineCommand(INDEX_FIRST_PERSON, VALID_DEADLINE_BOB)));
+        assertFalse(standardCommand.equals(new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(VALID_DEADLINE_BOB))));
     }
 }

@@ -165,6 +165,8 @@ public class EditCommand extends Command {
         private Weight weight;
         private Paid paid;
         private Set<Tag> tags;
+        private Gender gender;
+        private Age age;
 
         public EditPersonDescriptor() {}
 
@@ -243,7 +245,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(weight);
         }
 
+        // Getters and setters
+        public void setAge(Age age) { this.age = age; }
+        public Optional<Age> getAge() { return Optional.ofNullable(age); }
 
+        public void setGender(Gender gender) { this.gender = gender; }
+        public Optional<Gender> getGender() { return Optional.ofNullable(gender); }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
@@ -301,5 +308,6 @@ public class EditCommand extends Command {
                     .add("tags", tags)
                     .toString();
         }
+
     }
 }
