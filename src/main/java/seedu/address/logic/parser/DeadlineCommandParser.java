@@ -16,19 +16,35 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
      * and returns a {@code DeadlineCommand} object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public DeadlineCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEADLINE);
 
-        Index index;
+        ArgumentMultimap map = ArgumentTokenizer.tokenize(args, PREFIX_DEADLINE);
+
+        // 1) Parse index, but normalize any index error to MESSAGE_USAGE
+        final Index index;
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeadlineCommand.MESSAGE_USAGE), ive);
+            index = ParserUtil.parseIndex(map.getPreamble());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(DeadlineCommand.MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeadlineCommand.MESSAGE_USAGE), pe);
         }
 
-        String deadline = argMultimap.getValue(PREFIX_DEADLINE).orElse("");
+        // 2) The dl/ prefix is compulsory for this command.
+        //    (Value may be "" to clear, but the prefix itself must be present.)
+        if (!map.getValue(PREFIX_DEADLINE).isPresent()) {
+            throw new ParseException(String.format(DeadlineCommand.MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeadlineCommand.MESSAGE_USAGE));
+        }
 
-        return new DeadlineCommand(index, new Deadline(deadline));
+        // 3) Validate & build the value object ("" => clear)
+        String raw = map.getValue(PREFIX_DEADLINE).get();   // present by now
+        if (!Deadline.isValidDeadline(raw)) {
+            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+        }
+
+        Deadline deadline = Deadline.fromString(raw);
+        return new DeadlineCommand(index, deadline);
     }
 }

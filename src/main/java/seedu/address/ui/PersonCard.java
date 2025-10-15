@@ -65,7 +65,7 @@ public class PersonCard extends UiPart<Region> {
         age.setText(person.getAge().value + " years old");
         gender.setText(person.getGender().value);
         email.setText(person.getEmail().value);
-        deadline.setText(person.getDeadline().getDateString());
+        deadline.setText(person.getDeadline().toStorageString());
         goal.setText(person.getGoal().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

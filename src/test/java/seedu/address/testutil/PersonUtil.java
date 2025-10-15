@@ -42,7 +42,7 @@ public class PersonUtil {
         sb.append(PREFIX_HEIGHT + String.valueOf(person.getHeight().value) + " ");
         sb.append(PREFIX_AGE + String.valueOf(person.getAge().value) + " ");
         sb.append(PREFIX_GENDER + person.getGender().value + " ");
-        sb.append(PREFIX_DEADLINE + person.getDeadline().getDateString() + " ");
+        sb.append(PREFIX_DEADLINE + person.getDeadline().toStorageString() + " ");
         sb.append(PREFIX_PAID + person.getPaymentStatus().toString() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

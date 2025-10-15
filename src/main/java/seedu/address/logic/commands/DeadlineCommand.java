@@ -8,6 +8,7 @@ import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Person;
 
 import java.util.List;
+import java.util.Objects;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -34,6 +35,7 @@ public class DeadlineCommand extends Command {
 
     public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Person: %1$s";
     public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed deadline from Person: %1$s";
+    public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format!\n%1$s";
 
     private final Index index;
     private final Deadline deadline;
@@ -80,7 +82,7 @@ public class DeadlineCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !deadline.getDateString().isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
+        String message = !deadline.isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
@@ -98,5 +100,10 @@ public class DeadlineCommand extends Command {
         DeadlineCommand e = (DeadlineCommand) other;
         return index.equals(e.index)
                 && deadline.equals(e.deadline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, deadline);
     }
 }

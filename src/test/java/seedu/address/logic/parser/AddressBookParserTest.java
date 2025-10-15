@@ -94,11 +94,41 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
     }
 
+    // 1) Set a valid ISO date
     @Test
-    public void parseCommand_deadline() throws Exception {
-        final String deadline = "Some deadline.";
-        DeadlineCommand command = (DeadlineCommand) parser.parseCommand(DeadlineCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_DEADLINE + deadline);
-        assertEquals(new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(deadline)), command);
+    public void parseCommand_deadline_setIsoDate_success() throws Exception {
+        final String date = "2025-12-31";
+        DeadlineCommand expected = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.fromString(date));
+
+        DeadlineCommand actual = (DeadlineCommand) parser.parseCommand(
+                DeadlineCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_DEADLINE + date);
+
+        assertEquals(expected, actual);
+    }
+
+    // 2) Clear (empty value after dl/)
+    @Test
+    public void parseCommand_deadline_clear_success() throws Exception {
+        DeadlineCommand expected = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.empty());
+
+        DeadlineCommand actual = (DeadlineCommand) parser.parseCommand(
+                DeadlineCommand.COMMAND_WORD + " "
+                        + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_DEADLINE); // note: no value after the prefix
+
+        assertEquals(expected, actual);
+    }
+
+    // 3) Invalid input should throw
+    @Test
+    public void parseCommand_deadline_invalid_throwsParseException() {
+        assertThrows(ParseException.class, () ->
+                parser.parseCommand(
+                        DeadlineCommand.COMMAND_WORD + " "
+                                + INDEX_FIRST_PERSON.getOneBased() + " "
+                                + PREFIX_DEADLINE + "Some deadline.")
+        );
     }
 }

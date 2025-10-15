@@ -31,7 +31,7 @@ public class SampleDataUtil {
                 new Height("170"), // added height
                 new Age("25"), // added age
                 new Gender("male"), // added gender
-                new Deadline("2025-11-15"),
+                Deadline.fromString("2025-11-15"),
                 new Paid("false"), // added Paid
                 getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
@@ -40,7 +40,7 @@ public class SampleDataUtil {
                 new Height("165"),
                 new Age("28"), // added age
                 new Gender("female"), // added gender
-                new Deadline("2025-11-15"),
+                Deadline.fromString("2025-11-15"),
                 new Paid("true"),
                 getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
@@ -49,7 +49,7 @@ public class SampleDataUtil {
                 new Height("160"),
                 new Age("22"), // added age
                 new Gender("female"), // added gender
-                new Deadline("2025-11-15"),
+                Deadline.fromString("2025-11-15"),
                 new Paid("false"),
                 getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
@@ -58,7 +58,7 @@ public class SampleDataUtil {
                 new Height("175"),
                 new Age("30"), // added age
                 new Gender("male"), // added gender
-                new Deadline("2025-11-15"),
+                Deadline.fromString("2025-11-15"),
                 new Paid("false"),
                 getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
@@ -67,7 +67,7 @@ public class SampleDataUtil {
                 new Height("180"),
                 new Age("26"), // added age
                 new Gender("male"), // added gender
-                new Deadline("2025-11-15"),
+                Deadline.fromString("2025-11-15"),
                 new Paid("true"),
                 getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
@@ -76,7 +76,7 @@ public class SampleDataUtil {
                 new Height("172"),
                 new Age("24"), // added age
                 new Gender("male"), // added gender
-                new Deadline("2025-11-15"),
+                Deadline.fromString("2025-11-15"),
                 new Paid("false"),
                 getTagSet("colleagues"))
         };

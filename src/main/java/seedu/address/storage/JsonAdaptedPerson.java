@@ -80,7 +80,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        deadline = source.getDeadline().getDateString();
+        deadline = source.getDeadline().toStorageString();
         goal = source.getGoal().value;
         height = String.valueOf(source.getHeight().value); // convert int → String
         age = String.valueOf(source.getAge().value); // convert int → String
@@ -134,14 +134,13 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        if (deadline == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Deadline.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(deadline)) {
+        final String rawDeadline = (deadline == null) ? "" : deadline;
+
+        if (!Deadline.isValidDeadline(rawDeadline)) {
             throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
         }
-        final Deadline modelDeadline = new Deadline(deadline);
+
+        final Deadline modelDeadline = Deadline.fromString(rawDeadline);
 
         if (goal == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Goal.class.getSimpleName()));
