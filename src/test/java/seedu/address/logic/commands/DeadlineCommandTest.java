@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Deadline;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for DeadlineCommand.
@@ -27,8 +28,8 @@ public class DeadlineCommandTest {
     public void execute() {
         final String deadline = "2025-12-31";
 
-        assertCommandFailure(new DeadlineCommand(INDEX_FIRST_PERSON, deadline), model,
-                String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), deadline));
+        assertCommandFailure(new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(deadline)), model,
+                String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), new Deadline(deadline)));
     }
 
     @Test

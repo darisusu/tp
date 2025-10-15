@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -98,6 +99,6 @@ public class AddressBookParserTest {
         final String deadline = "Some deadline.";
         DeadlineCommand command = (DeadlineCommand) parser.parseCommand(DeadlineCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_DEADLINE + deadline);
-        assertEquals(new DeadlineCommand(INDEX_FIRST_PERSON, deadline), command);
+        assertEquals(new DeadlineCommand(INDEX_FIRST_PERSON, new Deadline(deadline)), command);
     }
 }
