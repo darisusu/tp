@@ -9,47 +9,45 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Age;
+import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Person;
 
 /**
- * Changes the age of an existing person in the address book.
+ * Edits the body fat percentage of an existing person in the address book.
  */
-public class AgeCommand extends Command {
+public class BodyfatCommand extends Command {
 
-    public static final String COMMAND_WORD = "age";
+    public static final String COMMAND_WORD = "bodyfat";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the age of the person identified "
+            + ": Edits the body fat percentage of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing age will be overwritten by the input.\n"
+            + "Existing body fat value will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "age/ [AGE]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + "age/ 25";
+            + "bf/BODYFAT\n"
+            + "Example: " + COMMAND_WORD + " 1 bf/18.5";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Age: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Bodyfat: %2$s";
 
-    public static final String MESSAGE_ADD_AGE_SUCCESS = "Added age to Person: %1$s";
-    public static final String MESSAGE_DELETE_AGE_SUCCESS = "Removed age from Person: %1$s";
-    public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format!\n%1$s";
+    public static final String MESSAGE_ADD_BODYFAT_SUCCESS = "Updated body fat for Person: %1$s";
+    public static final String MESSAGE_DELETE_BODYFAT_SUCCESS = "Removed body fat from Person: %1$s";
 
     private final Index index;
-    private final Age age;
+    private final Bodyfat bodyfat;
 
     /**
-     * @param index of the person in the filtered person list to edit the age
-     * @param age of the person to be updated to
+     * @param index of the person in the filtered person list to edit the body fat
+     * @param bodyfat of the person to be updated to
      */
-    public AgeCommand(Index index, Age age) {
-        requireAllNonNull(index, age);
-
+    public BodyfatCommand(Index index, Bodyfat bodyfat) {
+        requireAllNonNull(index, bodyfat);
         this.index = index;
-        this.age = age;
+        this.bodyfat = bodyfat;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireAllNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -65,12 +63,13 @@ public class AgeCommand extends Command {
                 personToEdit.getGoal(),
                 personToEdit.getHeight(),
                 personToEdit.getWeight(),
-                age,
+                personToEdit.getAge(),
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
-                personToEdit.getBodyfat(),
-                personToEdit.getTags());
+                bodyfat,
+                personToEdit.getTags()
+        );
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -79,12 +78,10 @@ public class AgeCommand extends Command {
     }
 
     /**
-     * Generates a command execution success message based on whether
-     * the age is added to or removed from
-     * {@code personToEdit}.
+     * Generates a command execution success message.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !age.toString().isEmpty() ? MESSAGE_ADD_AGE_SUCCESS : MESSAGE_DELETE_AGE_SUCCESS;
+        String message = (bodyfat != null) ? MESSAGE_ADD_BODYFAT_SUCCESS : MESSAGE_DELETE_BODYFAT_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
@@ -95,12 +92,12 @@ public class AgeCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AgeCommand)) {
+        if (!(other instanceof BodyfatCommand)) {
             return false;
         }
 
-        AgeCommand e = (AgeCommand) other;
+        BodyfatCommand e = (BodyfatCommand) other;
         return index.equals(e.index)
-                && age.equals(e.age);
+                && bodyfat.equals(e.bodyfat);
     }
 }

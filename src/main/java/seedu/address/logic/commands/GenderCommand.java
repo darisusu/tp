@@ -68,6 +68,7 @@ public class GenderCommand extends Command {
                 gender,
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
+                personToEdit.getBodyfat(),
                 personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);

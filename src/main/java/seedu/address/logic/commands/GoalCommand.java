@@ -68,6 +68,7 @@ public class GoalCommand extends Command {
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
+                personToEdit.getBodyfat(),
                 personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);

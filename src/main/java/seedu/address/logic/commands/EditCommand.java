@@ -27,6 +27,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
+import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
@@ -115,18 +116,17 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Deadline updatedDeadline = personToEdit.getDeadline();
-        Goal updatedGoal = personToEdit.getGoal();
+        Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
+        Goal updatedGoal = editPersonDescriptor.getGoal().orElse(personToEdit.getGoal());
         Height updatedHeight = editPersonDescriptor.getHeight().orElse(personToEdit.getHeight());
         Weight updatedWeight = editPersonDescriptor.getWeight().orElse(personToEdit.getWeight());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
-
-
+        Bodyfat updatedBodyfat = editPersonDescriptor.getBodyfat().orElse(personToEdit.getBodyfat());
         Age updatedAge = personToEdit.getAge(); // Keep existing age for now
         Gender updatedGender = personToEdit.getGender(); // Keep existing gender for now
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal,
-                updatedHeight, updatedWeight, updatedAge, updatedGender, updatedDeadline, updatedPaid, updatedTags);
+                updatedHeight, updatedWeight, updatedAge, updatedGender, updatedDeadline, updatedPaid, updatedBodyfat, updatedTags);
     }
 
     @Override
@@ -163,7 +163,9 @@ public class EditCommand extends Command {
         private Deadline deadline;
         private Height height;
         private Weight weight;
+        private Goal goal;
         private Paid paid;
+        private Bodyfat bodyfat;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -180,11 +182,13 @@ public class EditCommand extends Command {
             setHeight(toCopy.height);
             setWeight(toCopy.weight);
             setPaid(toCopy.paid);
+            setGoal(toCopy.goal);
+            setBodyfat(toCopy.bodyfat);
             setTags(toCopy.tags);
         }
 
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name,phone, email, address, height, weight, deadline, tags, paid);
+            return CollectionUtil.isAnyNonNull(name,phone, email, address, height, weight, deadline, tags, paid, bodyfat);
         }
 
         public void setName(Name name) {
@@ -244,6 +248,22 @@ public class EditCommand extends Command {
         }
 
 
+        public void setGoal(Goal goal) {
+            this.goal = goal;
+        }
+
+        public Optional<Goal> getGoal() {
+            return Optional.ofNullable(goal);
+        }
+
+        public void setBodyfat(Bodyfat bodyfat) {
+            this.bodyfat = bodyfat;
+        }
+
+        public Optional<Bodyfat> getBodyfat() {
+            return Optional.ofNullable(bodyfat);
+        }
+
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
@@ -283,6 +303,8 @@ public class EditCommand extends Command {
                     && Objects.equals(deadline, otherEditPersonDescriptor.deadline)
                     && Objects.equals(height, otherEditPersonDescriptor.height)
                     && Objects.equals(weight, otherEditPersonDescriptor.weight)
+                    && Objects.equals(goal, otherEditPersonDescriptor.goal)
+                    && Objects.equals(bodyfat, otherEditPersonDescriptor.bodyfat)
                     && Objects.equals(paid, otherEditPersonDescriptor.paid)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
@@ -297,6 +319,8 @@ public class EditCommand extends Command {
                     .add("deadline", deadline)
                     .add("height", height)
                     .add("weight", weight)
+                    .add("goal", goal)
+                    .add("bodyfat", bodyfat)
                     .add("paid", paid)
                     .add("tags", tags)
                     .toString();

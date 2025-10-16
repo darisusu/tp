@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Age;
+import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
@@ -34,6 +35,7 @@ public class PersonBuilder {
     public static final String DEFAULT_GENDER = "female";
     public static final String DEFAULT_DEADLINE = "2025-12-31";
     public static final String DEFAULT_PAID = "true";
+    public static final String DEFAULT_BODYFAT = "30.0";
 
     private Name name;
     private Phone phone;
@@ -46,6 +48,7 @@ public class PersonBuilder {
     private Gender gender;
     private Deadline deadline;
     private Paid paid;
+    private Bodyfat bodyfat;
     private Set<Tag> tags;
 
     /**
@@ -63,6 +66,7 @@ public class PersonBuilder {
         gender = new Gender(DEFAULT_GENDER);
         deadline = Deadline.fromString(DEFAULT_DEADLINE);
         paid = new Paid(DEFAULT_PAID);
+        bodyfat = new Bodyfat(DEFAULT_BODYFAT);
         tags = new HashSet<>();
     }
 
@@ -81,6 +85,7 @@ public class PersonBuilder {
         gender = personToCopy.getGender();
         deadline = personToCopy.getDeadline();
         paid = personToCopy.getPaymentStatus();
+        bodyfat = personToCopy.getBodyfat();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -180,8 +185,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Bodyfat} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBodyfat(String bodyfat) {
+        this.bodyfat = new Bodyfat(bodyfat);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, tags);
+        return new Person(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, bodyfat, tags);
     }
 
 }

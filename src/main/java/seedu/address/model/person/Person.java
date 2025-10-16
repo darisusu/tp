@@ -32,16 +32,15 @@ public class Person {
     private final Weight weight;
     private final Age age;
     private final Gender gender;
+    private final Bodyfat bodyfat;
 
     private final Set<Tag> tags = new HashSet<>();
-
-
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Weight weight,
-            Age age, Gender gender, Deadline deadline, Paid paid, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, goal, height, weight, age, gender, paid, tags);
+            Age age, Gender gender, Deadline deadline, Paid paid, Bodyfat bodyfat, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, goal, height, weight, age, gender, paid, bodyfat, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -54,6 +53,7 @@ public class Person {
         this.gender = gender;
         this.tags.addAll(tags);
         this.paid = paid;
+        this.bodyfat = bodyfat;
     }
 
     public Name getName() {
@@ -99,6 +99,8 @@ public class Person {
     public Paid getPaymentStatus() {
         return paid;
     }
+
+    public Bodyfat getBodyfat() {return bodyfat;}
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -147,13 +149,14 @@ public class Person {
                 && weight.equals(otherPerson.weight)
                 && age.equals(otherPerson.age)
                 && gender.equals(otherPerson.gender)
+                && bodyfat.equals(otherPerson.bodyfat)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, tags);
+        return Objects.hash(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, bodyfat, tags);
     }
 
     @Override
@@ -170,6 +173,7 @@ public class Person {
                 .add("age", age)
                 .add("gender", gender)
                 .add("paid", paid)
+                .add("bodyfat", bodyfat)
                 .add("tags", tags)
                 .toString();
     }
