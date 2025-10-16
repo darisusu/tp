@@ -15,6 +15,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Weight;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -29,6 +30,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_GOAL = "Lose 5kg";
     public static final String DEFAULT_HEIGHT = "170";
+    public static final String DEFAULT_WEIGHT = "65"; // default weight in kg
     public static final String DEFAULT_AGE = "25";
     public static final String DEFAULT_GENDER = "female";
     public static final String DEFAULT_DEADLINE = "2025-12-31";
@@ -41,6 +43,7 @@ public class PersonBuilder {
     private Address address;
     private Goal goal;
     private Height height;
+    private Weight weight;
     private Age age;
     private Gender gender;
     private Deadline deadline;
@@ -58,9 +61,10 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         goal = new Goal(DEFAULT_GOAL);
         height = new Height(DEFAULT_HEIGHT);
+        weight = new Weight(DEFAULT_WEIGHT);
         age = new Age(DEFAULT_AGE);
         gender = new Gender(DEFAULT_GENDER);
-        deadline = new Deadline(DEFAULT_DEADLINE);
+        deadline = Deadline.fromString(DEFAULT_DEADLINE);
         paid = new Paid(DEFAULT_PAID);
         bodyfat = new Bodyfat(DEFAULT_BODYFAT);
         tags = new HashSet<>();
@@ -76,6 +80,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         goal = personToCopy.getGoal();
         height = personToCopy.getHeight();
+        weight = personToCopy.getWeight();
         age = personToCopy.getAge();
         gender = personToCopy.getGender();
         deadline = personToCopy.getDeadline();
@@ -141,6 +146,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Weight} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withWeight(String weight) {
+        this.weight = new Weight(weight);
+        return this;
+    }
+
+    /**
      * Sets the {@code Age} of the {@code Person} that we are building.
      */
     public PersonBuilder withAge(String age) {
@@ -160,7 +173,7 @@ public class PersonBuilder {
      * Sets the {@code Deadline} of the {@code Person} that we are building.
      */
     public PersonBuilder withDeadline(String deadline) {
-        this.deadline = new Deadline(deadline);
+        this.deadline = Deadline.fromString(deadline);
         return this;
     }
 
@@ -181,7 +194,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, goal, height, age, gender, deadline, paid, bodyfat, tags);
+        return new Person(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, bodyfat, tags);
     }
 
 }

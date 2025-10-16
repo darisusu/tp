@@ -9,42 +9,42 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Goal;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Person;
 
 /**
- * Adds or removes a goal to/from a Person
+ * Changes the gender of an existing person in the address book.
  */
-public class GoalCommand extends Command {
+public class GenderCommand extends Command {
 
-    public static final String COMMAND_WORD = "goal";
+    public static final String COMMAND_WORD = "gender";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the goal of the person identified "
+            + ": Edits the gender of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing goal will be overwritten by the input.\n"
+            + "Existing gender will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "goal/ [goal]\n"
+            + "g/ [GENDER]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "goal/ Lose 10kg.";
+            + "g/ male";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Goal: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Gender: %2$s";
 
-    public static final String MESSAGE_ADD_GOAL_SUCCESS = "Added goal to Person: %1$s";
-    public static final String MESSAGE_DELETE_GOAL_SUCCESS = "Removed goal from Person: %1$s";
+    public static final String MESSAGE_ADD_GENDER_SUCCESS = "Added gender to Person: %1$s";
+    public static final String MESSAGE_DELETE_GENDER_SUCCESS = "Removed gender from Person: %1$s";
 
     private final Index index;
-    private final Goal goal;
+    private final Gender gender;
 
     /**
-     * @param index of the person in the filtered person list to edit the goal
-     * @param goal of the person to be updated to
+     * @param index of the person in the filtered person list to edit the gender
+     * @param gender of the person to be updated to
      */
-    public GoalCommand(Index index, Goal goal) {
-        requireAllNonNull(index, goal);
+    public GenderCommand(Index index, Gender gender) {
+        requireAllNonNull(index, gender);
 
         this.index = index;
-        this.goal = goal;
+        this.gender = gender;
     }
 
     @Override
@@ -61,14 +61,13 @@ public class GoalCommand extends Command {
                 personToEdit.getPhone(),
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
-                goal,
+                personToEdit.getGoal(),
                 personToEdit.getHeight(),
                 personToEdit.getWeight(),
                 personToEdit.getAge(),
-                personToEdit.getGender(),
+                gender,
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
-                personToEdit.getBodyfat(),
                 personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
@@ -79,11 +78,11 @@ public class GoalCommand extends Command {
 
     /**
      * Generates a command execution success message based on whether
-     * the goal is added to or removed from
+     * the gender is added to or removed from
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !goal.value.isEmpty() ? MESSAGE_ADD_GOAL_SUCCESS : MESSAGE_DELETE_GOAL_SUCCESS;
+        String message = !gender.value.isEmpty() ? MESSAGE_ADD_GENDER_SUCCESS : MESSAGE_DELETE_GENDER_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
@@ -94,12 +93,12 @@ public class GoalCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof GoalCommand)) {
+        if (!(other instanceof GenderCommand)) {
             return false;
         }
 
-        GoalCommand e = (GoalCommand) other;
+        GenderCommand e = (GenderCommand) other;
         return index.equals(e.index)
-                && goal.equals(e.goal);
+                && gender.equals(e.gender);
     }
 }

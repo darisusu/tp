@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -19,6 +20,7 @@ import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Weight;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -156,11 +158,12 @@ public class ParserUtil {
         if (!Deadline.isValidDeadline(trimmed)) {
             throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }
-        try {
-            return new Deadline(trimmed);
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
-        }
+        return Deadline.fromString(deadline);
+    }
+
+    public static Deadline parseDeadline(Optional<String> rawOpt) throws ParseException {
+        // If the prefix is missing entirely, treat as empty (no deadline)
+        return parseDeadline(rawOpt.orElse(""));
     }
     /**
      * Parses a {@code String height} into a {@code Height}.
@@ -175,6 +178,21 @@ public class ParserUtil {
             throw new ParseException(Height.MESSAGE_CONSTRAINTS);
         }
         return new Height(trimmedHeight);
+    }
+
+    /**
+     * Parses a {@code String weight} into a {@code Weight}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code weight} is invalid.
+     */
+    public static Weight parseWeight(String weight) throws ParseException {
+        requireNonNull(weight);
+        String trimmedWeight = weight.trim();
+        if (!Weight.isValidWeight(trimmedWeight)) {
+            throw new ParseException(Weight.MESSAGE_CONSTRAINTS);
+        }
+        return new Weight(trimmedWeight);
     }
 
     /**

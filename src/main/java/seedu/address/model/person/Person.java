@@ -23,24 +23,24 @@ public class Person {
 
     // Payment fields
     private final Deadline deadline;
+    private Paid paid;
 
     // Data fields
     private final Address address;
     private final Goal goal;
     private final Height height;
+    private final Weight weight;
     private final Age age;
     private final Gender gender;
     private final Bodyfat bodyfat;
 
     private final Set<Tag> tags = new HashSet<>();
-    private Paid paid;
-
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height,
+    public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Weight weight,
             Age age, Gender gender, Deadline deadline, Paid paid, Bodyfat bodyfat, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, goal, height, age, gender, paid, bodyfat, tags);
+        requireAllNonNull(name, phone, email, address, goal, height, weight, age, gender, paid, bodyfat, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -48,6 +48,7 @@ public class Person {
         this.deadline = deadline;
         this.goal = goal;
         this.height = height;
+        this.weight = weight;
         this.age = age;
         this.gender = gender;
         this.tags.addAll(tags);
@@ -81,6 +82,10 @@ public class Person {
 
     public Height getHeight() {
         return height;
+    }
+
+    public Weight getWeight() {
+        return weight;
     }
 
     public Age getAge() {
@@ -141,6 +146,7 @@ public class Person {
                 && deadline.equals(otherPerson.deadline)
                 && goal.equals(otherPerson.goal)
                 && height.equals(otherPerson.height)
+                && weight.equals(otherPerson.weight)
                 && age.equals(otherPerson.age)
                 && gender.equals(otherPerson.gender)
                 && bodyfat.equals(otherPerson.bodyfat)
@@ -150,7 +156,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, goal, height, age, gender, deadline, paid, bodyfat, tags);
+        return Objects.hash(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, bodyfat, tags);
     }
 
     @Override
@@ -163,6 +169,7 @@ public class Person {
                 .add("deadline", deadline)
                 .add("goal", goal)
                 .add("height", height)
+                .add("weight", weight)
                 .add("age", age)
                 .add("gender", gender)
                 .add("paid", paid)
