@@ -14,8 +14,16 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeadlineCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -96,7 +104,7 @@ public class AddressBookParserTest {
 
     // 1) Set a valid ISO date
     @Test
-    public void parseCommand_deadline_setIsoDate_success() throws Exception {
+    public void parseCommand_deadlineSetIsoDate_success() throws Exception {
         final String date = "2025-12-31";
         DeadlineCommand expected = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.fromString(date));
 
@@ -110,7 +118,7 @@ public class AddressBookParserTest {
 
     // 2) Clear (empty value after dl/)
     @Test
-    public void parseCommand_deadline_clear_success() throws Exception {
+    public void parseCommand_deadlineClear_success() throws Exception {
         DeadlineCommand expected = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.empty());
 
         DeadlineCommand actual = (DeadlineCommand) parser.parseCommand(
@@ -123,7 +131,7 @@ public class AddressBookParserTest {
 
     // 3) Invalid input should throw
     @Test
-    public void parseCommand_deadline_invalid_throwsParseException() {
+    public void parseCommand_deadlineInvalid_throwsParseException() {
         assertThrows(ParseException.class, () ->
                 parser.parseCommand(
                         DeadlineCommand.COMMAND_WORD + " "

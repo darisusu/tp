@@ -193,8 +193,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds the person with the specified attributes.
+     *
+     * @return the built person
+     */
     public Person build() {
-        return new Person(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, bodyfat, tags);
+        return new Person(name, phone, email, address, goal, height, weight, age, gender,
+                deadline, paid, bodyfat, tags);
     }
 
 }

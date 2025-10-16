@@ -15,9 +15,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Height;
-import seedu.address.model.person.Weight;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Weight;
 
 public class JsonAdaptedPersonTest {
 
@@ -177,7 +177,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullWeight_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(
                 VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_GOAL,
-                VALID_HEIGHT, null,VALID_AGE, VALID_GENDER, VALID_DEADLINE,
+                VALID_HEIGHT, null, VALID_AGE, VALID_GENDER, VALID_DEADLINE,
                 VALID_PAID, VALID_BODYFAT, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Weight.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);

@@ -1,15 +1,16 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeadlineCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Deadline;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
-
+/**
+ * Parses input arguments and creates a new DeadlineCommand object
+ */
 public class DeadlineCommandParser implements Parser<DeadlineCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the {@code DeadlineCommand}
@@ -39,7 +40,7 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
         }
 
         // 3) Validate & build the value object ("" => clear)
-        String raw = map.getValue(PREFIX_DEADLINE).get();   // present by now
+        String raw = map.getValue(PREFIX_DEADLINE).get(); // present by now
         if (!Deadline.isValidDeadline(raw)) {
             throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
         }

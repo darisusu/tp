@@ -21,7 +21,8 @@ public class DeadlineCommandParserTest {
         // have Deadline
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_DEADLINE + nonEmptyDeadline;
-        DeadlineCommand expectedCommand = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.fromString(nonEmptyDeadline));
+        DeadlineCommand expectedCommand = new DeadlineCommand(INDEX_FIRST_PERSON,
+                Deadline.fromString(nonEmptyDeadline));
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // no Deadline

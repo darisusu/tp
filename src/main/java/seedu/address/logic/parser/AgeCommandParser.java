@@ -1,15 +1,16 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AgeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Age;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
-
+/**
+ * Parses input arguments and creates a new AgeCommand object
+ */
 public class AgeCommandParser implements Parser<AgeCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the {@code AgeCommand}
@@ -39,7 +40,7 @@ public class AgeCommandParser implements Parser<AgeCommand> {
         }
 
         // 3) Validate & build the value object ("" => clear)
-        String raw = map.getValue(PREFIX_AGE).get();   // present by now
+        String raw = map.getValue(PREFIX_AGE).get(); // present by now
         if (!Age.isValidAge(raw)) {
             throw new ParseException(Age.MESSAGE_CONSTRAINTS);
         }

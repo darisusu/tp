@@ -3,6 +3,14 @@
     "name": "Person with invalid name field: Ha!ns Mu@ster",
     "phone": "9482424",
     "email": "hans@example.com",
-    "address": "4th street"
+    "address": "4th street",
+    "deadline": "2025-12-31",
+    "goal": "Lose 5kg",
+    "height": "170",
+    "weight": "70.0",
+    "age": "30",
+    "gender": "male",
+    "paid": "false",
+    "bodyfat": "20.0"
   } ]
 }

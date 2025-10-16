@@ -3,17 +3,18 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BODYFAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BODYFAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GOAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -40,6 +41,7 @@ public class AddCommand extends Command {
             + PREFIX_GENDER + "GENDER "
             + PREFIX_DEADLINE + "DEADLINE(yyyy-MM-dd) "
             + PREFIX_PAID + "PAID "
+            + PREFIX_BODYFAT + "BODYFAT "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "

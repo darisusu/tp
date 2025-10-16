@@ -162,6 +162,12 @@ public class ParserUtil {
         return Deadline.fromString(deadline);
     }
 
+    /**
+     * Parses a {@code Optional<String> deadline} into a {@code Deadline}.
+     * If the optional is empty, treats it as an empty deadline.
+     *
+     * @throws ParseException if the given {@code deadline} is invalid.
+     */
     public static Deadline parseDeadline(Optional<String> rawOpt) throws ParseException {
         // If the prefix is missing entirely, treat as empty (no deadline)
         return parseDeadline(rawOpt.orElse(""));
