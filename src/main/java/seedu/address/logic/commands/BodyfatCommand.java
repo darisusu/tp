@@ -62,6 +62,7 @@ public class BodyfatCommand extends Command {
                 personToEdit.getAddress(),
                 personToEdit.getGoal(),
                 personToEdit.getHeight(),
+                personToEdit.getWeight(),
                 personToEdit.getAge(),
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),

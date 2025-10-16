@@ -69,6 +69,7 @@ public class DeadlineCommand extends Command {
                 personToEdit.getGender(),
                 deadline,
                 personToEdit.getPaymentStatus(),
+                personToEdit.getBodyfat(),
                 personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
