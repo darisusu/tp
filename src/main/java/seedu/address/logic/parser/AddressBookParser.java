@@ -95,8 +95,9 @@ public class AddressBookParser {
         case GenderCommand.COMMAND_WORD:
             return new GenderCommandParser().parse(arguments);
 
-        case PaidCommand.COMMAND_WORD:  
+        case PaidCommand.COMMAND_WORD:
             return new PaidCommandParser().parse(arguments);
+            
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
