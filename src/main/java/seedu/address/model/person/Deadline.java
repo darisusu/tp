@@ -1,12 +1,12 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's deadline in the address book.
@@ -28,6 +28,12 @@ public class Deadline {
         this.value = requireNonNull(value);
     }
 
+    /**
+     * Creates a Deadline from a string.
+     *
+     * @param raw The raw string input
+     * @return A Deadline object
+     */
     public static Deadline fromString(String raw) {
         if (!isValidDeadline(raw)) {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
@@ -92,81 +98,13 @@ public class Deadline {
 
     @Override
     public boolean equals(Object o) {
-        return (this == o) ||
-                (o instanceof Deadline
-                && value.equals(((Deadline)o).value));
+        return (this == o)
+                || (o instanceof Deadline
+                && value.equals(((Deadline) o).value));
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(value);
     }
-
-    /**
-     * Constructs a {@code Deadline}.
-     *
-     * @param dateString A valid date string in yyyy-MM-dd format.
-     * @throws NullPointerException if {@code dateString} is null.
-     * @throws IllegalArgumentException if {@code dateString} does not match regex or is invalid.
-     *//*
-    public Deadline(String dateString) {
-        requireNonNull(dateString, "Deadline cannot be null");
-        if (!isValidDeadline(dateString)) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-        try {
-            this.value = LocalDate.parse(dateString, FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
-        }
-    }*/
-
-    /**
-     * Returns true if the given string is a valid deadline date.
-     *//*
-    public static boolean isValidDeadline(String test) {
-        return test.matches(VALIDATION_REGEX);
-    }
-
-    *//**
-     * Returns the stored deadline as a {@code LocalDate}.
-     *//*
-    public LocalDate getDate() {
-        return value;
-    }
-
-    public String getDateString() {
-        return value.toString();
-    }
-
-    *//**
-     * Returns true if the deadline is before today.
-     *//*
-    public boolean isOverdue() {
-        return value.isBefore(LocalDate.now());
-    }
-
-    *//**
-     * Returns true if the deadline is today.
-     *//*
-    public boolean isToday() {
-        return value.equals(LocalDate.now());
-    }
-
-    @Override
-    public String toString() {
-        return value.format(FORMATTER);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this
-                || (other instanceof Deadline
-                && value.equals(((Deadline) other).value));
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }*/
 }

@@ -123,10 +123,11 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Paid updatedPaid = editPersonDescriptor.getPaid().orElse(personToEdit.getPaymentStatus());
         Bodyfat updatedBodyfat = editPersonDescriptor.getBodyfat().orElse(personToEdit.getBodyfat());
-        Age updatedAge = personToEdit.getAge(); // Keep existing age for now
-        Gender updatedGender = personToEdit.getGender(); // Keep existing gender for now
+        Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
+        Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGoal,
-                updatedHeight, updatedWeight, updatedAge, updatedGender, updatedDeadline, updatedPaid, updatedBodyfat, updatedTags);
+                updatedHeight, updatedWeight, updatedAge, updatedGender, updatedDeadline, updatedPaid,
+                updatedBodyfat, updatedTags);
     }
 
     @Override
@@ -163,6 +164,8 @@ public class EditCommand extends Command {
         private Deadline deadline;
         private Height height;
         private Weight weight;
+        private Age age;
+        private Gender gender;
         private Goal goal;
         private Paid paid;
         private Bodyfat bodyfat;
@@ -181,6 +184,8 @@ public class EditCommand extends Command {
             setDeadline(toCopy.deadline);
             setHeight(toCopy.height);
             setWeight(toCopy.weight);
+            setAge(toCopy.age);
+            setGender(toCopy.gender);
             setPaid(toCopy.paid);
             setGoal(toCopy.goal);
             setBodyfat(toCopy.bodyfat);
@@ -188,7 +193,8 @@ public class EditCommand extends Command {
         }
 
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name,phone, email, address, height, weight, deadline, tags, paid, bodyfat);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, height, weight, age, gender,
+                    deadline, tags, paid, bodyfat);
         }
 
         public void setName(Name name) {
@@ -264,6 +270,21 @@ public class EditCommand extends Command {
             return Optional.ofNullable(bodyfat);
         }
 
+        public void setAge(Age age) {
+            this.age = age;
+        }
+
+        public Optional<Age> getAge() {
+            return Optional.ofNullable(age);
+        }
+
+        public void setGender(Gender gender) {
+            this.gender = gender;
+        }
+
+        public Optional<Gender> getGender() {
+            return Optional.ofNullable(gender);
+        }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

@@ -47,6 +47,7 @@ public class EditCommandTest {
                 .withWeight("48") // new field
                 .withAge("25")
                 .withGender("female")
+                .withBodyfat("18.5") // new field
                 .withTags("friends")
                 .build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();

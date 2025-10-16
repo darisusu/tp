@@ -36,7 +36,7 @@ public class GoalCommandTest {
 
         GoalCommand remarkCommand = new GoalCommand(INDEX_FIRST_PERSON, new Goal(editedPerson.getGoal().value));
 
-        String expectedMessage = String.format(GoalCommand.MESSAGE_ADD_GOAL_SUCCESS, editedPerson);
+        String expectedMessage = String.format(GoalCommand.MESSAGE_ADD_GOAL_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -52,7 +52,7 @@ public class GoalCommandTest {
         GoalCommand goalCommand = new GoalCommand(INDEX_FIRST_PERSON,
                 new Goal(editedPerson.getGoal().toString()));
 
-        String expectedMessage = String.format(GoalCommand.MESSAGE_DELETE_GOAL_SUCCESS, editedPerson);
+        String expectedMessage = String.format(GoalCommand.MESSAGE_DELETE_GOAL_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -70,7 +70,7 @@ public class GoalCommandTest {
 
         GoalCommand remarkCommand = new GoalCommand(INDEX_FIRST_PERSON, new Goal(editedPerson.getGoal().value));
 
-        String expectedMessage = String.format(GoalCommand.MESSAGE_ADD_GOAL_SUCCESS, editedPerson);
+        String expectedMessage = String.format(GoalCommand.MESSAGE_ADD_GOAL_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);

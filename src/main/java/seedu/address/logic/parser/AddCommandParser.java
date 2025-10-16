@@ -48,16 +48,18 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER,
-                        PREFIX_DEADLINE, PREFIX_PAID);
+                        PREFIX_DEADLINE, PREFIX_PAID, PREFIX_BODYFAT);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID)
+                PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE,
+                PREFIX_PAID, PREFIX_BODYFAT)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID);
+                PREFIX_ADDRESS, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE,
+                PREFIX_PAID, PREFIX_BODYFAT);
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
@@ -73,7 +75,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Gender gender = ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER).get());
         Bodyfat bodyfat = ParserUtil.parseBodyfat(argMultimap.getValue(PREFIX_BODYFAT).get());
 
-        Person person = new Person(name, phone, email, address, goal, height, weight, age, gender, deadline, paid, bodyfat, tagList);
+        Person person = new Person(name, phone, email, address, goal, height, weight, age, gender,
+                deadline, paid, bodyfat, tagList);
 
         return new AddCommand(person);
     }
