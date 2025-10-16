@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOAL;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -66,7 +67,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-        Goal goal = new Goal("");
+        Goal goal;
+        if (argMultimap.getValue(PREFIX_GOAL).isPresent()) {
+            goal = ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).get());
+        } else {
+            goal = new Goal("");
+        }
         Paid paid = ParserUtil.parsePaid(argMultimap.getValue(PREFIX_PAID).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Height height = ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get());
