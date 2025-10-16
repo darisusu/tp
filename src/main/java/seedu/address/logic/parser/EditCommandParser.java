@@ -3,11 +3,18 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BODYFAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -34,7 +41,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_DEADLINE, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_DEADLINE, PREFIX_GOAL, PREFIX_HEIGHT, PREFIX_WEIGHT,
+                        PREFIX_AGE, PREFIX_GENDER, PREFIX_PAID, PREFIX_BODYFAT, PREFIX_TAG);
 
         Index index;
 
@@ -45,7 +53,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_DEADLINE);
+                PREFIX_ADDRESS, PREFIX_DEADLINE, PREFIX_GOAL, PREFIX_HEIGHT, PREFIX_WEIGHT,
+                PREFIX_AGE, PREFIX_GENDER, PREFIX_PAID, PREFIX_BODYFAT);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -63,6 +72,27 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_DEADLINE).isPresent()) {
             editPersonDescriptor.setDeadline(ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_GOAL).isPresent()) {
+            editPersonDescriptor.setGoal(ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).get()));
+        }
+        if (argMultimap.getValue(PREFIX_HEIGHT).isPresent()) {
+            editPersonDescriptor.setHeight(ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get()));
+        }
+        if (argMultimap.getValue(PREFIX_WEIGHT).isPresent()) {
+            editPersonDescriptor.setWeight(ParserUtil.parseWeight(argMultimap.getValue(PREFIX_WEIGHT).get()));
+        }
+        if (argMultimap.getValue(PREFIX_AGE).isPresent()) {
+            editPersonDescriptor.setAge(ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE).get()));
+        }
+        if (argMultimap.getValue(PREFIX_GENDER).isPresent()) {
+            editPersonDescriptor.setGender(ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER).get()));
+        }
+        if (argMultimap.getValue(PREFIX_PAID).isPresent()) {
+            editPersonDescriptor.setPaid(ParserUtil.parsePaid(argMultimap.getValue(PREFIX_PAID).get()));
+        }
+        if (argMultimap.getValue(PREFIX_BODYFAT).isPresent()) {
+            editPersonDescriptor.setBodyfat(ParserUtil.parseBodyfat(argMultimap.getValue(PREFIX_BODYFAT).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 

@@ -2,17 +2,13 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.DeadlineCommand.MESSAGE_ARGUMENTS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -39,8 +35,8 @@ public class DeadlineCommandTest {
 
     @Test
     public void equals() {
-        Deadline setA  = Deadline.fromString("2025-12-31");
-        Deadline setB  = Deadline.fromString("2026-01-01");
+        Deadline setA = Deadline.fromString("2025-12-31");
+        Deadline setB = Deadline.fromString("2026-01-01");
         Deadline clear = Deadline.empty();
 
         DeadlineCommand base = new DeadlineCommand(INDEX_FIRST_PERSON, setA);

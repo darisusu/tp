@@ -91,7 +91,7 @@ class JsonAdaptedPerson {
         deadline = source.getDeadline().toStorageString();
         goal = source.getGoal().value;
         height = String.valueOf(source.getHeight().value); // convert int → String
-        weight = String.valueOf(source.getWeight().value); // convert int → String
+        weight = String.valueOf(source.getWeight().value); // convert Double → String
         age = String.valueOf(source.getAge().value); // convert int → String
         gender = source.getGender().value; // convert Gender to String
         paid = source.getPaymentStatus().toString(); // Convert Paid to String
@@ -202,7 +202,7 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Bodyfat.class.getSimpleName()));
         }
         if (!Bodyfat.isValidBodyfat(bodyfat)) {
-            throw new IllegalValueException(Paid.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(Bodyfat.MESSAGE_CONSTRAINTS);
         }
         final Bodyfat modelBodyfat = new Bodyfat(bodyfat);
 

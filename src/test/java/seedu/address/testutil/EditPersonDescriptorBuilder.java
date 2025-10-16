@@ -6,10 +6,18 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
+import seedu.address.model.person.Bodyfat;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
+import seedu.address.model.person.Goal;
+import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Weight;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,6 +44,13 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setHeight(person.getHeight());
+        descriptor.setWeight(person.getWeight());
+        descriptor.setAge(person.getAge());
+        descriptor.setGender(person.getGender());
+        descriptor.setDeadline(person.getDeadline());
+        descriptor.setPaid(person.getPaymentStatus());
+        descriptor.setBodyfat(person.getBodyfat());
         descriptor.setTags(person.getTags());
     }
 
@@ -68,6 +83,70 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Height} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withHeight(String height) {
+        descriptor.setHeight(new Height(height));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Weight} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withWeight(String weight) {
+        descriptor.setWeight(new Weight(weight));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Age} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withAge(String age) {
+        descriptor.setAge(new Age(age));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Gender} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGender(String gender) {
+        descriptor.setGender(new Gender(gender));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Deadline} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDeadline(String deadline) {
+        descriptor.setDeadline(Deadline.fromString(deadline));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Goal} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGoal(String goal) {
+        descriptor.setGoal(new Goal(goal));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Paid} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPaid(String paid) {
+        descriptor.setPaid(new Paid(paid));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Bodyfat} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBodyfat(String bodyfat) {
+        descriptor.setBodyfat(new Bodyfat(bodyfat));
         return this;
     }
 

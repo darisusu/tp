@@ -2,7 +2,18 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BODYFAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -35,8 +46,8 @@ public class CommandTestUtil {
     public static final String VALID_GOAL_BOB = "Lose 10kg";
     public static final String VALID_HEIGHT_AMY = "160";
     public static final String VALID_HEIGHT_BOB = "175";
-    public static final String VALID_WEIGHT_AMY = "60kg";
-    public static final String VALID_WEIGHT_BOB = "75kg";
+    public static final String VALID_WEIGHT_AMY = "60";
+    public static final String VALID_WEIGHT_BOB = "75";
     public static final String VALID_AGE_AMY = "25";
     public static final String VALID_AGE_BOB = "30";
     public static final String VALID_GENDER_AMY = "female";
@@ -45,6 +56,8 @@ public class CommandTestUtil {
     public static final Deadline VALID_DEADLINE_BOB = Deadline.fromString("2025-12-31");
     public static final String VALID_PAID_AMY = "false";
     public static final String VALID_PAID_BOB = "false";
+    public static final String VALID_BODYFAT_AMY = "18.5";
+    public static final String VALID_BODYFAT_BOB = "20.0";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -68,6 +81,8 @@ public class CommandTestUtil {
     public static final String DEADLINE_DESC_BOB = " " + PREFIX_DEADLINE + VALID_DEADLINE_BOB;
     public static final String PAID_DESC_AMY = " " + PREFIX_PAID + VALID_PAID_AMY;
     public static final String PAID_DESC_BOB = " " + PREFIX_PAID + VALID_PAID_BOB;
+    public static final String BODYFAT_DESC_AMY = " " + PREFIX_BODYFAT + VALID_BODYFAT_AMY;
+    public static final String BODYFAT_DESC_BOB = " " + PREFIX_BODYFAT + VALID_BODYFAT_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -149,3 +164,4 @@ public class CommandTestUtil {
     }
 
 }
+

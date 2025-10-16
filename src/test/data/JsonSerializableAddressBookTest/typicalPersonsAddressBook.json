@@ -7,10 +7,12 @@
     "address" : "123, Jurong West Ave 6, #08-111",
     "goal": "Lose 5kg",
     "height" : "165",
+    "weight" : "60",
     "age" : "25",
     "gender" : "female",
     "deadline": "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "18.5",
     "tags" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
@@ -20,10 +22,12 @@
     "deadline" : "2025-12-31",
     "goal": "Lose 5kg",
     "height" : "175",
+    "weight" : "75",
     "age" : "30",
     "gender" : "male",
     "deadline": "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "20.0",
     "tags" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
@@ -32,10 +36,12 @@
     "address" : "wall street",
     "goal": "Lose 5kg",
     "height" : "180",
+    "weight" : "80",
     "age" : "28",
     "gender" : "male",
     "deadline": "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "22.0",
     "tags" : [ ]
   }, {
     "name" : "Daniel Meier",
@@ -44,10 +50,12 @@
     "address" : "10th street",
     "goal": "Lose 5kg",
     "height" : "170",
+    "weight" : "70",
     "age" : "32",
     "gender" : "male",
     "deadline": "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "19.5",
     "tags" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
@@ -56,10 +64,12 @@
     "address" : "michegan ave",
     "goal": "Lose 5kg",
     "height" : "160",
+    "weight" : "55",
     "age" : "26",
     "gender" : "female",
     "deadline" : "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "17.5",
     "tags" : [ ]
   }, {
     "name" : "Fiona Kunz",
@@ -68,10 +78,12 @@
     "address" : "little tokyo",
     "goal": "Lose 5kg",
     "height" : "155",
+    "weight" : "50",
     "age" : "24",
     "gender" : "female",
     "deadline" : "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "16.0",
     "tags" : [ ]
   }, {
     "name" : "George Best",
@@ -80,10 +92,12 @@
     "address" : "4th street",
     "goal": "Lose 5kg",
     "height" : "185",
+    "weight" : "85",
     "age" : "35",
     "gender" : "male",
     "deadline" : "2025-12-31",
     "paid" : "true",
+    "bodyfat" : "21.0",
     "tags" : [ ]
   } ]
 }
