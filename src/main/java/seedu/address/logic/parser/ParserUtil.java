@@ -16,6 +16,7 @@ import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
+import seedu.address.model.person.Goal;
 import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
@@ -238,6 +239,21 @@ public class ParserUtil {
             throw new ParseException(Bodyfat.MESSAGE_CONSTRAINTS);
         }
         return new Bodyfat(trimmedBodyfat);
+    }
+
+    /**
+     * Parses a {@code String goal} into a {@code Goal}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code goal} is invalid.
+     */
+    public static Goal parseGoal(String goal) throws ParseException {
+        requireNonNull(goal);
+        String trimmedGoal = goal.trim();
+        if (!Goal.isValidGoal(trimmedGoal)) {
+            throw new ParseException(Goal.MESSAGE_CONSTRAINTS);
+        }
+        return new Goal(trimmedGoal);
     }
 
 }

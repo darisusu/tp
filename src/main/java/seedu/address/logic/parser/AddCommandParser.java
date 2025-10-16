@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOAL;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -48,23 +49,28 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER,
-                        PREFIX_DEADLINE, PREFIX_PAID);
+                        PREFIX_DEADLINE, PREFIX_PAID, PREFIX_BODYFAT);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID)
+                PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID, PREFIX_BODYFAT)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID);
+                PREFIX_ADDRESS, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE, PREFIX_PAID, PREFIX_BODYFAT);
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-        Goal goal = new Goal("");
+        Goal goal;
+        if (argMultimap.getValue(PREFIX_GOAL).isPresent()) {
+            goal = ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).get());
+        } else {
+            goal = new Goal("");
+        }
         Paid paid = ParserUtil.parsePaid(argMultimap.getValue(PREFIX_PAID).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Height height = ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get());
