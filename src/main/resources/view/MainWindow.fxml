@@ -58,11 +58,11 @@
           <!-- Sidebar -->
           <VBox fx:id="sidebar" VBox.vgrow="ALWAYS"
                 style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;" spacing="15">
-            <Button fx:id="fileButton" text="File" onAction="#handleFile"
-                    style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-font-size: 14px;" />
-            <Button fx:id="helpButton" text="Help" onAction="#handleHelp"
-                    style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-font-size: 14px;" />
-            <Region VBox.vgrow="ALWAYS"/>
+              <Button fx:id="fileButton" text="File" onAction="#handleFile"
+                      styleClass="sidebar-button" />
+              <Button fx:id="helpButton" text="Help" onAction="#handleHelp"
+                      styleClass="sidebar-button" />
+              <Region VBox.vgrow="ALWAYS"/>
           </VBox>
 
           <!-- Main Content -->

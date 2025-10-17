@@ -237,7 +237,7 @@
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
+    -fx-border-radius: 10, 10;
     -fx-border-insets: 1 1 1 1, 0;
 }
 
@@ -254,6 +254,29 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+/* Sidebar Buttons */
+.sidebar-button {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: transparent;
+    -fx-padding: 10 0 10 0;
+    -fx-cursor: hand;
+    -fx-max-width: Infinity; /* ensures full width inside VBox */
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.sidebar-button:pressed {
+    -fx-background-color: #00b4d8;
+    -fx-text-fill: black;
 }
 
 .dialog-pane {
