@@ -13,8 +13,8 @@ import seedu.address.logic.commands.HeightCommand;
 import seedu.address.model.person.Height;
 
 public class HeightCommandParserTest {
-    private final HeightCommandParser parser = new HeightCommandParser();
     private static final String VALID_HEIGHT = "170";
+    private final HeightCommandParser parser = new HeightCommandParser();
 
     @Test
     public void parse_indexSpecified_success() {
@@ -39,7 +39,8 @@ public class HeightCommandParserTest {
         assertParseFailure(parser, HeightCommand.COMMAND_WORD, expectedMessage);
 
         // no index
-        assertParseFailure(parser, HeightCommand.COMMAND_WORD + " " + PREFIX_HEIGHT + VALID_HEIGHT, expectedMessage);
+        assertParseFailure(parser, HeightCommand.COMMAND_WORD + " " + PREFIX_HEIGHT + VALID_HEIGHT,
+                expectedMessage);
 
         // no height prefix
         assertParseFailure(parser, INDEX_FIRST_PERSON.getOneBased() + " " + VALID_HEIGHT, expectedMessage);

@@ -39,7 +39,8 @@ public class WeightCommandTest {
 
         WeightCommand weightCommand = new WeightCommand(INDEX_FIRST_PERSON, new Weight(WEIGHT_STUB));
 
-        String expectedMessage = String.format(WeightCommand.MESSAGE_UPDATE_WEIGHT_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(WeightCommand.MESSAGE_UPDATE_WEIGHT_SUCCESS,
+                Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -56,7 +57,8 @@ public class WeightCommandTest {
 
         WeightCommand weightCommand = new WeightCommand(INDEX_FIRST_PERSON, new Weight(WEIGHT_STUB));
 
-        String expectedMessage = String.format(WeightCommand.MESSAGE_UPDATE_WEIGHT_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(WeightCommand.MESSAGE_UPDATE_WEIGHT_SUCCESS,
+                Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);

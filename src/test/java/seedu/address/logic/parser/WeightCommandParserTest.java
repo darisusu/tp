@@ -13,8 +13,8 @@ import seedu.address.logic.commands.WeightCommand;
 import seedu.address.model.person.Weight;
 
 public class WeightCommandParserTest {
-    private final WeightCommandParser parser = new WeightCommandParser();
     private static final String VALID_WEIGHT = "70";
+    private final WeightCommandParser parser = new WeightCommandParser();
 
     @Test
     public void parse_indexSpecified_success() {

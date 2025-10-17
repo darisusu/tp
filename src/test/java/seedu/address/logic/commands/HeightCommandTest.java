@@ -39,7 +39,8 @@ public class HeightCommandTest {
 
         HeightCommand heightCommand = new HeightCommand(INDEX_FIRST_PERSON, new Height(HEIGHT_STUB));
 
-        String expectedMessage = String.format(HeightCommand.MESSAGE_UPDATE_HEIGHT_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(HeightCommand.MESSAGE_UPDATE_HEIGHT_SUCCESS,
+                Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -56,7 +57,8 @@ public class HeightCommandTest {
 
         HeightCommand heightCommand = new HeightCommand(INDEX_FIRST_PERSON, new Height(HEIGHT_STUB));
 
-        String expectedMessage = String.format(HeightCommand.MESSAGE_UPDATE_HEIGHT_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(HeightCommand.MESSAGE_UPDATE_HEIGHT_SUCCESS,
+                Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
