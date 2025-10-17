@@ -91,5 +91,4 @@ public class WeightCommand extends Command {
         return index.equals(e.index)
                 && weight.equals(e.weight);
     }
-
 }

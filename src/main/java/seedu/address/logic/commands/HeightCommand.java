@@ -91,5 +91,4 @@ public class HeightCommand extends Command {
         return index.equals(e.index)
                 && height.equals(e.height);
     }
-
 }

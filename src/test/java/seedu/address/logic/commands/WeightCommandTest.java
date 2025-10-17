@@ -111,5 +111,4 @@ public class WeightCommandTest {
         // different weight -> returns false
         assertFalse(standardCommand.equals(new WeightCommand(INDEX_FIRST_PERSON, new Weight(VALID_WEIGHT_BOB))));
     }
-
 }

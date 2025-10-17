@@ -44,5 +44,4 @@ public class WeightCommandParserTest {
         // no weight prefix
         assertParseFailure(parser, INDEX_FIRST_PERSON.getOneBased() + " " + VALID_WEIGHT, expectedMessage);
     }
-
 }
