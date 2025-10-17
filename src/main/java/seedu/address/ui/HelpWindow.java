@@ -193,5 +193,4 @@ public class HelpWindow extends UiPart<Stage> {
         return HTML_TEMPLATE_PREFIX + htmlBody + HTML_TEMPLATE_SUFFIX;
     }
 
-
 }
