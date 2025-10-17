@@ -10,11 +10,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
 
 /**
  * Controller for a help page
@@ -24,10 +29,29 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
 
     public static final String HELP_MESSAGE = "Need a quick refresher?"
-            + "\nBrowse the full command reference below or open the complete guide.";
-    public static final String COMMAND_REFERENCE_RESOURCE = "/help/CommandReference.txt";
+            + "\nBrowse the full command reference below...";
+    public static final String COMMAND_REFERENCE_RESOURCE = "/help/CommandReference.md";
     public static final String COMMAND_REFERENCE_FALLBACK = "Command reference unavailable. "
-            + "Please make sure CommandReference.txt is packaged with the app.";
+            + "Please make sure CommandReference.md is packaged with the app.";
+
+    private static final Parser MARKDOWN_PARSER = Parser.builder().build();
+    private static final HtmlRenderer HTML_RENDERER = HtmlRenderer.builder().build();
+    private static final String HTML_TEMPLATE_PREFIX = """
+            <html><head><meta charset="UTF-8" />
+            <style>
+            body { background-color: #1d1d1d; color: #f5f5f5; font-family: 'Segoe UI', sans-serif;
+                margin: 0; padding: 16px; }
+            h1, h2, h3, h4, h5 { color: #00b4d8; }
+            a { color: #4dabf7; }
+            a:hover { color: #74c0fc; }
+            code { font-family: 'Consolas', 'Courier New', monospace; background: rgba(255, 255, 255, 0.05);
+                padding: 2px 4px; border-radius: 4px; }
+            pre { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 6px; overflow: auto; }
+            ul { padding-left: 20px; }
+            li { margin-bottom: 6px; }
+            </style></head><body>
+            """;
+    private static final String HTML_TEMPLATE_SUFFIX = "</body></html>";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
@@ -39,7 +63,7 @@ public class HelpWindow extends UiPart<Stage> {
     private Label helpMessage;
 
     @FXML
-    private TextArea commandReferenceArea;
+    private WebView commandReferenceView;
 
     @FXML
     private Hyperlink userGuideLink;
@@ -52,10 +76,9 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
-        commandReferenceArea.setText(loadCommandReference());
-        commandReferenceArea.positionCaret(0);
-        commandReferenceArea.setScrollTop(0);
-        commandReferenceArea.setScrollLeft(0);
+        commandReferenceView.getEngine().setJavaScriptEnabled(false);
+        commandReferenceView.getEngine().loadContent(loadCommandReferenceHtml());
+        commandReferenceView.setContextMenuEnabled(false);
         userGuideLink.setText(USERGUIDE_URL);
     }
 
@@ -149,7 +172,7 @@ public class HelpWindow extends UiPart<Stage> {
         }
     }
 
-    private String loadCommandReference() {
+    private String loadCommandReferenceMarkdown() {
         try (InputStream inputStream = HelpWindow.class.getResourceAsStream(COMMAND_REFERENCE_RESOURCE)) {
             if (inputStream == null) {
                 logger.warning("Command reference resource not found: " + COMMAND_REFERENCE_RESOURCE);
@@ -162,5 +185,13 @@ public class HelpWindow extends UiPart<Stage> {
             return COMMAND_REFERENCE_FALLBACK;
         }
     }
+
+    private String loadCommandReferenceHtml() {
+        String markdown = loadCommandReferenceMarkdown();
+        Node document = MARKDOWN_PARSER.parse(markdown);
+        String htmlBody = HTML_RENDERER.render(document);
+        return HTML_TEMPLATE_PREFIX + htmlBody + HTML_TEMPLATE_SUFFIX;
+    }
+
 
 }
