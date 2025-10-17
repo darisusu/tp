@@ -22,6 +22,7 @@ import seedu.address.logic.commands.GenderCommand;
 import seedu.address.logic.commands.GoalCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PaidCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
