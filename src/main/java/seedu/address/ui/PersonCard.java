@@ -64,18 +64,18 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        height.setText(person.getHeight().value + " cm");
-        weight.setText(person.getWeight().value + " kg");
-        age.setText(person.getAge().value + " years old");
-        gender.setText(person.getGender().value);
-        email.setText(person.getEmail().value);
-        deadline.setText(person.getDeadline().toStorageString());
-        goal.setText(person.getGoal().value);
-        bodyfat.setText(person.getBodyfat().toString() + "%");
-        paid.setText(person.getPaymentStatus().value ? "Paid" : "Not Paid");
+        name.setText("Name: " + person.getName().fullName);
+        phone.setText("Phone Number:" + person.getPhone().value);
+        address.setText("Address: " + person.getAddress().value);
+        height.setText("Height: " + person.getHeight().value + " cm");
+        weight.setText("Weight: " + person.getWeight().value + " kg");
+        age.setText("Age: " + person.getAge().value + " years old");
+        gender.setText("Gender: " + person.getGender().value);
+        email.setText("Email: " + person.getEmail().value);
+        deadline.setText("Payment Deadline: " + person.getDeadline().toStorageString());
+        goal.setText("Personal Goal: " + person.getGoal().value);
+        bodyfat.setText("Bodyfat Percentage: " + person.getBodyfat().toString() + "%");
+        paid.setText("Payment Status: " + (person.getPaymentStatus().value ? "Paid" : "Not Paid"));
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
