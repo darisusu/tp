@@ -33,7 +33,7 @@
                     wrapText="true" VBox.vgrow="ALWAYS" />
           <HBox alignment="CENTER_LEFT" fx:id="actionBar" spacing="10.0">
             <children>
-              <Label text="Open the full guide:" />
+              <Label text="Open original AB3 for reference:" />
               <Hyperlink fx:id="userGuideLink" onAction="#openUserGuide" />
               <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL" />
             </children>
