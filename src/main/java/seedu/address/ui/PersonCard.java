@@ -75,7 +75,7 @@ public class PersonCard extends UiPart<Region> {
         deadline.setText(person.getDeadline().toStorageString());
         goal.setText(person.getGoal().value);
         bodyfat.setText(person.getBodyfat().toString());
-        paid.setText(person.getPaymentStatus().toString());
+        paid.setText(person.getPaymentStatus().value ? "Paid" : "Not Paid");
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
