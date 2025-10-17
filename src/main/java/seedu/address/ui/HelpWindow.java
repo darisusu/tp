@@ -24,7 +24,7 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
 
     public static final String HELP_MESSAGE = "Need a quick refresher?"
-            + "\nBrowse the full command reference below or open the complete guide.";
+            + "\nBrowse the full command reference below...";
     public static final String COMMAND_REFERENCE_RESOURCE = "/help/CommandReference.txt";
     public static final String COMMAND_REFERENCE_FALLBACK = "Command reference unavailable. "
             + "Please make sure CommandReference.txt is packaged with the app.";
