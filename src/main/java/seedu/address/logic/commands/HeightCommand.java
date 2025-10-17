@@ -13,7 +13,7 @@ import seedu.address.model.person.Height;
 import seedu.address.model.person.Person;
 
 /**
- * Edits the height of an existing person in the address book.
+ * Updates the height of an existing person in the address book.
  */
 public class HeightCommand extends Command {
 
@@ -25,12 +25,11 @@ public class HeightCommand extends Command {
             + "Existing height will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "h/HEIGHT\n"
-            + "Example: " + COMMAND_WORD + " 1 h/175.0";
+            + "Example: " + COMMAND_WORD + " 1 h/170";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Height: %2$s";
 
-    public static final String MESSAGE_ADD_HEIGHT_SUCCESS = "Updated height for Person: %1$s";
-    public static final String MESSAGE_DELETE_HEIGHT_SUCCESS = "Removed height from Person: %1$s";
+    public static final String MESSAGE_UPDATE_HEIGHT_SUCCESS = "Updated height for Person: %1$s";
 
     private final Index index;
     private final Height height;
@@ -41,6 +40,7 @@ public class HeightCommand extends Command {
      */
     public HeightCommand(Index index, Height height) {
         requireAllNonNull(index, height);
+
         this.index = index;
         this.height = height;
     }
@@ -61,28 +61,19 @@ public class HeightCommand extends Command {
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
                 personToEdit.getGoal(),
-                height, // updated height here
+                height,
                 personToEdit.getWeight(),
                 personToEdit.getAge(),
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
                 personToEdit.getBodyfat(),
-                personToEdit.getTags()
-        );
+                personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
-    }
-
-    /**
-     * Generates a command execution success message.
-     */
-    private String generateSuccessMessage(Person personToEdit) {
-        String message = (height != null) ? MESSAGE_ADD_HEIGHT_SUCCESS : MESSAGE_DELETE_HEIGHT_SUCCESS;
-        return String.format(message, Messages.format(personToEdit));
+        return new CommandResult(String.format(MESSAGE_UPDATE_HEIGHT_SUCCESS, Messages.format(editedPerson)));
     }
 
     @Override

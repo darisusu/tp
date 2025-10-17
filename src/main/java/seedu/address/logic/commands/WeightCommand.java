@@ -9,11 +9,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Weight;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Weight;
 
 /**
- * Edits the weight of an existing person in the address book.
+ * Updates the weight of an existing person in the address book.
  */
 public class WeightCommand extends Command {
 
@@ -25,12 +25,11 @@ public class WeightCommand extends Command {
             + "Existing weight will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "w/WEIGHT\n"
-            + "Example: " + COMMAND_WORD + " 1 w/70.5";
+            + "Example: " + COMMAND_WORD + " 1 w/70";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Weight: %2$s";
 
-    public static final String MESSAGE_ADD_WEIGHT_SUCCESS = "Updated weight for Person: %1$s";
-    public static final String MESSAGE_DELETE_WEIGHT_SUCCESS = "Removed weight from Person: %1$s";
+    public static final String MESSAGE_UPDATE_WEIGHT_SUCCESS = "Updated weight for Person: %1$s";
 
     private final Index index;
     private final Weight weight;
@@ -41,6 +40,7 @@ public class WeightCommand extends Command {
      */
     public WeightCommand(Index index, Weight weight) {
         requireAllNonNull(index, weight);
+
         this.index = index;
         this.weight = weight;
     }
@@ -62,27 +62,18 @@ public class WeightCommand extends Command {
                 personToEdit.getAddress(),
                 personToEdit.getGoal(),
                 personToEdit.getHeight(),
-                weight, // updated weight here
+                weight,
                 personToEdit.getAge(),
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),
                 personToEdit.getPaymentStatus(),
                 personToEdit.getBodyfat(),
-                personToEdit.getTags()
-        );
+                personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
-    }
-
-    /**
-     * Generates a command execution success message.
-     */
-    private String generateSuccessMessage(Person personToEdit) {
-        String message = (weight != null) ? MESSAGE_ADD_WEIGHT_SUCCESS : MESSAGE_DELETE_WEIGHT_SUCCESS;
-        return String.format(message, Messages.format(personToEdit));
+        return new CommandResult(String.format(MESSAGE_UPDATE_WEIGHT_SUCCESS, Messages.format(editedPerson)));
     }
 
     @Override
