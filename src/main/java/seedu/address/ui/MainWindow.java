@@ -61,16 +61,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private Button helpButton;
 
-    @FXML
-    private void handleFile() {
-        handleExit();
-    }
-
-    @FXML
-    private void handleHelpButton() {
-        handleHelp();
-    }
-
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -87,6 +77,16 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+    }
+
+    @FXML
+    private void handleFile() {
+        handleExit();
+    }
+
+    @FXML
+    private void handleHelpButton() {
+        handleHelp();
     }
 
     public Stage getPrimaryStage() {

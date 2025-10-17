@@ -32,9 +32,9 @@ public class PaidCommandParser implements Parser<PaidCommand> {
         }
 
         String paidString = argMultimap.getValue(PREFIX_PAID)
-                .orElseThrow(() -> new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PaidCommand.MESSAGE_USAGE)));
+                .orElseThrow(() ->
+                        new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PaidCommand.MESSAGE_USAGE)));
 
-                
         try {
             Paid paid = new Paid(paidString);
             return new PaidCommand(index, paid);
