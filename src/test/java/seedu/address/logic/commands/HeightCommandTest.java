@@ -111,4 +111,5 @@ public class HeightCommandTest {
         // different height -> returns false
         assertFalse(standardCommand.equals(new HeightCommand(INDEX_FIRST_PERSON, new Height(VALID_HEIGHT_BOB))));
     }
+
 }

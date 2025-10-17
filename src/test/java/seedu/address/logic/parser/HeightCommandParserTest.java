@@ -44,4 +44,5 @@ public class HeightCommandParserTest {
         // no height prefix
         assertParseFailure(parser, INDEX_FIRST_PERSON.getOneBased() + " " + VALID_HEIGHT, expectedMessage);
     }
+
 }
