@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.control.Separator?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -28,17 +30,23 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <FlowPane fx:id="tags" />
+        <Separator/>
+        <Label styleClass="cell_medium_label" text="Particulars:" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="height" styleClass="cell_small_label" text="\$height" />
-      <Label fx:id="weight" styleClass="cell_small_label" text="\$weight" />
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+        <Separator/>
+        <Label styleClass="cell_medium_label" text="Physical Stats:" />
+      <Label fx:id="goal" styleClass="cell_small_label" text="\$goal" />
       <Label fx:id="age" styleClass="cell_small_label" text="\$age" />
       <Label fx:id="gender" styleClass="cell_small_label" text="\$gender" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
-      <Label fx:id="goal" styleClass="cell_small_label" text="\$goal" />
+      <Label fx:id="height" styleClass="cell_small_label" text="\$height" />
+      <Label fx:id="weight" styleClass="cell_small_label" text="\$weight" />
       <Label fx:id="bodyfat" styleClass="cell_small_label" text="\$bodyfat" />
+        <Separator/>
+        <Label styleClass="cell_medium_label" text="Payment Details: " />
       <Label fx:id="paid" styleClass="cell_small_label" text="\$paid" />
+      <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
     </VBox>
   </GridPane>
 </HBox>
