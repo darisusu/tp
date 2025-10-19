@@ -11,17 +11,18 @@ Command format conventions
 Core trainee management
 -----------------------
 add — create a trainee profile
-  Format: add n/NAME p/PHONE e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID bf/BODYFAT [goal/GOAL] [t/TAG]…
-  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney
+  Format: add n/NAME p/PHONE e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SESSION bf/BODYFAT [goal/GOAL] [t/TAG]…
+  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false s/WEEKLY:MON 18:00 bf/18.5 goal/Build muscle t/friend t/owesMoney
   Guidance:
     • HEIGHT is in centimetres, WEIGHT in kilograms, AGE in years, BODYFAT as a percentage (you may provide decimals).
     • GENDER accepts: male, female, other, non-binary, prefer not to say (or m/f/o/nb/pns).
     • DEADLINE uses the yyyy-MM-dd format (e.g. 2025-11-10) to track the trainee’s target date.
     • PAID accepts `true` or `false`.
+    • SESSION accepts either `YYYY-MM-DD HH:MM` or `[WEEKLY|BIWEEKLY|MONTHLY]:[DAY] HH:MM` (24-hour time, MON–SUN days).
     • Add as many TAG values as needed to categorise the trainee.
 
 edit — update a trainee profile
-  Format: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [dl/DEADLINE] [paid/PAID] [bf/BODYFAT] [goal/GOAL] [t/TAG]…
+  Format: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [dl/DEADLINE] [paid/PAID] [s/SESSION] [bf/BODYFAT] [goal/GOAL] [t/TAG]…
   Example: edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
   Guidance:
     • Provide at least one field to change.
