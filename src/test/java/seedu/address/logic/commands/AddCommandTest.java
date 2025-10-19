@@ -157,6 +157,16 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+		@Override
+		public boolean hasSessionConflict(Person person, Person toIgnore) {
+			throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
+		}
+
+		@Override
+		public boolean hasSessionConflict(Person person) {
+			throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
+		}
     }
 
     /**

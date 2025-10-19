@@ -25,7 +25,7 @@ public class Session {
     public static final String MESSAGE_CONSTRAINTS_FORMAT = "Error: Session format must be either: "
             + "YYYY-MM-DD HH:MM OR [WEEKLY|BIWEEKLY|MONTHLY]:[DAY] HH:MM";
     public static final String MESSAGE_CONSTRAINTS_TIME = "Error: Invalid time. Use 24-hour format (00:00–23:59).";
-    public static final String MESSAGE_CONSTRAINTS_DAY = "Error: Invalid day. Use MON, TUE, etc.";
+    public static final String MESSAGE_CONSTRAINTS_DAY = "Error: Invalid day. Use MONDAY, TUESDAY, etc.";
     public static final String MESSAGE_CONSTRAINTS_PAST_DATE = "Error: Session date cannot be in the past.";
 
     private static final Pattern ONE_OFF_PATTERN = Pattern.compile(

@@ -15,7 +15,7 @@ public class SessionTest {
     @Test
     public void fromString_validWeekly_returnsCanonical() {
         Session session = Session.fromString("weekly:mon 18:00");
-        assertEquals("WEEKLY:MON 18:00", session.toStorageString());
+        assertEquals("WEEKLY:MONDAY 18:00", session.toStorageString());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class SessionTest {
     @Test
     public void fromString_invalidTime_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, Session.MESSAGE_CONSTRAINTS_TIME,
-                () -> Session.fromString("WEEKLY:MON 25:00"));
+                () -> Session.fromString("WEEKLY:MONDAY 25:00"));
     }
 
     @Test

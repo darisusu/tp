@@ -270,9 +270,9 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code goal} is invalid.
      */
-    public static Goal parseGoal(String goal) throws ParseException {
-        requireNonNull(goal);
-        String trimmedGoal = goal.trim();
+    public static Goal parseGoal(String string) throws ParseException {
+        requireNonNull(string);
+        String trimmedGoal = string.trim();
         if (!Goal.isValidGoal(trimmedGoal)) {
             throw new ParseException(Goal.MESSAGE_CONSTRAINTS);
         }
