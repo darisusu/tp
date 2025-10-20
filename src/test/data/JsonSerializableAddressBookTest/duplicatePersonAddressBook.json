@@ -12,7 +12,8 @@
     "gender": "female",
     "paid": "true",
     "bodyfat": "25.0",
-    "tags": [ "friends" ]
+    "session": "WEEKLY:TUESDAY 18:00",
+    "tags": ["friends"]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
@@ -25,6 +26,7 @@
     "age": "25",
     "gender": "female",
     "paid": "true",
-    "bodyfat": "25.0"
+    "bodyfat": "25.0",
+    "session": "WEEKLY:MONDAY 18:00"
   } ]
 }

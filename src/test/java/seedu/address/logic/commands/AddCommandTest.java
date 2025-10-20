@@ -158,15 +158,15 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-		@Override
-		public boolean hasSessionConflict(Person person, Person toIgnore) {
-			throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
-		}
+        @Override
+        public boolean hasSessionConflict(Person person, Person toIgnore) {
+            throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
+        }
 
-		@Override
-		public boolean hasSessionConflict(Person person) {
-			throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
-		}
+        @Override
+        public boolean hasSessionConflict(Person person) {
+            throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
+        }
     }
 
     /**
@@ -209,6 +209,20 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
-    }
 
+        @Override
+        public boolean hasSessionConflict(Person person, Person toIgnore) {
+            return false;
+        }
+
+        @Override
+        public boolean hasSessionConflict(Person person) {
+            return false;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
+            // do nothing
+        }
+    }
 }

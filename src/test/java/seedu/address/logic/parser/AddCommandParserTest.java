@@ -19,8 +19,8 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SESSION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PAID_DESC_AMY;
@@ -54,8 +54,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SESSION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -75,6 +75,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
+
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
@@ -89,7 +90,6 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB
                 + DEADLINE_DESC_BOB + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
-
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withGoal("").withPaid("false")
@@ -174,7 +174,7 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withGoal("").withPaid("false")
-                .withWeight("60").withBodyfat("18.5").withSession("WEEKLY:MON 18:00").withTags().build();
+                .withWeight("60").withBodyfat("18.5").withSession("WEEKLY:MONDAY 18:00").withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + HEIGHT_DESC_AMY + WEIGHT_DESC_AMY + AGE_DESC_AMY + GENDER_DESC_AMY + DEADLINE_DESC_AMY
                 + PAID_DESC_AMY + BODYFAT_DESC_AMY + SESSION_DESC_AMY, new AddCommand(expectedPerson));
@@ -210,25 +210,25 @@ public class AddCommandParserTest {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
-                + PAID_DESC_BOB + BODYFAT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
-                + PAID_DESC_BOB + BODYFAT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
                 + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
-                + PAID_DESC_BOB + BODYFAT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Email.MESSAGE_CONSTRAINTS);
 
         // invalid address
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
                 + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
-                + PAID_DESC_BOB + BODYFAT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Address.MESSAGE_CONSTRAINTS);
 
         // invalid tag

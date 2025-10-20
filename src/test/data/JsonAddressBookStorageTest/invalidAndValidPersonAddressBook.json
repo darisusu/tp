@@ -11,7 +11,8 @@
     "age": "30",
     "gender": "male",
     "paid": "false",
-    "bodyfat": "20.0"
+    "bodyfat": "20.0",
+    "session": "WEEKLY:MONDAY 18:00"
   }, {
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
@@ -24,6 +25,7 @@
     "age": "30",
     "gender": "male",
     "paid": "false",
-    "bodyfat": "20.0"
+    "bodyfat": "20.0",
+    "session": "WEEKLY:TUESDAY 19:00"
   } ]
 }

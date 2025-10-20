@@ -11,6 +11,7 @@
     "age": "30",
     "gender": "male",
     "paid": "false",
-    "bodyfat": "20.0"
+    "bodyfat": "20.0",
+    "session": "WEEKLY:MONDAY 18:00"
   } ]
 }

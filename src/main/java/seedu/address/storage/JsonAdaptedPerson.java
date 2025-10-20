@@ -99,8 +99,8 @@ class JsonAdaptedPerson {
         age = String.valueOf(source.getAge().value); // convert int → String
         gender = source.getGender().value; // convert Gender to String
         paid = source.getPaymentStatus().toString(); // Convert Paid to String
-        session = source.getSession().toStorageString();
         bodyfat = source.getBodyfat().toString();
+        session = source.getSession().toStorageString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
