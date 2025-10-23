@@ -58,7 +58,7 @@
           <!-- Sidebar -->
           <VBox fx:id="sidebar" VBox.vgrow="ALWAYS"
                 style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;" spacing="15">
-              <Button fx:id="fileButton" text="File" onAction="#handleFile"
+              <Button fx:id="fileButton" text="Exit" onAction="#handleFile"
                       styleClass="sidebar-button" />
               <Button fx:id="helpButton" text="Help" onAction="#handleHelp"
                       styleClass="sidebar-button" />
