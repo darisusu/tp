@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+
+/**
+ * Dashboard panel containing useful information at a glance
+ */
 public class DashboardPanel extends UiPart<Region> {
 
     private static final String FXML = "DashboardPanel.fxml";
