@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
 # AB-3 User Guide
@@ -67,32 +67,26 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### Help window: `help`
 
-Shows a message explaining how to access the help page.
+Opens a window which lists all the commands available in AddressBook, as well as other usage tips and examples.
 
-![help message](images/helpMessage.png)
+![help_window_screenshot](images/help_window.png)
 
 Format: `help`
-
 
 ### Adding a person: `add`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SESSION bf/BODYFAT [t/TAG]…​`
-
-Session format:
-
-* One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
-* Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
-* Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
-* Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
-* Legacy inputs like `WEEKLY:MONDAY 18:00` are still accepted and will be converted to the new storage format automatically.
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SCHEDULE bf/BODYFAT [t/TAG]…​`
 
 <box type="tip" seamless>
-
 **Tip:** A person can have any number of tags (including 0)
+</box>
+
+<box type="idea" seamless>
+**Note:** `SCHEDULE` follows the formats outlined in the "Session Formatting Guide" section below.
 </box>
 
 Examples:
@@ -189,7 +183,6 @@ AddressBook data are saved in the hard disk automatically after any command that
 AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
-
 **Caution:**
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
@@ -214,6 +207,33 @@ _Details coming soon ..._
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
+
+## Session Formatting Guide:
+
+* One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
+* Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
+* Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
+* Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
+* Legacy inputs like `WEEKLY:MONDAY 18:00` are still accepted and will be converted to the new storage format automatically.
+- Use the following formats when specifying session timings with the s/(schedule) prefix.
+- Note: Fitbook will automatically handle conflicts between overlapping sessions with error message.
+
+| **Type** | **Format** | **Example** |
+|-----------|-------------|-------------|
+| **One-off** | `YYYY-MM-DD HH:MM` | `2025-06-10 14:30` |
+| **Weekly (1 slot)** | `WEEKLY:DAY HH:MM` | `weekly:mon 18:00` |
+| **Weekly (multi-slot)** | `WEEKLY:DAY-START-END-DAY-START-END` | `weekly:mon-1800-1930-tue-1800-1900` |
+| **Biweekly** | `BIWEEKLY:DAY HH:MM` | `biweekly:fri 09:00` |
+| **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
+
+- DAY accepts: mon, tue, wed, thu, fri, sat, sun.
+- Time values use the 24-hour format without separators (e.g. 1800 = 6:00 PM).
+- Multi-slot entries can list multiple day–time ranges in sequence.
+- Monthly sessions occur on the specified day of the month.
+- All times are interpreted in local time.
+
+
+
 
 ## Command summary
 
