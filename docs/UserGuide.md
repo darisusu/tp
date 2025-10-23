@@ -180,6 +180,21 @@ Format: `sortbypaid`
 Examples:
 * `sortbypaid` - Sorts the current list by payment status
 
+### Sorting persons by payment deadline: `sortbydeadline`
+
+Sorts the person list by payment deadline, in ascending or descending order.
+
+Format: `sortbydeadline [asc/desc]`
+
+* Sorts the current person list by payment deadline
+* Ascending order: Earliest, latest, no deadline
+* Descending order: No deadline, latest, earliest
+
+Examples:
+* `sortbydeadline` - Sorts the current list in ascending order
+* `sortbydeadline asc` - Sorts the current list in ascending order
+* `sortbydeadline desc` - Sorts the current list in descending order
+
 ### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
