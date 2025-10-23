@@ -167,6 +167,11 @@ public class AddCommandTest {
         public boolean hasSessionConflict(Person person) {
             throw new UnsupportedOperationException("Unimplemented method 'hasSessionConflict'");
         }
+
+        @Override
+        public void sortPersonListByPaid() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

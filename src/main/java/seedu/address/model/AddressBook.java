@@ -111,6 +111,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    /**
+     * Sorts the person list by paid status (unpaid first, paid second).
+     */
+    public void sortByPaid() {
+        persons.sortByPaid();
+    }
+
     //// util methods
 
     @Override
