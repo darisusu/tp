@@ -177,6 +177,8 @@ public class AddCommandTest {
         @Override
         public void resetPersonListOrder(){
 
+        }
+
         @Override
         public void sortPersonListByPaid() {
             throw new AssertionError("This method should not be called.");
