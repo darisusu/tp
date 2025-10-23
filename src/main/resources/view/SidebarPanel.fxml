@@ -3,34 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="15"
-      style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;"
-      xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1">
+<VBox spacing="15" style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 
-    <Button fx:id="dashboardButton"
-            maxWidth="Infinity"
-            onAction="#handleDashboardClicked"
-            style="sidebar-button"
-            text="Dashboard" />
+    <Button fx:id="dashboardButton" maxWidth="Infinity" onAction="#handleDashboardClicked" styleClass="sidebar-button" text="Dashboard" />
 
-    <Button fx:id="clientsButton"
-            maxWidth="Infinity"
-            onAction="#handleClientsClicked"
-            style="sidebar-button"
-            text="Clients" />
+    <Button fx:id="clientsButton" maxWidth="Infinity" onAction="#handleClientsClicked" styleClass="sidebar-button" text="Clients" />
 
-    <Button fx:id="helpButton"
-            maxWidth="Infinity"
-            onAction="#handleHelp"
-            styleClass="sidebar-button"
-            text="Help" />
+    <Button fx:id="helpButton" maxWidth="Infinity" onAction="#handleHelp" styleClass="sidebar-button" text="Help" />
 
-    <Button fx:id="fileButton"
-            maxWidth="Infinity"
-            onAction="#handleFile"
-            styleClass="sidebar-button"
-            text="Exit" />
+    <Button fx:id="fileButton" maxWidth="Infinity" onAction="#handleFile" styleClass="sidebar-button" text="Exit" />
 
     <Region VBox.vgrow="ALWAYS" />
 </VBox>
