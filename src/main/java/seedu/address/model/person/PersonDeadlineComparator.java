@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Optional;
 
-
+/**
+ * Comparator that orders {@link Person}s by earliest deadline first.
+ * Persons without a deadline are placed after those with a deadline.
+ */
 public final class PersonDeadlineComparator implements Comparator<Person> {
 
     private final boolean ascending;

@@ -1,10 +1,11 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -20,9 +21,9 @@ public class SortByDeadlineCommandTest {
 
     @Test
     public void execute_sortAscending_reordersListEarliestFirst() throws Exception {
-        Person p1 = new PersonBuilder(BENSON).withDeadline("2025-12-01").build();  // Dec
-        Person p2 = new PersonBuilder(CARL).withDeadline("").build();              // none
-        Person p3 = new PersonBuilder(ALICE).withDeadline("2025-01-15").build();   // Jan
+        Person p1 = new PersonBuilder(BENSON).withDeadline("2025-12-01").build();
+        Person p2 = new PersonBuilder(CARL).withDeadline("").build();
+        Person p3 = new PersonBuilder(ALICE).withDeadline("2025-01-15").build();
 
         AddressBook ab = new AddressBook();
         // Keep original (unsorted) insertion order:
@@ -39,9 +40,9 @@ public class SortByDeadlineCommandTest {
 
     @Test
     public void execute_sortDescending_reordersListLatestFirst() throws Exception {
-        Person p1 = new PersonBuilder(BENSON).withDeadline("2025-12-01").build();  // Dec
-        Person p2 = new PersonBuilder(CARL).withDeadline("").build();              // none
-        Person p3 = new PersonBuilder(ALICE).withDeadline("2025-01-15").build();   // Jan
+        Person p1 = new PersonBuilder(BENSON).withDeadline("2025-12-01").build();
+        Person p2 = new PersonBuilder(CARL).withDeadline("").build();
+        Person p3 = new PersonBuilder(ALICE).withDeadline("2025-01-15").build();
 
         AddressBook ab = new AddressBook();
         // Keep original (unsorted) insertion order:

@@ -1,10 +1,13 @@
 package seedu.address.logic.parser;
 
+import java.util.Locale;
+
 import seedu.address.logic.commands.SortByDeadlineCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import java.util.Locale;
-
+/**
+ * Parses input arguments and creates a {@link SortByDeadlineCommand}.
+ */
 public class SortByDeadlineCommandParser implements Parser<SortByDeadlineCommand> {
     @Override
     public SortByDeadlineCommand parse(String args) throws ParseException {

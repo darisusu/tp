@@ -1,11 +1,15 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.PersonDeadlineComparator;
 
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Sorts the person list by deadline.
+ * <p>Earliest deadlines first by default; accepts "desc" to invert.</p>
+ */
 public class SortByDeadlineCommand extends Command {
 
     public static final String COMMAND_WORD = "sortbydeadline";
