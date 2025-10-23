@@ -1,12 +1,12 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Region;
 
 /**
  * Sidebar panel containing navigation buttons.
  */
-public class SidebarPanel extends UiPart<VBox> {
+public class SidebarPanel extends UiPart<Region> {
     private static final String FXML = "SidebarPanel.fxml";
 
     private SidebarListener listener;
