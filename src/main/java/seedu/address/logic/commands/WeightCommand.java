@@ -9,46 +9,45 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Goal;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Weight;
 
 /**
- * Adds or removes a goal to/from a Person
+ * Updates the weight of an existing person in the address book.
  */
-public class GoalCommand extends Command {
+public class WeightCommand extends Command {
 
-    public static final String COMMAND_WORD = "goal";
+    public static final String COMMAND_WORD = "weight";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Edits the goal of the person identified "
+            + ": Edits the weight of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing goal will be overwritten by the input.\n"
+            + "Existing weight will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "goal/ [goal]\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + "goal/ Lose 10kg.";
+            + "w/WEIGHT\n"
+            + "Example: " + COMMAND_WORD + " 1 w/70";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Goal: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Weight: %2$s";
 
-    public static final String MESSAGE_ADD_GOAL_SUCCESS = "Added goal to Person: %1$s";
-    public static final String MESSAGE_DELETE_GOAL_SUCCESS = "Removed goal from Person: %1$s";
+    public static final String MESSAGE_UPDATE_WEIGHT_SUCCESS = "Updated weight for Person: %1$s";
 
     private final Index index;
-    private final Goal goal;
+    private final Weight weight;
 
     /**
-     * @param index of the person in the filtered person list to edit the goal
-     * @param goal of the person to be updated to
+     * @param index of the person in the filtered person list to edit the weight
+     * @param weight of the person to be updated to
      */
-    public GoalCommand(Index index, Goal goal) {
-        requireAllNonNull(index, goal);
+    public WeightCommand(Index index, Weight weight) {
+        requireAllNonNull(index, weight);
 
         this.index = index;
-        this.goal = goal;
+        this.weight = weight;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireAllNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -61,9 +60,9 @@ public class GoalCommand extends Command {
                 personToEdit.getPhone(),
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
-                goal,
+                personToEdit.getGoal(),
                 personToEdit.getHeight(),
-                personToEdit.getWeight(),
+                weight,
                 personToEdit.getAge(),
                 personToEdit.getGender(),
                 personToEdit.getDeadline(),
@@ -75,17 +74,7 @@ public class GoalCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
-    }
-
-    /**
-     * Generates a command execution success message based on whether
-     * the goal is added to or removed from
-     * {@code personToEdit}.
-     */
-    private String generateSuccessMessage(Person personToEdit) {
-        String message = !goal.value.isEmpty() ? MESSAGE_ADD_GOAL_SUCCESS : MESSAGE_DELETE_GOAL_SUCCESS;
-        return String.format(message, Messages.format(personToEdit));
+        return new CommandResult(String.format(MESSAGE_UPDATE_WEIGHT_SUCCESS, Messages.format(editedPerson)));
     }
 
     @Override
@@ -95,12 +84,12 @@ public class GoalCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof GoalCommand)) {
+        if (!(other instanceof WeightCommand)) {
             return false;
         }
 
-        GoalCommand e = (GoalCommand) other;
+        WeightCommand e = (WeightCommand) other;
         return index.equals(e.index)
-                && goal.equals(e.goal);
+                && weight.equals(e.weight);
     }
 }

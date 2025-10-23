@@ -70,6 +70,7 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getWeight().orElse(null) + ", goal="
                 + editPersonDescriptor.getGoal().orElse(null) + ", bodyfat="
                 + editPersonDescriptor.getBodyfat().orElse(null) + ", paid="
+                + editPersonDescriptor.getSession().orElse(null) + ", session="
                 + editPersonDescriptor.getPaid().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());

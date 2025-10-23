@@ -1,19 +1,70 @@
-#copyButton, #helpMessage {
-    -fx-text-fill: white;
+#helpContainer {
+    -fx-background-color: #1d1d1d;
+}
+
+#helpContainer .label {
+    -fx-text-fill: #f5f5f5;
+}
+
+#helpTitleLabel {
+    -fx-text-fill: #00b4d8;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+#commandReferenceView {
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-background-color: transparent;
+}
+
+#commandReferenceView:focused {
+    -fx-border-color: #4dabf7;
+}
+
+#commandReferenceArea .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#commandReferenceArea .viewport {
+    -fx-background-color: transparent;
+}
+
+#commandReferenceArea .content {
+    -fx-padding: 8px 12px 12px 12px;
+    -fx-background-color: transparent;
+}
+
+#actionBar {
+    -fx-padding: 10 0 0 0;
+}
+
+#actionBar .label {
+    -fx-text-fill: #d0d0d0;
+}
+
+.hyperlink {
+    -fx-text-fill: #4dabf7;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #74c0fc;
 }
 
 #copyButton {
-    -fx-background-color: dimgray;
+    -fx-background-color: #2d2d2d;
+    -fx-text-fill: white;
+    -fx-border-color: rgba(255, 255, 255, 0.25);
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6 14;
 }
 
 #copyButton:hover {
-    -fx-background-color: gray;
+    -fx-padding: 6 14;
 }
 
 #copyButton:armed {
-    -fx-background-color: darkgray;
-}
-
-#helpMessageContainer {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1f1f1f;
 }

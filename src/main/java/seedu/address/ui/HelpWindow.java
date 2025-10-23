@@ -1,14 +1,25 @@
 package seedu.address.ui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
+
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+
 
 /**
  * Controller for a help page
@@ -16,7 +27,31 @@ import seedu.address.commons.core.LogsCenter;
 public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+
+    public static final String HELP_MESSAGE = "Need a quick refresher?"
+            + "\nBrowse the full command reference below...";
+    public static final String COMMAND_REFERENCE_RESOURCE = "/help/CommandReference.md";
+    public static final String COMMAND_REFERENCE_FALLBACK = "Command reference unavailable. "
+            + "Please make sure CommandReference.md is packaged with the app.";
+
+    private static final Parser MARKDOWN_PARSER = Parser.builder().build();
+    private static final HtmlRenderer HTML_RENDERER = HtmlRenderer.builder().build();
+    private static final String HTML_TEMPLATE_PREFIX = """
+            <html><head><meta charset="UTF-8" />
+            <style>
+            body { background-color: #1d1d1d; color: #f5f5f5; font-family: 'Segoe UI', sans-serif;
+                margin: 0; padding: 16px; }
+            h1, h2, h3, h4, h5 { color: #00b4d8; }
+            a { color: #4dabf7; }
+            a:hover { color: #74c0fc; }
+            code { font-family: 'Consolas', 'Courier New', monospace; background: rgba(255, 255, 255, 0.05);
+                padding: 2px 4px; border-radius: 4px; }
+            pre { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 6px; overflow: auto; }
+            ul { padding-left: 20px; }
+            li { margin-bottom: 6px; }
+            </style></head><body>
+            """;
+    private static final String HTML_TEMPLATE_SUFFIX = "</body></html>";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
@@ -27,6 +62,12 @@ public class HelpWindow extends UiPart<Stage> {
     @FXML
     private Label helpMessage;
 
+    @FXML
+    private WebView commandReferenceView;
+
+    @FXML
+    private Hyperlink userGuideLink;
+
     /**
      * Creates a new HelpWindow.
      *
@@ -35,6 +76,10 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
+        commandReferenceView.getEngine().setJavaScriptEnabled(false);
+        commandReferenceView.getEngine().loadContent(loadCommandReferenceHtml());
+        commandReferenceView.setContextMenuEnabled(false);
+        userGuideLink.setText(USERGUIDE_URL);
     }
 
     /**
@@ -99,4 +144,53 @@ public class HelpWindow extends UiPart<Stage> {
         url.putString(USERGUIDE_URL);
         clipboard.setContent(url);
     }
+
+
+    /**
+     * Opens the user guide in the system browser if supported. If opening fails, the URL is copied instead.
+     */
+    @FXML
+    private void openUserGuide() {
+        if (!Desktop.isDesktopSupported()) {
+            logger.warning("Desktop browsing is not supported. Copying URL instead.");
+            copyUrl();
+            return;
+        }
+
+        Desktop desktop = Desktop.getDesktop();
+        if (!desktop.isSupported(Desktop.Action.BROWSE)) {
+            logger.warning("Browse action is not supported. Copying URL instead.");
+            copyUrl();
+            return;
+        }
+
+        try {
+            desktop.browse(java.net.URI.create(USERGUIDE_URL));
+        } catch (IOException e) {
+            logger.warning("Failed to open user guide in browser: " + e.getMessage());
+            copyUrl();
+        }
+    }
+
+    private String loadCommandReferenceMarkdown() {
+        try (InputStream inputStream = HelpWindow.class.getResourceAsStream(COMMAND_REFERENCE_RESOURCE)) {
+            if (inputStream == null) {
+                logger.warning("Command reference resource not found: " + COMMAND_REFERENCE_RESOURCE);
+                return COMMAND_REFERENCE_FALLBACK;
+            }
+
+            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            logger.warning("Failed to load command reference: " + e.getMessage());
+            return COMMAND_REFERENCE_FALLBACK;
+        }
+    }
+
+    private String loadCommandReferenceHtml() {
+        String markdown = loadCommandReferenceMarkdown();
+        Node document = MARKDOWN_PARSER.parse(markdown);
+        String htmlBody = HTML_RENDERER.render(document);
+        return HTML_TEMPLATE_PREFIX + htmlBody + HTML_TEMPLATE_SUFFIX;
+    }
+
 }
