@@ -9,7 +9,7 @@
 ## Core trainee management
 ### `add` — create a trainee profile
 - **Format:** `add n/NAME p/PHONE e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SCHEDULE bf/BODYFAT goal/GOAL t/TAG…`
-- **Example:** `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male 
+- **Example:** `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male
 dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
 
 - **Guidance:**
@@ -45,6 +45,15 @@ dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
 ### `clear` — reset the trainee list
 - **Format:** `clear`
 - **Guidance:** Deletes **all** trainees. This cannot be undone.
+
+### `sortbypaid` — sort trainees by payment status
+- **Format:** `sortbypaid`
+- **Example:** `sortbypaid`
+- **Guidance:**
+    - Sorts the current trainee list by payment status
+    - Unpaid trainees (paid: false) appear first
+    - Paid trainees (paid: true) appear second
+    - Useful for identifying which trainees need payment follow-up
 
 ## Progress tracking updates
 ### `age` — update a trainee’s age
@@ -95,7 +104,7 @@ dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
 
 ## Sessions
 
-- Use the following formats when specifying session timings with the s/(schedule) prefix. 
+- Use the following formats when specifying session timings with the s/(schedule) prefix.
 - Note: Fitbook will automatically handle conflicts between overlapping sessions with error message.
 
 | **Type** | **Format** | **Example** |
@@ -106,10 +115,10 @@ dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
 | **Biweekly** | `BIWEEKLY:DAY HH:MM` | `biweekly:fri 09:00` |
 | **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
 
-- DAY accepts: mon, tue, wed, thu, fri, sat, sun. 
-- Time values use the 24-hour format without separators (e.g. 1800 = 6:00 PM). 
-- Multi-slot entries can list multiple day–time ranges in sequence. 
-- Monthly sessions occur on the specified day of the month. 
+- DAY accepts: mon, tue, wed, thu, fri, sat, sun.
+- Time values use the 24-hour format without separators (e.g. 1800 = 6:00 PM).
+- Multi-slot entries can list multiple day–time ranges in sequence.
+- Monthly sessions occur on the specified day of the month.
 - All times are interpreted in local time.
 
 ## Navigation and help
