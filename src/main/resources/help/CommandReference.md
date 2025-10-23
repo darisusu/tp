@@ -1,6 +1,6 @@
-# FitBook command reference
+# FitBook Command Reference
 
-## Command format conventions
+## Format conventions
 - Words in `UPPER_CASE` are parameters you should replace with your own values.
 - Items in square brackets `[ ]` are optional. Items followed by `…` can be repeated multiple times.
 - Commands that update a trainee use the index shown in the currently displayed list. The first trainee has index `1`.
