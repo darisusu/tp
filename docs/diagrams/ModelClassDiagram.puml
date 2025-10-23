@@ -41,6 +41,8 @@ Person *--> Gender
 Person *--> Age
 Person *--> Weight
 Person *--> Height
+Person *--> Goal
+Person *--> Deadline
 Person *--> "*" Tag
 Person *--> Session : session
 Session *--> SessionRecurringSlot : recurringSlots
