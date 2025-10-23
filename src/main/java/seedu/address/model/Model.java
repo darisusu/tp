@@ -94,4 +94,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Sorts the person list by paid status (unpaid first, paid second).
+     */
+    void sortPersonListByPaid();
 }

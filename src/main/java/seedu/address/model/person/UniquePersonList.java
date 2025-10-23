@@ -116,6 +116,16 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts the person list by paid status (unpaid first, paid second).
+     */
+    public void sortByPaid() {
+        internalList.sort((person1, person2) -> {
+            // Unpaid (false) comes first, paid (true) comes second
+            return Boolean.compare(person1.getPaymentStatus().value, person2.getPaymentStatus().value);
+        });
+    }
+
+    /**
      * Returns true if {@code toCheck}'s session conflicts with another person in the list.
      */
     public boolean hasSessionConflict(Person toCheck) {
