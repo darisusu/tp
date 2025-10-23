@@ -80,7 +80,15 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SESSION bf/BODYFAT [t/TAG]…​`
+
+Session format:
+
+* One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
+* Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
+* Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
+* Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
+* Legacy inputs like `WEEKLY:MONDAY 18:00` are still accepted and will be converted to the new storage format automatically.
 
 <box type="tip" seamless>
 

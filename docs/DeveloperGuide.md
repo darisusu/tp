@@ -456,7 +456,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | **CLI (Command-Line Interface)** | A text-based interface where users type commands instead of using graphical buttons.                                                      |
 | **Client** | A person managed by the trainer, whose data includes personal info, sessions, payments, and stats. May be referred to as trainee as well. |
-| **Session** | A scheduled training appointment between the trainer and a client. Each session should take up a few hours in a day.                      |
+| **Session** | A scheduled training appointment between the trainer and a client. Stored as either a one-off timestamp (`YYYY-MM-DD HH:MM`), a monthly slot (`MONTHLY:DD HH:MM`), or a weekly/biweekly string containing one or more `DAY-START-END` ranges (e.g. `WEEKLY:MON-1700-1930-TUE-1800-1900`). Each session should take up a few hours in a day.                      |
 | **Payment Record** | A log of transactions between a client and the trainer. Currently recorded on a monthly basis.                                            |
 | **Body Stats** | Measurable fitness indicators like weight, BMI, and strength level.                                                                       |
 | **JSON** | JavaScript Object Notation — the format used to store FitBook data.                                                                       |

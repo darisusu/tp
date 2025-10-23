@@ -21,6 +21,7 @@ import seedu.address.model.person.Height;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Session;
 import seedu.address.model.person.Weight;
 import seedu.address.model.tag.Tag;
 
@@ -172,6 +173,22 @@ public class ParserUtil {
         // If the prefix is missing entirely, treat as empty (no deadline)
         return parseDeadline(rawOpt.orElse(""));
     }
+
+    /**
+     * Parses a {@code String session} into a {@code Session}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code session} is invalid.
+     */
+    public static Session parseSession(String session) throws ParseException {
+        requireNonNull(session);
+        String trimmedSession = session.trim();
+        try {
+            return Session.fromString(trimmedSession);
+        } catch (IllegalArgumentException ex) {
+            throw new ParseException(ex.getMessage(), ex);
+        }
+    }
     /**
      * Parses a {@code String height} into a {@code Height}.
      * Leading and trailing whitespaces will be trimmed.
@@ -253,9 +270,9 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code goal} is invalid.
      */
-    public static Goal parseGoal(String goal) throws ParseException {
-        requireNonNull(goal);
-        String trimmedGoal = goal.trim();
+    public static Goal parseGoal(String string) throws ParseException {
+        requireNonNull(string);
+        String trimmedGoal = string.trim();
         if (!Goal.isValidGoal(trimmedGoal)) {
             throw new ParseException(Goal.MESSAGE_CONSTRAINTS);
         }
