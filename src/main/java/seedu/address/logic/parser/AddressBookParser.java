@@ -113,7 +113,6 @@ public class AddressBookParser {
 
         case SortByDeadlineCommand.COMMAND_WORD:
             return new SortByDeadlineCommandParser().parse(arguments);
-          
         case SortByPaidCommand.COMMAND_WORD:
             return new SortByPaidCommandParser().parse(arguments);
 
