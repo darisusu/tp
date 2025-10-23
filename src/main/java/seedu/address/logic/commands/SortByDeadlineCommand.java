@@ -14,8 +14,8 @@ public class SortByDeadlineCommand extends Command {
             + "Parameters: [asc|desc]\n"
             + "Example: " + COMMAND_WORD + " desc";
 
-    public static final String MESSAGE_SUCCESS_ASC = "Sorted deadline (earliest first).";
-    public static final String MESSAGE_SUCCESS_DESC = "Sorted deadline (latest first).";
+    public static final String MESSAGE_SUCCESS_ASC = "Sorted by deadline (earliest first).";
+    public static final String MESSAGE_SUCCESS_DESC = "Sorted by deadline (latest first).";
 
     private final boolean ascending;
 

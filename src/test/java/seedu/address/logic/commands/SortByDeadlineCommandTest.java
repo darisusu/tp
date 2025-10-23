@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.testutil.TypicalPersons.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,42 +20,39 @@ public class SortByDeadlineCommandTest {
 
     @Test
     public void execute_sortAscending_reordersListEarliestFirst() throws Exception {
-        // Persons: p2 (no deadline), p1 (Dec), p3 (Jan)
-        Person p1 = new PersonBuilder().withName("Bob").withDeadline("2025-12-01").build();
-        Person p2 = new PersonBuilder().withName("Cara").withDeadline("").build();
-        Person p3 = new PersonBuilder().withName("Alice").withDeadline("2025-01-15").build();
+        Person p1 = new PersonBuilder(BENSON).withDeadline("2025-12-01").build();  // Dec
+        Person p2 = new PersonBuilder(CARL).withDeadline("").build();              // none
+        Person p3 = new PersonBuilder(ALICE).withDeadline("2025-01-15").build();   // Jan
 
         AddressBook ab = new AddressBook();
-        ab.setPersons(Arrays.asList(p2, p1, p3)); // Start unsorted
+        // Keep original (unsorted) insertion order:
+        ab.addPerson(p2);
+        ab.addPerson(p1);
+        ab.addPerson(p3);
 
         Model model = new ModelManager(ab, new UserPrefs());
+        CommandResult result = new SortByDeadlineCommand(true).execute(model);
 
-        Command cmd = new SortByDeadlineCommand(true);
-        CommandResult result = cmd.execute(model);
-
-        // Expect earliest first: p3 (Jan), p1 (Dec), p2 (none)
-        List<Person> actual = new ArrayList<>(model.getFilteredPersonList());
-        assertEquals(Arrays.asList(p3, p1, p2), actual);
+        assertEquals(List.of(p3, p1, p2), new ArrayList<>(model.getFilteredPersonList()));
         assertEquals("Sorted by deadline (earliest first).", result.getFeedbackToUser());
     }
 
     @Test
     public void execute_sortDescending_reordersListLatestFirst() throws Exception {
-        Person p1 = new PersonBuilder().withName("Bob").withDeadline("2025-12-01").build();
-        Person p2 = new PersonBuilder().withName("Cara").withDeadline("").build();
-        Person p3 = new PersonBuilder().withName("Alice").withDeadline("2025-01-15").build();
+        Person p1 = new PersonBuilder(BENSON).withDeadline("2025-12-01").build();  // Dec
+        Person p2 = new PersonBuilder(CARL).withDeadline("").build();              // none
+        Person p3 = new PersonBuilder(ALICE).withDeadline("2025-01-15").build();   // Jan
 
         AddressBook ab = new AddressBook();
-        ab.setPersons(Arrays.asList(p3, p2, p1)); // Start unsorted
+        // Keep original (unsorted) insertion order:
+        ab.addPerson(p2);
+        ab.addPerson(p1);
+        ab.addPerson(p3);
 
         Model model = new ModelManager(ab, new UserPrefs());
+        CommandResult result = new SortByDeadlineCommand(false).execute(model);
 
-        Command cmd = new SortByDeadlineCommand(false);
-        CommandResult result = cmd.execute(model);
-
-        // Expect latest first: p1 (Dec), p3 (Jan), p2 (none)
-        List<Person> actual = new ArrayList<>(model.getFilteredPersonList());
-        assertEquals(Arrays.asList(p1, p3, p2), actual);
+        assertEquals(List.of(p2, p1, p3), new ArrayList<>(model.getFilteredPersonList()));
         assertEquals("Sorted by deadline (latest first).", result.getFeedbackToUser());
     }
 
