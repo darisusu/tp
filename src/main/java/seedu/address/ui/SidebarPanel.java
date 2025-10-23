@@ -1,0 +1,38 @@
+package seedu.address.ui;
+
+import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
+
+/**
+ * Sidebar panel containing navigation buttons.
+ */
+public class SidebarPanel extends UiPart<VBox> {
+    private static final String FXML = "SidebarPanel.fxml";
+
+    private SidebarListener listener;
+
+    public SidebarPanel() {
+        super(FXML);
+    }
+
+    /**
+     * Used by MainWindow to react to sidebar events.
+     */
+    public void setSidebarListener(SidebarListener listener) {
+        this.listener = listener;
+    }
+
+    @FXML
+    private void handleClientsClicked() {
+        if (listener != null) {
+            listener.onShowClients();
+        }
+    }
+
+    /**
+     * Interface for MainWindow to implement, so Sidebar can notify it.
+     */
+    public interface SidebarListener {
+        void onShowClients();
+    }
+}
