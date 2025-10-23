@@ -56,16 +56,9 @@
         <HBox spacing="0" VBox.vgrow="ALWAYS">
 
           <!-- Sidebar -->
-          <VBox fx:id="sidebar" VBox.vgrow="ALWAYS"
-                style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;" spacing="15">
-              <Button fx:id="fileButton" text="Exit" onAction="#handleFile"
-                      styleClass="sidebar-button" />
-              <Button fx:id="helpButton" text="Help" onAction="#handleHelp"
-                      styleClass="sidebar-button" />
-              <Region VBox.vgrow="ALWAYS"/>
-          </VBox>
+            <StackPane fx:id="sidebarPlaceholder" prefWidth="170"/>
 
-          <!-- Main Content -->
+            <!-- Main Content -->
           <VBox fx:id="mainContent" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" style="-fx-background-color: #2b2b2b;">
             <!-- MenuBar (Hidden) -->
             <MenuBar fx:id="menuBar" visible="false" managed="false">
@@ -82,7 +75,7 @@
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                <StackPane fx:id="mainContentPlaceholder" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
             </VBox>
 
             <!-- Command Box -->

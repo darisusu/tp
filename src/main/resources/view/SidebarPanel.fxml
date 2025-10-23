@@ -6,12 +6,25 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="seedu.address.ui.SidebarPanel"
       style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;"
       spacing="15">
 
-    <Button fx:id="clientsButton" text="Clients" onAction="#handleClientsClicked"
-            style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-font-size: 14px;"
+    <Button fx:id="clientsButton"
+            text="Clients"
+            onAction="#handleClientsClicked"
+            style="sidebar-button"
+            maxWidth="Infinity"/>
+
+    <Button fx:id="fileButton"
+            text="Exit"
+            onAction="#handleFile"
+            styleClass="sidebar-button"
+            maxWidth="Infinity"/>
+
+    <Button fx:id="helpButton"
+            text="Help"
+            onAction="#handleHelp"
+            styleClass="sidebar-button"
             maxWidth="Infinity"/>
 
     <Region VBox.vgrow="ALWAYS"/>

@@ -29,10 +29,27 @@ public class SidebarPanel extends UiPart<VBox> {
         }
     }
 
+    @FXML
+    private void handleFile() {
+        if (listener != null) {
+            listener.onExit();
+        }
+    }
+
+    @FXML
+    private void handleHelp() {
+        if (listener != null) {
+            listener.onHelp();
+
+        }
+    }
+
     /**
      * Interface for MainWindow to implement, so Sidebar can notify it.
      */
     public interface SidebarListener {
         void onShowClients();
+        void onExit();
+        void onHelp();
     }
 }
