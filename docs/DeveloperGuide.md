@@ -158,6 +158,40 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Sort by Paid Status feature
+
+The sort by paid status feature allows trainers to sort their client list by payment status, with unpaid clients appearing first for easy follow-up.
+
+#### Implementation
+
+The sortbypaid command is implemented through the following components:
+
+* `SortByPaidCommand` — The command class that executes the sorting operation
+* `SortByPaidCommandParser` — Parses the "sortbypaid" command input
+* `Model#sortPersonListByPaid()` — Interface method for sorting by paid status
+* `AddressBook#sortByPaid()` — Delegates sorting to the person list
+* `UniquePersonList#sortByPaid()` — Performs the actual sorting logic
+
+The sorting logic uses `Boolean.compare()` to sort unpaid clients (false) before paid clients (true).
+
+#### Class Diagram
+
+The following class diagram shows the relationship between the sortbypaid command and related classes:
+
+<puml src="diagrams/SortByPaidCommandDiagram.puml" alt="SortByPaidCommand Class Diagram" />
+
+#### Sequence Diagram
+
+The following sequence diagram shows the execution flow of the sortbypaid command:
+
+<puml src="diagrams/SortByPaidSequenceDiagram.puml" alt="SortByPaidCommand Sequence Diagram" />
+
+#### Activity Diagram
+
+The following activity diagram shows the workflow for sorting by paid status:
+
+<puml src="diagrams/SortByPaidActivityDiagram.puml" alt="SortByPaidCommand Activity Diagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
