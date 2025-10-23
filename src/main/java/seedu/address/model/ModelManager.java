@@ -145,6 +145,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void sortPersonListByPaid() {
+        addressBook.sortByPaid();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

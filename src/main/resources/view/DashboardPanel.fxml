@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10"
+      style="-fx-padding: 10;"
+      HBox.hgrow="ALWAYS"
+      VBox.vgrow="ALWAYS">
+
+    <!-- Left column -->
+    <VBox fx:id="leftColumn"
+          spacing="10"
+          style="-fx-background-color: #f0f0f0; -fx-padding: 10;"
+          HBox.hgrow="ALWAYS"
+          VBox.vgrow="ALWAYS">
+        <!-- Lists or other components go here -->
+    </VBox>
+
+    <!-- Right column -->
+    <VBox fx:id="rightColumn"
+          spacing="10"
+          style="-fx-background-color: #e0e0e0; -fx-padding: 10;"
+          HBox.hgrow="ALWAYS"
+          VBox.vgrow="ALWAYS">
+        <!-- Lists or other components go here -->
+    </VBox>
+</HBox>

@@ -166,6 +166,20 @@ Exits the program.
 
 Format: `exit`
 
+### Sorting persons by paid status: `sortbypaid`
+
+Sorts the person list by payment status (unpaid clients first, paid clients second).
+
+Format: `sortbypaid`
+
+* Sorts the current person list by paid status
+* Unpaid clients (paid: false) will appear first
+* Paid clients (paid: true) will appear second
+* The sorting is applied to the currently displayed list
+
+Examples:
+* `sortbypaid` - Sorts the current list by payment status
+
 ### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -211,4 +225,5 @@ Action     | Format, Examples
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`
+**Sort**   | `sortbypaid`<br> e.g., `sortbypaid`
 **Help**   | `help`

@@ -104,4 +104,9 @@ public interface Model {
 
     /** Resets person list */
     void resetPersonListOrder();
+
+    /**
+     * Sorts the person list by paid status (unpaid first, paid second).
+     */
+    void sortPersonListByPaid();
 }

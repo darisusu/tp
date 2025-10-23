@@ -33,9 +33,17 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private DashboardPanel dashboardPanel;
+    private SidebarPanel sidebarPanel;
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+
+    @FXML
+    private StackPane sidebarPlaceholder;
+
+    @FXML
+    private StackPane mainContentPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -131,8 +139,34 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        sidebarPanel = new SidebarPanel();
+        dashboardPanel = new DashboardPanel();
+        sidebarPanel.setSidebarListener(new SidebarPanel.SidebarListener() {
+
+            @Override
+            public void onShowClients() {
+                mainContentPlaceholder.getChildren().setAll(personListPanel.getRoot());
+            }
+
+            @Override
+            public void onShowDashboard() {
+                mainContentPlaceholder.getChildren().setAll(dashboardPanel.getRoot());
+            }
+
+            @Override
+            public void onExit() {
+                handleExit();
+            }
+
+            @Override
+            public void onHelp() {
+                handleHelp();
+            }
+        });
+        sidebarPlaceholder.getChildren().setAll(sidebarPanel.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        mainContentPlaceholder.getChildren().setAll(dashboardPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -144,8 +178,8 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         welcomeLabel.setText("Welcome back, Trainer!");
-
     }
+
 
     /**
      * Sets the default size based on {@code guiSettings}.
