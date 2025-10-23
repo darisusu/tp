@@ -30,6 +30,13 @@ public class SidebarPanel extends UiPart<Region> {
     }
 
     @FXML
+    private void handleDashboardClicked() {
+        if (listener != null) {
+            listener.onShowDashboard();
+        }
+    }
+
+    @FXML
     private void handleFile() {
         if (listener != null) {
             listener.onExit();
@@ -48,6 +55,7 @@ public class SidebarPanel extends UiPart<Region> {
      * Interface for MainWindow to implement, so Sidebar can notify it.
      */
     public interface SidebarListener {
+        void onShowDashboard();
         void onShowClients();
         void onExit();
         void onHelp();

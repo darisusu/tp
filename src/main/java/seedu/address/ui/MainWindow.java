@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private DashboardPanel dashboardPanel;
     private SidebarPanel sidebarPanel;
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
@@ -139,10 +140,17 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         sidebarPanel = new SidebarPanel();
+        dashboardPanel = new DashboardPanel();
         sidebarPanel.setSidebarListener(new SidebarPanel.SidebarListener() {
+
             @Override
             public void onShowClients() {
                 mainContentPlaceholder.getChildren().setAll(personListPanel.getRoot());
+            }
+
+            @Override
+            public void onShowDashboard() {
+                mainContentPlaceholder.getChildren().setAll(dashboardPanel.getRoot());
             }
 
             @Override

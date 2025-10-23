@@ -9,6 +9,12 @@
       style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;"
       spacing="15">
 
+    <Button fx:id="dashboardButton"
+            text="Dashboard"
+            onAction="#handleDashboardClicked"
+            style="sidebar-button"
+            maxWidth="Infinity"/>
+
     <Button fx:id="clientsButton"
             text="Clients"
             onAction="#handleClientsClicked"
