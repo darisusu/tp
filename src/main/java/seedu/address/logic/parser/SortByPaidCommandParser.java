@@ -17,7 +17,7 @@ public class SortByPaidCommandParser implements Parser<SortByPaidCommand> {
      */
     public SortByPaidCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        
+
         if (!trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortByPaidCommand.MESSAGE_USAGE));
