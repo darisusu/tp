@@ -12,7 +12,7 @@ Core trainee management
 -----------------------
 add — create a trainee profile
   Format: add n/NAME p/PHONE e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SESSION bf/BODYFAT [goal/GOAL] [t/TAG]…
-  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false s/WEEKLY:MON 18:00 bf/18.5 goal/Build muscle t/friend t/owesMoney
+  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false s/WEEKLY:MON-1800-1930-TUE-1800-1900 bf/18.5 goal/Build muscle t/friend t/owesMoney
   Guidance:
     • HEIGHT is in centimetres, WEIGHT in kilograms, AGE in years, BODYFAT as a percentage (you may provide decimals).
     • GENDER accepts: male, female, other, non-binary, prefer not to say (or m/f/o/nb/pns).

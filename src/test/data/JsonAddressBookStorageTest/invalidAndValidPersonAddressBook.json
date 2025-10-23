@@ -12,7 +12,7 @@
     "gender": "male",
     "paid": "false",
     "bodyfat": "20.0",
-    "session": "WEEKLY:MONDAY 18:00"
+    "session": "WEEKLY:MON-1800-1900"
   }, {
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
@@ -26,6 +26,6 @@
     "gender": "male",
     "paid": "false",
     "bodyfat": "20.0",
-    "session": "WEEKLY:TUESDAY 19:00"
+    "session": "WEEKLY:TUE-1900-2000"
   } ]
 }

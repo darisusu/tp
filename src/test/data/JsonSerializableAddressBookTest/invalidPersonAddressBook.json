@@ -12,6 +12,6 @@
     "gender": "male",
     "paid": "false",
     "bodyfat": "20.0",
-    "session": "WEEKLY:MONDAY 18:00"
+    "session": "WEEKLY:MON-1800-1900"
   } ]
 }

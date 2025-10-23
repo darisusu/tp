@@ -35,7 +35,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-    private static final String VALID_SESSION = "WEEKLY:MONDAY 18:00";
+    private static final String VALID_SESSION = "WEEKLY:MON-1800-1900";
 
     private static final String WHITESPACE = " \t\r\n";
 

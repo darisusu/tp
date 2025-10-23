@@ -38,7 +38,7 @@ public class SampleDataUtil {
                 Deadline.fromString("2025-11-15"),
                 new Paid("false"), // added Paid
                 new Bodyfat("30.0"),
-                Session.fromString("WEEKLY:MON 08:00"),
+                Session.fromString("WEEKLY:MON-0800-0900"),
                 getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
@@ -50,7 +50,7 @@ public class SampleDataUtil {
                 Deadline.fromString("2025-11-15"),
                 new Paid("true"),
                 new Bodyfat("30.0"),
-                Session.fromString("WEEKLY:TUE 09:00"),
+                Session.fromString("WEEKLY:TUE-0900-1000"),
                 getTagSet("colleagues", "friends")),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
@@ -62,7 +62,7 @@ public class SampleDataUtil {
                 Deadline.fromString("2025-11-15"),
                 new Paid("false"),
                 new Bodyfat("30.0"),
-                Session.fromString("WEEKLY:WED 10:00"),
+                Session.fromString("WEEKLY:WED-1000-1100"),
                 getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
@@ -74,7 +74,7 @@ public class SampleDataUtil {
                 Deadline.fromString("2025-11-15"),
                 new Paid("false"),
                 new Bodyfat("30.0"),
-                Session.fromString("WEEKLY:THU 11:00"),
+                Session.fromString("WEEKLY:THU-1100-1200"),
                 getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"),
@@ -86,7 +86,7 @@ public class SampleDataUtil {
                 Deadline.fromString("2025-11-15"),
                 new Paid("true"),
                 new Bodyfat("30.0"),
-                Session.fromString("WEEKLY:FRI 12:00"),
+                Session.fromString("WEEKLY:FRI-1200-1300"),
                 getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
@@ -98,7 +98,7 @@ public class SampleDataUtil {
                 Deadline.fromString("2025-11-15"),
                 new Paid("false"),
                 new Bodyfat("30.0"),
-                Session.fromString("WEEKLY:SAT 13:00"),
+                Session.fromString("WEEKLY:SAT-1300-1400"),
                 getTagSet("colleagues"))
         };
     }

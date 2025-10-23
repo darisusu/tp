@@ -11,6 +11,9 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -23,37 +26,49 @@ import java.util.regex.Pattern;
 public class Session {
 
     public static final String MESSAGE_CONSTRAINTS_FORMAT = "Error: Session format must be either: "
-            + "YYYY-MM-DD HH:MM OR [WEEKLY|BIWEEKLY|MONTHLY]:[DAY] HH:MM";
-    public static final String MESSAGE_CONSTRAINTS_TIME = "Error: Invalid time. Use 24-hour format (00:00–23:59).";
-    public static final String MESSAGE_CONSTRAINTS_DAY = "Error: Invalid day. Use MONDAY, TUESDAY, etc.";
+            + "YYYY-MM-DD HH:MM, [WEEKLY|BIWEEKLY]:DAY-START-END(-DAY-START-END)*, "
+            + "or MONTHLY:DD HH:MM.";
+    public static final String MESSAGE_CONSTRAINTS_TIME = "Error: Invalid time. Use 24-hour format (HH:mm or HHmm).";
+    public static final String MESSAGE_CONSTRAINTS_DAY =
+            "Error: Invalid day. Use MONDAY, TUESDAY, or their three-letter abbreviations.";
     public static final String MESSAGE_CONSTRAINTS_PAST_DATE = "Error: Session date cannot be in the past.";
+    public static final String MESSAGE_CONSTRAINTS_TIME_RANGE =
+            "Error: Session end time must be after the start time.";
+    public static final String MESSAGE_CONSTRAINTS_OVERLAP =
+            "Error: Weekly session slots must not overlap.";
 
     private static final Pattern ONE_OFF_PATTERN = Pattern.compile(
             "^(?<date>\\d{4}-\\d{2}-\\d{2})\\s+(?<time>\\d{2}:\\d{2})$");
-    private static final Pattern RECURRING_PATTERN = Pattern.compile(
-            "^(?<type>WEEKLY|BIWEEKLY|MONTHLY):(?<spec>[^\\s]+)\\s+(?<time>\\d{2}:\\d{2})$",
+    private static final Pattern MONTHLY_PATTERN = Pattern.compile(
+            "^(?<type>MONTHLY):(?<day>\\d{1,2})\\s+(?<time>\\d{2}:\\d{2})$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern LEGACY_RECURRING_PATTERN = Pattern.compile(
+            "^(?<type>WEEKLY|BIWEEKLY):(?<day>[^\\s]+)\\s+(?<time>\\d{2}:\\d{2})$",
             Pattern.CASE_INSENSITIVE);
+    private static final Pattern MULTI_SLOT_PATTERN = Pattern.compile(
+            "^(?<type>WEEKLY|BIWEEKLY):(?<slots>.+)$", Pattern.CASE_INSENSITIVE);
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
+    private static final DateTimeFormatter TIME_FORMATTER_COMPACT = DateTimeFormatter.ofPattern("HHmm")
             .withResolverStyle(ResolverStyle.STRICT);
     private static final int MONTH_LOOKAHEAD = 24; // For conflict checks between monthly and weekly/biweekly sessions
 
     private final SessionType type;
     private final LocalDateTime oneOffDateTime;
-    private final DayOfWeek dayOfWeek;
     private final int dayOfMonth;
     private final LocalTime time;
+    private final List<RecurringSlot> recurringSlots;
     private final String value;
 
     private final Clock clock;
 
-    private Session(SessionType type, LocalDateTime oneOffDateTime, DayOfWeek dayOfWeek,
-            int dayOfMonth, LocalTime time, String value, Clock clock) {
+    private Session(SessionType type, LocalDateTime oneOffDateTime,
+            int dayOfMonth, LocalTime time, List<RecurringSlot> recurringSlots, String value, Clock clock) {
         this.type = type;
         this.oneOffDateTime = oneOffDateTime;
-        this.dayOfWeek = dayOfWeek;
         this.dayOfMonth = dayOfMonth;
         this.time = time;
+        this.recurringSlots = List.copyOf(requireNonNull(recurringSlots));
         this.value = value;
         this.clock = clock;
     }
@@ -85,27 +100,38 @@ public class Session {
                 throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_PAST_DATE);
             }
             String canonical = dateTime.format(DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm"));
-            return new Session(SessionType.ONE_OFF, dateTime, null, -1, time, canonical, clock);
+            return new Session(SessionType.ONE_OFF, dateTime, -1, time, List.of(), canonical, clock);
         }
 
-        Matcher recurringMatcher = RECURRING_PATTERN.matcher(trimmed.toUpperCase(Locale.ROOT));
-        if (recurringMatcher.matches()) {
-            SessionType type = SessionType.fromString(recurringMatcher.group("type"));
-            LocalTime time = parseTime(recurringMatcher.group("time"));
-            switch (type) {
-            case WEEKLY:
-            case BIWEEKLY:
-                DayOfWeek day = parseDayOfWeek(recurringMatcher.group("spec"));
-                String canonicalWeekly = type + ":" + day.name() + " " + formatTime(time);
-                return new Session(type, null, day, -1, time, canonicalWeekly, clock);
-            case MONTHLY:
-                int dayOfMonth = parseDayOfMonth(recurringMatcher.group("spec"));
-                String canonicalMonthly = type + ":" + String.format(Locale.ROOT, "%02d", dayOfMonth)
-                        + " " + formatTime(time);
-                return new Session(type, null, null, dayOfMonth, time, canonicalMonthly, clock);
-            default:
-                throw new IllegalStateException("Unhandled session type: " + type);
-            }
+        Matcher monthlyMatcher = MONTHLY_PATTERN.matcher(trimmed);
+        if (monthlyMatcher.matches()) {
+            SessionType type = SessionType.fromString(monthlyMatcher.group("type"));
+            LocalTime time = parseTime(monthlyMatcher.group("time"));
+            int dayOfMonth = parseDayOfMonth(monthlyMatcher.group("day"));
+            String canonicalMonthly = type + ":" + String.format(Locale.ROOT, "%02d", dayOfMonth)
+                    + " " + formatTime(time);
+            return new Session(type, null, dayOfMonth, time, List.of(), canonicalMonthly, clock);
+        }
+
+        Matcher legacyRecurringMatcher = LEGACY_RECURRING_PATTERN.matcher(trimmed);
+        if (legacyRecurringMatcher.matches()) {
+            SessionType type = SessionType.fromString(legacyRecurringMatcher.group("type"));
+            DayOfWeek day = parseDayOfWeek(legacyRecurringMatcher.group("day"));
+            LocalTime start = parseTime(legacyRecurringMatcher.group("time"));
+            RecurringSlot slot = new RecurringSlot(day, start, start);
+            List<RecurringSlot> sortedSlots = sortRecurringSlots(List.of(slot));
+            String canonical = buildRecurringCanonical(type, sortedSlots);
+            return new Session(type, null, -1, null, sortedSlots, canonical, clock);
+        }
+
+        Matcher multiSlotMatcher = MULTI_SLOT_PATTERN.matcher(trimmed);
+        if (multiSlotMatcher.matches()) {
+            SessionType type = SessionType.fromString(multiSlotMatcher.group("type"));
+            List<RecurringSlot> slots = parseRecurringSlots(multiSlotMatcher.group("slots"));
+            validateRecurringSlots(slots);
+            List<RecurringSlot> sortedSlots = sortRecurringSlots(slots);
+            String canonical = buildRecurringCanonical(type, sortedSlots);
+            return new Session(type, null, -1, null, sortedSlots, canonical, clock);
         }
 
         throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_FORMAT);
@@ -139,11 +165,51 @@ public class Session {
         }
     }
 
-    private static DayOfWeek parseDayOfWeek(String raw) {
+    private static LocalTime parseSlotTime(String timeStr) {
+        String trimmed = timeStr.trim();
         try {
-            return DayOfWeek.valueOf(raw.toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_DAY, ex);
+            if (trimmed.contains(":")) {
+                return LocalTime.parse(trimmed, TIME_FORMATTER);
+            }
+            return LocalTime.parse(trimmed, TIME_FORMATTER_COMPACT);
+        } catch (DateTimeParseException ex) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_TIME, ex);
+        }
+    }
+
+    private static DayOfWeek parseDayOfWeek(String raw) {
+        String trimmed = raw.trim().toUpperCase(Locale.ROOT);
+        switch (trimmed) {
+        case "MON":
+        case "MONDAY":
+            return DayOfWeek.MONDAY;
+        case "TUE":
+        case "TUES":
+        case "TUESDAY":
+            return DayOfWeek.TUESDAY;
+        case "WED":
+        case "WEDNESDAY":
+            return DayOfWeek.WEDNESDAY;
+        case "THU":
+        case "THUR":
+        case "THURS":
+        case "THURSDAY":
+            return DayOfWeek.THURSDAY;
+        case "FRI":
+        case "FRIDAY":
+            return DayOfWeek.FRIDAY;
+        case "SAT":
+        case "SATURDAY":
+            return DayOfWeek.SATURDAY;
+        case "SUN":
+        case "SUNDAY":
+            return DayOfWeek.SUNDAY;
+        default:
+            try {
+                return DayOfWeek.valueOf(trimmed);
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_DAY, ex);
+            }
         }
     }
 
@@ -163,6 +229,62 @@ public class Session {
         return time.format(TIME_FORMATTER);
     }
 
+    private static String formatTimeCompact(LocalTime time) {
+        return time.format(TIME_FORMATTER_COMPACT);
+    }
+
+    private static List<RecurringSlot> parseRecurringSlots(String slotsRaw) {
+        String sanitized = slotsRaw.replaceAll("\\s+", "");
+        if (sanitized.isEmpty()) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_FORMAT);
+        }
+        String[] tokens = sanitized.split("-");
+        if (tokens.length < 3 || tokens.length % 3 != 0) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_FORMAT);
+        }
+
+        List<RecurringSlot> slots = new ArrayList<>();
+        for (int i = 0; i < tokens.length; i += 3) {
+            DayOfWeek day = parseDayOfWeek(tokens[i]);
+            LocalTime start = parseSlotTime(tokens[i + 1]);
+            LocalTime end = parseSlotTime(tokens[i + 2]);
+            if (!end.isAfter(start)) {
+                throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_TIME_RANGE);
+            }
+            slots.add(new RecurringSlot(day, start, end));
+        }
+        return slots;
+    }
+
+    private static void validateRecurringSlots(List<RecurringSlot> slots) {
+        if (slots.isEmpty()) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_FORMAT);
+        }
+        List<RecurringSlot> sorted = sortRecurringSlots(slots);
+        for (int i = 1; i < sorted.size(); i++) {
+            RecurringSlot previous = sorted.get(i - 1);
+            RecurringSlot current = sorted.get(i);
+            if (previous.overlaps(current)) {
+                throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_OVERLAP);
+            }
+        }
+    }
+
+    private static String buildRecurringCanonical(SessionType type, List<RecurringSlot> slots) {
+        List<RecurringSlot> sorted = sortRecurringSlots(slots);
+        List<String> parts = new ArrayList<>(sorted.size());
+        for (RecurringSlot slot : sorted) {
+            parts.add(slot.toCanonicalString());
+        }
+        return type + ":" + String.join("-", parts);
+    }
+
+    private static List<RecurringSlot> sortRecurringSlots(List<RecurringSlot> slots) {
+        List<RecurringSlot> sorted = new ArrayList<>(slots);
+        sorted.sort(Comparator.naturalOrder());
+        return sorted;
+    }
+
     public SessionType getType() {
         return type;
     }
@@ -178,7 +300,7 @@ public class Session {
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, oneOffDateTime, dayOfWeek, dayOfMonth, time);
+        return Objects.hash(type, oneOffDateTime, dayOfMonth, time, recurringSlots);
     }
 
     @Override
@@ -194,9 +316,9 @@ public class Session {
         Session otherSession = (Session) other;
         return type == otherSession.type
                 && Objects.equals(oneOffDateTime, otherSession.oneOffDateTime)
-                && Objects.equals(dayOfWeek, otherSession.dayOfWeek)
                 && dayOfMonth == otherSession.dayOfMonth
-                && Objects.equals(time, otherSession.time);
+                && Objects.equals(time, otherSession.time)
+                && Objects.equals(recurringSlots, otherSession.recurringSlots);
     }
 
     /**
@@ -223,7 +345,7 @@ public class Session {
         }
 
         // Both weekly or biweekly
-        return this.dayOfWeek == other.dayOfWeek && this.time.equals(other.time);
+        return hasOverlappingSlots(other);
     }
 
     private boolean occursOn(LocalDateTime candidate) {
@@ -232,7 +354,7 @@ public class Session {
             return oneOffDateTime.equals(candidate);
         case WEEKLY:
         case BIWEEKLY:
-            return candidate.getDayOfWeek() == dayOfWeek && candidate.toLocalTime().equals(time);
+            return recurringSlots.stream().anyMatch(slot -> slot.occursOn(candidate));
         case MONTHLY:
             return candidate.getDayOfMonth() == dayOfMonth && candidate.toLocalTime().equals(time);
         default:
@@ -240,13 +362,19 @@ public class Session {
         }
     }
 
-    private static boolean conflictsMonthlyWithRecurring(Session monthly, Session recurring) {
-        if (!monthly.time.equals(recurring.time)) {
-            return false;
+    private boolean hasOverlappingSlots(Session other) {
+        for (RecurringSlot slot : recurringSlots) {
+            for (RecurringSlot otherSlot : other.recurringSlots) {
+                if (slot.overlaps(otherSlot)) {
+                    return true;
+                }
+            }
         }
-        DayOfWeek recurringDay = recurring.dayOfWeek;
-        if (recurringDay == null) {
-            // Should not happen unless recurring is monthly
+        return false;
+    }
+
+    private static boolean conflictsMonthlyWithRecurring(Session monthly, Session recurring) {
+        if (recurring.recurringSlots.isEmpty()) {
             return false;
         }
         YearMonth start = YearMonth.from(LocalDate.now(monthly.clock));
@@ -256,11 +384,97 @@ public class Session {
                 continue;
             }
             LocalDate date = current.atDay(monthly.dayOfMonth);
-            if (date.getDayOfWeek() == recurringDay) {
-                return true;
+            for (RecurringSlot slot : recurring.recurringSlots) {
+                if (date.getDayOfWeek() == slot.day && slot.contains(monthly.time)) {
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    private static final class RecurringSlot implements Comparable<RecurringSlot> {
+        private final DayOfWeek day;
+        private final LocalTime start;
+        private final LocalTime end;
+
+        private RecurringSlot(DayOfWeek day, LocalTime start, LocalTime end) {
+            this.day = requireNonNull(day);
+            this.start = requireNonNull(start);
+            this.end = requireNonNull(end);
+        }
+
+        private boolean isInstant() {
+            return start.equals(end);
+        }
+
+        private boolean occursOn(LocalDateTime candidate) {
+            if (candidate.getDayOfWeek() != day) {
+                return false;
+            }
+            LocalTime candidateTime = candidate.toLocalTime();
+            if (isInstant()) {
+                return candidateTime.equals(start);
+            }
+            return !candidateTime.isBefore(start) && candidateTime.isBefore(end);
+        }
+
+        private boolean contains(LocalTime candidate) {
+            if (isInstant()) {
+                return candidate.equals(start);
+            }
+            return !candidate.isBefore(start) && candidate.isBefore(end);
+        }
+
+        private boolean overlaps(RecurringSlot other) {
+            if (day != other.day) {
+                return false;
+            }
+            if (isInstant() && other.isInstant()) {
+                return start.equals(other.start);
+            }
+            if (isInstant()) {
+                return !start.isBefore(other.start) && start.isBefore(other.end);
+            }
+            if (other.isInstant()) {
+                return !other.start.isBefore(start) && other.start.isBefore(end);
+            }
+            return start.isBefore(other.end) && other.start.isBefore(end);
+        }
+
+        private String toCanonicalString() {
+            return day.name().substring(0, 3) + "-" + formatTimeCompact(start) + "-" + formatTimeCompact(end);
+        }
+
+        @Override
+        public int compareTo(RecurringSlot other) {
+            int dayCompare = Integer.compare(day.getValue(), other.day.getValue());
+            if (dayCompare != 0) {
+                return dayCompare;
+            }
+            int startCompare = start.compareTo(other.start);
+            if (startCompare != 0) {
+                return startCompare;
+            }
+            return end.compareTo(other.end);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof RecurringSlot)) {
+                return false;
+            }
+            RecurringSlot other = (RecurringSlot) obj;
+            return day == other.day && start.equals(other.start) && end.equals(other.end);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(day, start, end);
+        }
     }
 
     /**

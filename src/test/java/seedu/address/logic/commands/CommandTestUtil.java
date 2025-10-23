@@ -59,8 +59,8 @@ public class CommandTestUtil {
     public static final String VALID_PAID_BOB = "false";
     public static final String VALID_BODYFAT_AMY = "18.5";
     public static final String VALID_BODYFAT_BOB = "20.0";
-    public static final String VALID_SESSION_AMY = "WEEKLY:MON 18:00";
-    public static final String VALID_SESSION_BOB = "WEEKLY:TUE 19:00";
+    public static final String VALID_SESSION_AMY = "WEEKLY:MON-1800-1930-TUE-1800-1900";
+    public static final String VALID_SESSION_BOB = "WEEKLY:WED-1900-2030";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 

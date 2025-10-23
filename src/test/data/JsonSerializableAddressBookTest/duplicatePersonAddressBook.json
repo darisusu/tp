@@ -12,7 +12,7 @@
     "gender": "female",
     "paid": "true",
     "bodyfat": "25.0",
-    "session": "WEEKLY:TUESDAY 18:00",
+    "session": "WEEKLY:TUE-1800-1900",
     "tags": ["friends"]
   }, {
     "name": "Alice Pauline",
@@ -27,6 +27,6 @@
     "gender": "female",
     "paid": "true",
     "bodyfat": "25.0",
-    "session": "WEEKLY:MONDAY 18:00"
+    "session": "WEEKLY:MON-1800-1900"
   } ]
 }

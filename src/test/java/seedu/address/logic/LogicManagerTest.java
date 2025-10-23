@@ -14,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PAID_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.SESSION_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SESSION_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.WEIGHT_DESC_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -177,7 +178,7 @@ public class LogicManagerTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + HEIGHT_DESC_AMY + WEIGHT_DESC_AMY + AGE_DESC_AMY
                 + GENDER_DESC_AMY + DEADLINE_DESC_AMY + PAID_DESC_AMY + BODYFAT_DESC_AMY + SESSION_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withGoal("").withPaid("false")
-                .withWeight("60").withBodyfat("18.5").withSession("WEEKLY:MONDAY 18:00").withTags().build();
+                .withWeight("60").withBodyfat("18.5").withSession(VALID_SESSION_AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);

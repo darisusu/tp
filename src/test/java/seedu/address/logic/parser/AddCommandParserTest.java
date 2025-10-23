@@ -38,6 +38,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_BODYFAT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SESSION_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SESSION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -174,7 +175,7 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withGoal("").withPaid("false")
-                .withWeight("60").withBodyfat("18.5").withSession("WEEKLY:MONDAY 18:00").withTags().build();
+                .withWeight("60").withBodyfat("18.5").withSession(VALID_SESSION_AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + HEIGHT_DESC_AMY + WEIGHT_DESC_AMY + AGE_DESC_AMY + GENDER_DESC_AMY + DEADLINE_DESC_AMY
                 + PAID_DESC_AMY + BODYFAT_DESC_AMY + SESSION_DESC_AMY, new AddCommand(expectedPerson));

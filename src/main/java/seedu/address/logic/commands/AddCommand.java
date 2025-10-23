@@ -56,7 +56,7 @@ public class AddCommand extends Command {
             + PREFIX_GENDER + "male "
             + PREFIX_DEADLINE + "2025-11-10 "
             + PREFIX_PAID + "false "
-            + PREFIX_SESSION + "WEEKLY:MONDAY 18:00 "
+            + PREFIX_SESSION + "WEEKLY:MON-1800-1930-TUE-1800-1900 "
             + PREFIX_BODYFAT + "18.5 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";

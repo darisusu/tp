@@ -13,9 +13,15 @@ import org.junit.jupiter.api.Test;
 public class SessionTest {
 
     @Test
-    public void fromString_validWeekly_returnsCanonical() {
+    public void fromString_validWeeklyMultiSlot_returnsCanonical() {
+        Session session = Session.fromString("weekly:mon-1800-1930-tue-1800-1900");
+        assertEquals("WEEKLY:MON-1800-1930-TUE-1800-1900", session.toStorageString());
+    }
+
+    @Test
+    public void fromString_legacyWeekly_returnsCanonical() {
         Session session = Session.fromString("weekly:monday 18:00");
-        assertEquals("WEEKLY:MONDAY 18:00", session.toStorageString());
+        assertEquals("WEEKLY:MON-1800-1800", session.toStorageString());
     }
 
     @Test
@@ -44,6 +50,19 @@ public class SessionTest {
     }
 
     @Test
+    public void fromString_invalidTimeRange_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                Session.MESSAGE_CONSTRAINTS_TIME_RANGE, () -> Session.fromString("WEEKLY:MON-1900-1800"));
+    }
+
+    @Test
+    public void fromString_overlappingWeeklySlots_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                Session.MESSAGE_CONSTRAINTS_OVERLAP,
+                () -> Session.fromString("WEEKLY:MON-1800-1900-MON-1830-1930"));
+    }
+
+    @Test
     public void fromString_pastDate_throwsIllegalArgumentException() {
         String pastDate = LocalDate.now().minusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
         assertThrows(IllegalArgumentException.class,
@@ -52,25 +71,25 @@ public class SessionTest {
 
     @Test
     public void conflictsWith_sameWeekly_returnsTrue() {
-        Session first = Session.fromString("WEEKLY:MONDAY 18:00");
-        Session second = Session.fromString("weekly:monday 18:00");
+        Session first = Session.fromString("WEEKLY:MON-1800-1930");
+        Session second = Session.fromString("weekly:mon-1800-1930");
         assertTrue(first.conflictsWith(second));
     }
 
     @Test
     public void conflictsWith_weeklyAndOneOffMatching_returnsTrue() {
-        Session weekly = Session.fromString("WEEKLY:FRIDAY 09:00");
+        Session weekly = Session.fromString("WEEKLY:FRI-0900-1100");
         String upcomingFriday = LocalDate.now()
                 .plusDays((5 - LocalDate.now().getDayOfWeek().getValue() + 7) % 7)
                 .format(DateTimeFormatter.ISO_LOCAL_DATE);
-        Session oneOff = Session.fromString(upcomingFriday + " 09:00");
+        Session oneOff = Session.fromString(upcomingFriday + " 09:30");
         assertTrue(weekly.conflictsWith(oneOff));
     }
 
     @Test
     public void conflictsWith_differentSessions_returnsFalse() {
-        Session weekly = Session.fromString("WEEKLY:MONDAY 09:00");
-        Session otherWeekly = Session.fromString("WEEKLY:TUESDAY 10:00");
+        Session weekly = Session.fromString("WEEKLY:MON-0900-1000");
+        Session otherWeekly = Session.fromString("WEEKLY:TUE-1000-1100");
         assertFalse(weekly.conflictsWith(otherWeekly));
     }
 }

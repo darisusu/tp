@@ -37,7 +37,7 @@ public class PersonBuilder {
     public static final String DEFAULT_DEADLINE = "2025-12-31";
     public static final String DEFAULT_PAID = "true";
     public static final String DEFAULT_BODYFAT = "30.0";
-    public static final String DEFAULT_SESSION = "WEEKLY:MONDAY 18:00";
+    public static final String DEFAULT_SESSION = "WEEKLY:MON-1800-1900";
 
     private Name name;
     private Phone phone;
