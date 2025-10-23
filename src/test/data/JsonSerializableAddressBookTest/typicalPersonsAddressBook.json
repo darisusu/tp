@@ -13,7 +13,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "18.5",
-    "session": "WEEKLY:MON-1800-1900",
+    "session": "WEEKLY:MON-0800-0900",
     "tags": ["friends"]
   }, {
     "name": "Benson Meier",
@@ -28,7 +28,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "20.0",
-    "session": "WEEKLY:TUE-1800-1900",
+    "session": "WEEKLY:TUE-0900-1000",
     "tags": ["owesMoney", "friends"]
   }, {
     "name": "Carl Kurz",
@@ -43,7 +43,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "22.0",
-    "session": "WEEKLY:WED-1800-1900",
+    "session": "WEEKLY:WED-1000-1100",
     "tags": []
   }, {
     "name": "Daniel Meier",
@@ -58,7 +58,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "19.5",
-    "session": "WEEKLY:THU-1800-1900",
+    "session": "WEEKLY:THU-1100-1200",
     "tags": ["friends"]
   }, {
     "name": "Elle Meyer",
@@ -73,7 +73,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "17.5",
-    "session": "WEEKLY:FRI-1800-1900",
+    "session": "WEEKLY:FRI-1200-1300",
     "tags": []
   }, {
     "name": "Fiona Kunz",
@@ -88,7 +88,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "16.0",
-    "session": "WEEKLY:SAT-1800-1900",
+    "session": "WEEKLY:SAT-1300-1400",
     "tags": []
   }, {
     "name": "George Best",
@@ -103,7 +103,7 @@
     "deadline": "2025-12-31",
     "paid": "true",
     "bodyfat": "21.0",
-    "session": "WEEKLY:SUN-1800-1900",
+    "session": "WEEKLY:SUN-1400-1500",
     "tags": []
   } ]
 }
