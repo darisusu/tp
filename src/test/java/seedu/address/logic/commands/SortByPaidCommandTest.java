@@ -140,5 +140,15 @@ public class SortByPaidCommandTest {
         public boolean isSortPersonListByPaidCalled() {
             return sortPersonListByPaidCalled;
         }
+
+        @Override
+        public void setPersonListComparator(Comparator<Person> comparator) {
+            throw new AssertionError("sortPersonList should not be called in AddCommandTest.");
+        }
+
+        @Override
+        public void resetPersonListOrder() {
+
+        }
     }
 }
