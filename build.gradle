@@ -61,4 +61,8 @@ shadowJar {
     archiveFileName = 'FitBook.jar'
 }
 
+run {
+    enableAssertions = true
+}
+
 defaultTasks 'clean', 'test'
