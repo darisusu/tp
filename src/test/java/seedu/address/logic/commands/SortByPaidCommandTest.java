@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -139,6 +140,16 @@ public class SortByPaidCommandTest {
 
         public boolean isSortPersonListByPaidCalled() {
             return sortPersonListByPaidCalled;
+        }
+
+        @Override
+        public void setPersonListComparator(Comparator<Person> comparator) {
+            throw new AssertionError("sortPersonList should not be called in AddCommandTest.");
+        }
+
+        @Override
+        public void resetPersonListOrder() {
+
         }
     }
 }
