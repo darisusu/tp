@@ -46,6 +46,15 @@ dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
 - **Format:** `clear`
 - **Guidance:** Deletes **all** trainees. This cannot be undone.
 
+### `sortbypaid` — sort trainees by payment status
+- **Format:** `sortbypaid`
+- **Example:** `sortbypaid`
+- **Guidance:**
+    - Sorts the current trainee list by payment status
+    - Unpaid trainees (paid: false) appear first
+    - Paid trainees (paid: true) appear second
+    - Useful for identifying which trainees need payment follow-up
+
 ## Progress tracking updates
 ### `age` — update a trainee’s age
 - **Format:** `age INDEX age/AGE`
