@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="seedu.address.ui.SidebarPanel"
+      style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-pref-width: 170;"
+      spacing="15">
+
+    <Button fx:id="clientsButton" text="Clients" onAction="#handleClientsClicked"
+            style="-fx-background-color: transparent; -fx-text-fill: #ffffff; -fx-font-size: 14px;"
+            maxWidth="Infinity"/>
+
+    <Region VBox.vgrow="ALWAYS"/>
+</VBox>
