@@ -58,8 +58,7 @@ public class SessionTest {
     @Test
     public void fromString_overlappingWeeklySlots_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class,
-                Session.MESSAGE_CONSTRAINTS_OVERLAP,
-                () -> Session.fromString("WEEKLY:MON-1800-1900-MON-1830-1930"));
+                Session.MESSAGE_CONSTRAINTS_OVERLAP, () -> Session.fromString("WEEKLY:MON-1800-1900-MON-1830-1930"));
     }
 
     @Test

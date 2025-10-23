@@ -138,7 +138,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullSession_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_GOAL, VALID_HEIGHT, VALID_WEIGHT, VALID_AGE, VALID_GENDER, VALID_DEADLINE,
-                VALID_PAID, VALID_BODYFAT, null, VALID_TAGS);
+                VALID_PAID, null ,VALID_BODYFAT, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Session.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
