@@ -78,8 +78,10 @@ public class SessionTest {
     @Test
     public void conflictsWith_weeklyAndOneOffMatching_returnsTrue() {
         Session weekly = Session.fromString("WEEKLY:FRI-0900-1100");
+        // Account for if test runs on a Friday but after 0930
         String upcomingFriday = LocalDate.now()
-                .plusDays((5 - LocalDate.now().getDayOfWeek().getValue() + 7) % 7)
+                .plusDays(((5 - LocalDate.now().getDayOfWeek().getValue() + 7) % 7 + 7) % 7)
+                .plusWeeks(((5 - LocalDate.now().getDayOfWeek().getValue()) % 7 == 0) ? 1 : 0)
                 .format(DateTimeFormatter.ISO_LOCAL_DATE);
         Session oneOff = Session.fromString(upcomingFriday + " 09:30");
         assertTrue(weekly.conflictsWith(oneOff));
