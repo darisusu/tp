@@ -9,6 +9,10 @@ import java.util.logging.Logger;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.Extension;
+import java.util.List;
+
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,8 +38,14 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String COMMAND_REFERENCE_FALLBACK = "Command reference unavailable. "
             + "Please make sure CommandReference.md is packaged with the app.";
 
-    private static final Parser MARKDOWN_PARSER = Parser.builder().build();
-    private static final HtmlRenderer HTML_RENDERER = HtmlRenderer.builder().build();
+    private static final List<Extension> MARKDOWN_EXTENSIONS = List.of(TablesExtension.create());
+
+    private static final Parser MARKDOWN_PARSER =
+            Parser.builder().extensions(MARKDOWN_EXTENSIONS).build();
+
+    private static final HtmlRenderer HTML_RENDERER =
+            HtmlRenderer.builder().extensions(MARKDOWN_EXTENSIONS).build();
+
     private static final String HTML_TEMPLATE_PREFIX = """
             <html><head><meta charset="UTF-8" />
             <style>
@@ -49,9 +59,16 @@ public class HelpWindow extends UiPart<Stage> {
             pre { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 6px; overflow: auto; }
             ul { padding-left: 20px; }
             li { margin-bottom: 6px; }
+            /* Table styling */
+            table { border-collapse: collapse; width: 100%; margin-top: 10px; margin-bottom: 10px; }
+            th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+            th { background-color: #2a2a2a; color: #00b4d8; }
+            tr:nth-child(even) { background-color: #2b2b2b; }
             </style></head><body>
             """;
     private static final String HTML_TEMPLATE_SUFFIX = "</body></html>";
+
+
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
