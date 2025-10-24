@@ -56,9 +56,13 @@ public class CommandResult {
         return exit;
     }
 
-    public boolean isClient() { return showClient; }
+    public boolean isClient() {
+        return showClient;
+    }
 
-    public boolean isDashboard() { return showDashboard; }
+    public boolean isDashboard() {
+        return showDashboard;
+    }
 
     @Override
     public boolean equals(Object other) {

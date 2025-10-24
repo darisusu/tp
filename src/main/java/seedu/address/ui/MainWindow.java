@@ -145,10 +145,14 @@ public class MainWindow extends UiPart<Stage> {
         sidebarPanel.setSidebarListener(new SidebarPanel.SidebarListener() {
 
             @Override
-            public void onShowClients() { showClients(); }
+            public void onShowClients() {
+                showClients();
+            }
 
             @Override
-            public void onShowDashboard() { showDashboard(); }
+            public void onShowDashboard() {
+                showDashboard();
+            }
 
             @Override
             public void onExit() {
