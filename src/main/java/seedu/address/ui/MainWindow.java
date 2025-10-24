@@ -267,6 +267,14 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            if (commandResult.isClient()) {
+                showClients();
+            }
+
+            if (commandResult.isDashboard()) {
+                showDashboard();
+            }
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
