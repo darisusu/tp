@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -145,12 +146,12 @@ public class MainWindow extends UiPart<Stage> {
 
             @Override
             public void onShowClients() {
-                mainContentPlaceholder.getChildren().setAll(personListPanel.getRoot());
+                showClients();
             }
 
             @Override
             public void onShowDashboard() {
-                mainContentPlaceholder.getChildren().setAll(dashboardPanel.getRoot());
+                showDashboard();
             }
 
             @Override
@@ -190,6 +191,40 @@ public class MainWindow extends UiPart<Stage> {
         if (guiSettings.getWindowCoordinates() != null) {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+        }
+    }
+
+    /**
+     * Switches the main content area to show the dashboard, if not already displayed.
+     */
+    @FXML
+    public void showDashboard() {
+        Node current = mainContentPlaceholder.getChildren().isEmpty()
+                ? null
+                : mainContentPlaceholder.getChildren().get(0);
+
+        Node dashboardRoot = dashboardPanel.getRoot();
+
+        // Only switch if the dashboard isn't already displayed
+        if (current != dashboardRoot) {
+            mainContentPlaceholder.getChildren().setAll(dashboardRoot);
+        }
+    }
+
+    /**
+     * Switches the main content area to show the client list, if not already displayed.
+     */
+    @FXML
+    public void showClients() {
+        Node current = mainContentPlaceholder.getChildren().isEmpty()
+                ? null
+                : mainContentPlaceholder.getChildren().get(0);
+
+        Node clientListRoot = personListPanel.getRoot();
+
+        // Only switch if the client list isn't already displayed
+        if (current != clientListRoot) {
+            mainContentPlaceholder.getChildren().setAll(clientListRoot);
         }
     }
 
@@ -235,6 +270,14 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            if (commandResult.isClient()) {
+                showClients();
+            }
+
+            if (commandResult.isDashboard()) {
+                showDashboard();
+            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
