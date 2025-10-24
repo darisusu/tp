@@ -4,15 +4,14 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.commonmark.Extension;
+import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import org.commonmark.ext.gfm.tables.TablesExtension;
-import org.commonmark.Extension;
-import java.util.List;
-
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,84 +46,84 @@ public class HelpWindow extends UiPart<Stage> {
             HtmlRenderer.builder().extensions(MARKDOWN_EXTENSIONS).build();
 
     private static final String HTML_TEMPLATE_PREFIX = """
-            <html><head><meta charset="UTF-8" />
-            <style>
-            body {
-                background-color: #383838;
-                color: #e6e6e6;
-                font-family: 'Segoe UI', 'Segoe UI Semibold', sans-serif;
-                margin: 0;
-                padding: 16px;
-            }
-            
-            h1, h2, h3, h4, h5 {
-                color: white;
-                font-weight: 300;
-            }
-            
-            a {
-                color: #00b4d8;
-                text-decoration: none;
-            }
-            a:hover {
-                color: #4dabf7;
-            }
-            
-            code, pre {
-                font-family: 'Consolas', 'Courier New', monospace;
-                background: #2e2e2e;
-                color: #f8f8f8;
-                padding: 2px 4px;
-                border-radius: 4px;
-            }
-            pre {
-                padding: 10px;
-                border-radius: 6px;
-                overflow: auto;
-            }
-            
-            ul {
-                padding-left: 20px;
-            }
-            
-            li {
-                margin-bottom: 6px;
-            }
-            
-            /* Table styling */
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                background-color: #383838;
-                border-radius: 6px;
-                overflow: hidden;
-            }
-            
-            th, td {
-                border: 1px solid #4a4a4a;
-                padding: 8px 10px;
-                text-align: left;
-                font-size: 11pt;
-                color: #f5f5f5;
-            }
-            
-            th {
-                background-color: #2a2a2a;
-                color: #00b4d8;
-                font-weight: 600;
-            }
-            
-            tr:nth-child(even) {
-                background-color: #3c3e3f;
-            }
-            
-            tr:nth-child(odd) {
-                background-color: #515658;
-            }
-            </style></head><body>
-            """;
+<html><head><meta charset="UTF-8" />
+<style>
+body {
+    background-color: #383838;
+    color: #e6e6e6;
+    font-family: 'Segoe UI', 'Segoe UI Semibold', sans-serif;
+    margin: 0;
+    padding: 16px;
+}
+
+h1, h2, h3, h4, h5 {
+    color: white;
+    font-weight: 300;
+}
+
+a {
+    color: #00b4d8;
+    text-decoration: none;
+}
+a:hover {
+    color: #4dabf7;
+}
+
+code, pre {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #2e2e2e;
+    color: #f8f8f8;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+pre {
+    padding: 10px;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 6px;
+}
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #383838;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #4a4a4a;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 11pt;
+    color: #f5f5f5;
+}
+
+th {
+    background-color: #2a2a2a;
+    color: #00b4d8;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #3c3e3f;
+}
+
+tr:nth-child(odd) {
+    background-color: #515658;
+}
+</style></head><body>
+                                """;
 
     private static final String HTML_TEMPLATE_SUFFIX = "</body></html>";
 
