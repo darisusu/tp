@@ -55,6 +55,28 @@ dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
     - Paid trainees (paid: true) appear second
     - Useful for identifying which trainees need payment follow-up
 
+### `sortbydeadline` — sort trainees by their payment deadlines in ascending order
+- **Format:** `sortbydeadline`
+- **Example:** `sortbydeadline`
+- **Guidance:**
+    - Sorts the current trainee list by payment deadline in ascending order
+    - Trainees with earlier deadlines appear first
+    - Trainees with no deadlines appear last
+    - Useful for identifying which trainees are due for payment next
+
+### `sortbydeadline asc` — same as above
+- **Format:** `sortbydeadline asc`
+- **Example:** `sortbydeadline asc`
+
+### `sortbydeadline desc` — sort trainees by their payment deadlines in descending order
+- **Format:** `sortbydeadline desc`
+- **Example:** `sortbydeadline desc`
+- **Guidance:**
+    - Sorts the current trainee list by payment deadline in descending order
+    - Trainees with later deadlines appear first
+    - Trainees with no deadlines appear last
+    - Useful for identifying which trainees are not due for payment soon
+
 ## Progress tracking updates
 ### `age` — update a trainee’s age
 - **Format:** `age INDEX age/AGE`
@@ -105,7 +127,7 @@ dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney`
 ## Sessions
 
 - Use the following formats when specifying session timings with the s/(schedule) prefix.
-- Note: Fitbook will automatically handle conflicts between overlapping sessions with error message.
+- Note: Fitbook will automatically handle conflicts between overlapping sessions with an error message.
 
 | **Type** | **Format** | **Example** |
 |-----------|-------------|-------------|
