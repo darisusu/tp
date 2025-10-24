@@ -49,23 +49,83 @@ public class HelpWindow extends UiPart<Stage> {
     private static final String HTML_TEMPLATE_PREFIX = """
             <html><head><meta charset="UTF-8" />
             <style>
-            body { background-color: #1d1d1d; color: #f5f5f5; font-family: 'Segoe UI', sans-serif;
-                margin: 0; padding: 16px; }
-            h1, h2, h3, h4, h5 { color: #00b4d8; }
-            a { color: #4dabf7; }
-            a:hover { color: #74c0fc; }
-            code { font-family: 'Consolas', 'Courier New', monospace; background: rgba(255, 255, 255, 0.05);
-                padding: 2px 4px; border-radius: 4px; }
-            pre { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 6px; overflow: auto; }
-            ul { padding-left: 20px; }
-            li { margin-bottom: 6px; }
+            body {
+                background-color: #383838;
+                color: #e6e6e6;
+                font-family: 'Segoe UI', 'Segoe UI Semibold', sans-serif;
+                margin: 0;
+                padding: 16px;
+            }
+            
+            h1, h2, h3, h4, h5 {
+                color: white;
+                font-weight: 300;
+            }
+            
+            a {
+                color: #00b4d8;
+                text-decoration: none;
+            }
+            a:hover {
+                color: #4dabf7;
+            }
+            
+            code, pre {
+                font-family: 'Consolas', 'Courier New', monospace;
+                background: #2e2e2e;
+                color: #f8f8f8;
+                padding: 2px 4px;
+                border-radius: 4px;
+            }
+            pre {
+                padding: 10px;
+                border-radius: 6px;
+                overflow: auto;
+            }
+            
+            ul {
+                padding-left: 20px;
+            }
+            
+            li {
+                margin-bottom: 6px;
+            }
+            
             /* Table styling */
-            table { border-collapse: collapse; width: 100%; margin-top: 10px; margin-bottom: 10px; }
-            th, td { border: 1px solid #555; padding: 8px; text-align: left; }
-            th { background-color: #2a2a2a; color: #00b4d8; }
-            tr:nth-child(even) { background-color: #2b2b2b; }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                background-color: #383838;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+            
+            th, td {
+                border: 1px solid #4a4a4a;
+                padding: 8px 10px;
+                text-align: left;
+                font-size: 11pt;
+                color: #f5f5f5;
+            }
+            
+            th {
+                background-color: #2a2a2a;
+                color: #00b4d8;
+                font-weight: 600;
+            }
+            
+            tr:nth-child(even) {
+                background-color: #3c3e3f;
+            }
+            
+            tr:nth-child(odd) {
+                background-color: #515658;
+            }
             </style></head><body>
             """;
+
     private static final String HTML_TEMPLATE_SUFFIX = "</body></html>";
 
 
