@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -144,14 +145,10 @@ public class MainWindow extends UiPart<Stage> {
         sidebarPanel.setSidebarListener(new SidebarPanel.SidebarListener() {
 
             @Override
-            public void onShowClients() {
-                mainContentPlaceholder.getChildren().setAll(personListPanel.getRoot());
-            }
+            public void onShowClients() { showClients(); }
 
             @Override
-            public void onShowDashboard() {
-                mainContentPlaceholder.getChildren().setAll(dashboardPanel.getRoot());
-            }
+            public void onShowDashboard() { showDashboard(); }
 
             @Override
             public void onExit() {
@@ -190,6 +187,40 @@ public class MainWindow extends UiPart<Stage> {
         if (guiSettings.getWindowCoordinates() != null) {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+        }
+    }
+
+    /**
+     * Switches the main content area to show the dashboard, if not already displayed.
+     */
+    @FXML
+    public void showDashboard() {
+        Node current = mainContentPlaceholder.getChildren().isEmpty()
+                ? null
+                : mainContentPlaceholder.getChildren().get(0);
+
+        Node dashboardRoot = dashboardPanel.getRoot();
+
+        // Only switch if the dashboard isn't already displayed
+        if (current != dashboardRoot) {
+            mainContentPlaceholder.getChildren().setAll(dashboardRoot);
+        }
+    }
+
+    /**
+     * Switches the main content area to show the client list, if not already displayed.
+     */
+    @FXML
+    public void showClients() {
+        Node current = mainContentPlaceholder.getChildren().isEmpty()
+                ? null
+                : mainContentPlaceholder.getChildren().get(0);
+
+        Node clientListRoot = personListPanel.getRoot();
+
+        // Only switch if the client list isn't already displayed
+        if (current != clientListRoot) {
+            mainContentPlaceholder.getChildren().setAll(clientListRoot);
         }
     }
 
