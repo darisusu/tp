@@ -6,7 +6,7 @@ pageNav: 3
 
 # FitBook User Guide
 
-Hi Trainers!<br> 
+Hi Trainers!<br>
 **FitBook** is a **desktop app for managing trainees, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). With a few simple commands, you can utilise **FitBook's** in-built functions to manage all your trainees right at your fingertips! Be it from your client's body statistics to session and payment timings, **FitBook** has it all!
 
 <!-- * Table of Contents -->
@@ -72,7 +72,7 @@ Hi Trainers!<br>
 
 Opens a window which lists all the commands available in AddressBook, as well as other usage tips and examples.
 
-![help_window_screenshot](images/help_window.png)
+![help_window_screenshot](images/helpMessage.png)
 
 Format: `help`
 
