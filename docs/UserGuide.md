@@ -4,9 +4,10 @@
   pageNav: 3
 ---
 
-# AB-3 User Guide
+# FitBook User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Hi Trainers!<br> 
+**FitBook** is a **desktop app for managing trainees, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). With a few simple commands, you can utilise **FitBook's** in-built functions to manage all your trainees right at your fingertips! Be it from your client's body statistics to session and payment timings, **FitBook** has it all!
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -197,11 +198,11 @@ Examples:
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+FitBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+FitBook data are saved automatically as a JSON file `[JAR file location]/data/FitBook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
