@@ -3,8 +3,11 @@ package seedu.address.commons.util;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,13 +19,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -40,54 +41,48 @@ public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
-        // === Match original AB3 Jackson 2.7 behavior ===
+        // Match AB3 Jackson 2.7 behavior
         objectMapper.findAndRegisterModules();
+        objectMapper.disable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, false);
+
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
-        // Keep original insertion order for both fields and map keys
-        objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, false);
+        // Force stable field order for deterministic JSON
+        objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
         objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, false);
-
-        // Register time module
         objectMapper.registerModule(new JavaTimeModule());
 
         // Custom serializers/deserializers
         SimpleModule customModule = new SimpleModule("CustomModule")
                 .addSerializer(Level.class, new ToStringSerializer())
                 .addDeserializer(Level.class, new LevelDeserializer(Level.class))
-                // Keep relative filenames (fix ConfigUtilTest)
-                .addSerializer(Path.class, new JsonSerializer<Path>() {
-                    @Override
-                    public void serialize(Path value, JsonGenerator gen, SerializerProvider serializers)
-                            throws IOException {
-                        gen.writeString(value.getFileName().toString());
-                    }
-                })
-                .addDeserializer(Path.class, new JsonDeserializer<Path>() {
-                    @Override
-                    public Path deserialize(JsonParser p, DeserializationContext ctxt)
-                            throws IOException {
-                        return Path.of(p.getValueAsString());
-                    }
-                });
-
+                // Preserve only the filename part of Paths
+                .addSerializer(Path.class, new PathSerializer())
+                .addDeserializer(Path.class, new PathDeserializer());
         objectMapper.registerModule(customModule);
     }
 
+    /**
+     * Writes an object as JSON to the specified file.
+     */
     static <T> void serializeObjectToJsonFile(Path jsonFile, T objectToSerialize) throws IOException {
         FileUtil.writeToFile(jsonFile, toJsonString(objectToSerialize));
     }
 
+    /**
+     * Reads and converts a JSON file to an object of the given class.
+     */
     static <T> T deserializeObjectFromJsonFile(Path jsonFile, Class<T> classOfObjectToDeserialize)
             throws IOException {
         return fromJsonString(FileUtil.readFromFile(jsonFile), classOfObjectToDeserialize);
     }
 
     /**
-     * Returns the JSON object from the given file or {@code Optional.empty()} if the file is not found.
+     * Reads a JSON file into an object, returning Optional.empty() if the file does not exist.
      */
     public static <T> Optional<T> readJsonFile(Path filePath, Class<T> classOfObjectToDeserialize)
             throws DataLoadingException {
@@ -107,7 +102,7 @@ public class JsonUtil {
     }
 
     /**
-     * Saves the JSON object to the specified file.
+     * Saves the given object as a JSON file.
      */
     public static <T> void saveJsonFile(T jsonFile, Path filePath) throws IOException {
         requireNonNull(filePath);
@@ -116,37 +111,72 @@ public class JsonUtil {
     }
 
     /**
-     * Converts a JSON string to an instance of a class.
+     * Converts a JSON string to an object of the given class.
      */
     public static <T> T fromJsonString(String json, Class<T> instanceClass) throws IOException {
         return objectMapper.readValue(json, instanceClass);
     }
 
     /**
-     * Converts a class instance to its JSON string representation.
+     * Converts an object to its JSON string representation without pretty-printing.
      */
     public static <T> String toJsonString(T instance) throws JsonProcessingException {
-        // Force compact JSON by disabling indentation
-        objectMapper.disable(SerializationFeature.INDENT_OUTPUT);
-        return objectMapper.writeValueAsString(instance);
+        try {
+            // Create generator with NO pretty printer
+            StringWriter sw = new StringWriter();
+            JsonGenerator gen = objectMapper.getFactory().createGenerator(sw);
+            gen.setPrettyPrinter(null);
+            // Disable spaces between tokens entirely
+            gen.useDefaultPrettyPrinter();
+            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, false);
+            objectMapper.writeValue(gen, instance);
+            gen.close();
+            return sw.toString().replaceAll("(?m)\\s+(?=[,:\\[\\]\\{\\}])", "");
+            // removes spacing around JSON symbols only, not inside strings
+        } catch (IOException e) {
+            throw new JsonProcessingException("serialization failed", e) {};
+        }
     }
 
-    /**
-     * Deserializer for java.util.logging.Level.
-     */
-    private static class LevelDeserializer extends FromStringDeserializer<Level> {
+    /** Custom deserializer for java.util.logging.Level. */
+    private static class LevelDeserializer extends
+            com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer<Level> {
         protected LevelDeserializer(Class<?> vc) {
             super(vc);
         }
 
         @Override
-        protected Level _deserialize(String value, DeserializationContext ctxt) {
-            return Level.parse(value);
+        public Level deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException {
+            return Level.parse(parser.getValueAsString());
+        }
+    }
+
+    /** Custom serializer for java.nio.file.Path that stores only the filename. */
+    private static class PathSerializer extends com.fasterxml.jackson.databind.ser.std.StdScalarSerializer<Path> {
+        protected PathSerializer() {
+            super(Path.class);
         }
 
         @Override
-        public Class<Level> handledType() {
-            return Level.class;
+        public void serialize(Path value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+            gen.writeString(value.toString());
+        }
+    }
+
+    /** Custom deserializer for java.nio.file.Path. */
+    private static class PathDeserializer extends com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer<Path> {
+        protected PathDeserializer() {
+            super(Path.class);
+        }
+
+        @Override
+        public Path deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException {
+            String value = parser.getValueAsString();
+            try {
+                return Paths.get(value);
+            } catch (InvalidPathException ex) {
+                throw InvalidFormatException.from(parser, "Invalid path", value, Path.class);
+            }
         }
     }
 }
