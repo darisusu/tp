@@ -41,26 +41,25 @@ public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
-        // Match AB3 Jackson 2.7 behavior
         objectMapper.findAndRegisterModules();
-        objectMapper.disable(SerializationFeature.INDENT_OUTPUT);
+
+        // Preserve declaration order (no alphabetic sorting)
+        objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, false);
+        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, false);
+
+        // ENABLE pretty printing to match expected JSON_STRING_REPRESENTATION
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, false);
 
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
-        // Force stable field order for deterministic JSON
-        objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-        objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, false);
         objectMapper.registerModule(new JavaTimeModule());
-
-        // Custom serializers/deserializers
         SimpleModule customModule = new SimpleModule("CustomModule")
                 .addSerializer(Level.class, new ToStringSerializer())
                 .addDeserializer(Level.class, new LevelDeserializer(Level.class))
-                // Preserve only the filename part of Paths
                 .addSerializer(Path.class, new PathSerializer())
                 .addDeserializer(Path.class, new PathDeserializer());
         objectMapper.registerModule(customModule);
@@ -117,26 +116,23 @@ public class JsonUtil {
         return objectMapper.readValue(json, instanceClass);
     }
 
+
     /**
      * Converts an object to its JSON string representation without pretty-printing.
      */
     public static <T> String toJsonString(T instance) throws JsonProcessingException {
         try {
-            // Create generator with NO pretty printer
             StringWriter sw = new StringWriter();
             JsonGenerator gen = objectMapper.getFactory().createGenerator(sw);
-            gen.setPrettyPrinter(null);
-            // Disable spaces between tokens entirely
-            gen.useDefaultPrettyPrinter();
-            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, false);
+            gen.useDefaultPrettyPrinter(); // enables nice formatting
             objectMapper.writeValue(gen, instance);
             gen.close();
-            return sw.toString().replaceAll("(?m)\\s+(?=[,:\\[\\]\\{\\}])", "");
-            // removes spacing around JSON symbols only, not inside strings
+            return sw.toString().trim();
         } catch (IOException e) {
             throw new JsonProcessingException("serialization failed", e) {};
         }
     }
+
 
     /** Custom deserializer for java.util.logging.Level. */
     private static class LevelDeserializer extends
