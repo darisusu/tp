@@ -3,12 +3,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="10"
-      style="-fx-padding: 10;"
-      HBox.hgrow="ALWAYS"
-      VBox.vgrow="ALWAYS">
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<HBox fx:id="columns" spacing="16" xmlns:fx="http://javafx.com/fxml">
 
     <!-- Left column -->
     <VBox fx:id="leftColumn"
@@ -19,12 +16,17 @@
         <!-- Lists or other components go here -->
     </VBox>
 
-    <!-- Right column -->
+    <!-- RIGHT column -->
     <VBox fx:id="rightColumn"
-          spacing="10"
-          style="-fx-background-color: #e0e0e0; -fx-padding: 10;"
-          HBox.hgrow="ALWAYS"
+          spacing="8"
+          prefWidth="520"
           VBox.vgrow="ALWAYS">
-        <!-- Lists or other components go here -->
+        <!-- Header shown above the unpaid list -->
+        <Label fx:id="rightHeader"
+               text="Unpaid clients"
+               styleClass="dashboard-section-title"/>
+
+        <!-- Placeholder where Java inserts PersonListPanel root (ListView) -->
+        <Pane fx:id="rightListPlaceholder" VBox.vgrow="ALWAYS"/>
     </VBox>
 </HBox>

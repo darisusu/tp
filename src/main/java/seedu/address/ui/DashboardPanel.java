@@ -4,6 +4,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
@@ -14,6 +17,7 @@ public class DashboardPanel extends UiPart<Region> {
 
     @FXML private VBox leftColumn;
     @FXML private VBox rightColumn;
+    @FXML private Pane rightListPlaceholder;
 
     private PersonListPanel unpaidListPanel;
 
@@ -23,19 +27,19 @@ public class DashboardPanel extends UiPart<Region> {
 
     /** Call this once from MainWindow after construction. */
     public void bindRightList(ObservableList<Person> masterList) {
-        // Unpaid only  ->  p.getPaid().value == false
+        // Unpaid only  ->  p.getPaymentStatus().value == false
         FilteredList<Person> unpaidOnly = new FilteredList<>(masterList, p ->
                 p.getPaymentStatus() != null && !p.getPaymentStatus().value);
 
-        // Sort by deadline ascending (use your comparator)
+        // Sort by deadline ascending
         SortedList<Person> unpaidByDeadline =
                 new SortedList<>(unpaidOnly, new PersonDeadlineComparator(true));
 
         // Render into the right column
         unpaidListPanel = new PersonListPanel(unpaidByDeadline);
-        rightColumn.getChildren().setAll(unpaidListPanel.getRoot());
-    }
+        Node listRoot = unpaidListPanel.getRoot();
 
-    public VBox getLeftColumn() { return leftColumn; }
-    public VBox getRightColumn() { return rightColumn; }
+        rightListPlaceholder.getChildren().setAll(listRoot);
+        VBox.setVgrow(listRoot, Priority.ALWAYS);
+    }
 }
