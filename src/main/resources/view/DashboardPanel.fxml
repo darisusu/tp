@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:id="columns">
+    <padding>
+        <Insets top="8" right="8" bottom="8" left="8"/>
+    </padding>
 
-<HBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="10"
-      style="-fx-padding: 10;"
-      HBox.hgrow="ALWAYS"
-      VBox.vgrow="ALWAYS">
+    <!-- 50 / 50 columns -->
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+        <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS"/>
+    </rowConstraints>
 
-    <!-- Left column -->
+    <!-- LEFT column (white background) -->
     <VBox fx:id="leftColumn"
-          spacing="10"
-          style="-fx-background-color: #f0f0f0; -fx-padding: 10;"
-          HBox.hgrow="ALWAYS"
-          VBox.vgrow="ALWAYS">
-        <!-- Lists or other components go here -->
-    </VBox>
+          GridPane.columnIndex="0"
+          GridPane.rowIndex="0"
+          spacing="8"
+          VBox.vgrow="ALWAYS"
+          style="-fx-background-color: white; -fx-padding: 8;"/>
 
-    <!-- Right column -->
+    <!-- RIGHT column -->
     <VBox fx:id="rightColumn"
-          spacing="10"
-          style="-fx-background-color: #e0e0e0; -fx-padding: 10;"
-          HBox.hgrow="ALWAYS"
+          GridPane.columnIndex="1"
+          GridPane.rowIndex="0"
+          spacing="8"
           VBox.vgrow="ALWAYS">
-        <!-- Lists or other components go here -->
+
+        <!-- Header: centered + white text -->
+        <Label fx:id="rightHeader"
+               text="Unpaid Trainees"
+               maxWidth="Infinity"
+               alignment="CENTER"
+               styleClass="dashboard-section-title"
+               style="-fx-text-fill: white;"/>
+
+        <!-- List placeholder (PersonListPanel root injected here) -->
+        <StackPane fx:id="rightListPlaceholder" VBox.vgrow="ALWAYS"/>
     </VBox>
-</HBox>
+</GridPane>

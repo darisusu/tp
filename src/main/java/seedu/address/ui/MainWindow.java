@@ -142,6 +142,9 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         sidebarPanel = new SidebarPanel();
         dashboardPanel = new DashboardPanel();
+
+        dashboardPanel.bindRightList(logic.getFilteredPersonList());
+
         sidebarPanel.setSidebarListener(new SidebarPanel.SidebarListener() {
 
             @Override

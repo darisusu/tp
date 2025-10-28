@@ -39,7 +39,7 @@ public class AddCommand extends Command {
             + PREFIX_WEIGHT + "WEIGHT "
             + PREFIX_AGE + "AGE "
             + PREFIX_GENDER + "GENDER "
-            + PREFIX_DEADLINE + "DEADLINE(yyyy-MM-dd) "
+            + PREFIX_DEADLINE + "DEADLINE(YYYY-MM-DD) "
             + PREFIX_PAID + "PAID "
             + PREFIX_SESSION + "SESSION "
             + PREFIX_BODYFAT + "BODYFAT "
