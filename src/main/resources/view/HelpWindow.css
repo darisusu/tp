@@ -102,6 +102,16 @@
     -fx-border-color: #4a4a4a;
 }
 
+.command-reference-plain {
+    -fx-padding: 0;
+}
+
+.command-reference-plain .text {
+    -fx-fill: #e6e6e6;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 12.5px;
+}
+
 .command-reference-bullet-list {
     -fx-spacing: 6;
 }
