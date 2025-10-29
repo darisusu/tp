@@ -19,16 +19,16 @@ public class SessionTest {
     }
 
     @Test
-    public void fromString_legacyWeekly_returnsCanonical() {
-        Session session = Session.fromString("weekly:monday 18:00");
-        assertEquals("WEEKLY:MON-1800-1800", session.toStorageString());
-    }
-
-    @Test
     public void fromString_validOneOff_returnsCanonical() {
         String date = LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
         Session session = Session.fromString(date + " 09:30");
         assertEquals(date + " 09:30", session.toStorageString());
+    }
+
+    @Test
+    public void fromString_legacyWeeklyFormat_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                Session.MESSAGE_CONSTRAINTS_MISSING_END_TIME, () -> Session.fromString("weekly:monday 18:00"));
     }
 
     @Test
@@ -40,13 +40,13 @@ public class SessionTest {
     @Test
     public void fromString_invalidTime_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class,
-                Session.MESSAGE_CONSTRAINTS_TIME, () -> Session.fromString("WEEKLY:MONDAY 25:00"));
+                Session.MESSAGE_CONSTRAINTS_TIME, () -> Session.fromString("WEEKLY:MON-2500-2600"));
     }
 
     @Test
     public void fromString_invalidDay_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class,
-                Session.MESSAGE_CONSTRAINTS_DAY, () -> Session.fromString("WEEKLY:FUNDAY 18:00"));
+                Session.MESSAGE_CONSTRAINTS_DAY, () -> Session.fromString("WEEKLY:FUNDAY-1800-1900"));
     }
 
     @Test
