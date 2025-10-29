@@ -53,7 +53,7 @@ public class DashboardPanel extends UiPart<Region> {
     @FXML private Pane leftListPlaceholder;
 
     private PersonListPanel unpaidListPanel;
-    private PersonListPanel sessionListPanel;
+    private SessionListPanel sessionListPanel;
 
     public DashboardPanel() {
         super(FXML);
@@ -82,7 +82,7 @@ public class DashboardPanel extends UiPart<Region> {
         // Sort by next session date ascending (soonest first)
         var sortedBySession = new SortedList<>(masterList, new PersonSessionComparator());
 
-        sessionListPanel = new PersonListPanel(sortedBySession);
+        SessionListPanel sessionListPanel = new SessionListPanel(sortedBySession);
         Node listRoot = sessionListPanel.getRoot();
         leftListPlaceholder.getChildren().setAll(listRoot);
         VBox.setVgrow(listRoot, Priority.ALWAYS);
