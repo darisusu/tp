@@ -435,7 +435,6 @@ public class Session {
         }
     }
 
-
     private static boolean conflictsMonthlyWithRecurring(Session monthly, Session recurring) {
         if (recurring.recurringSlots.isEmpty()) {
             return false;
