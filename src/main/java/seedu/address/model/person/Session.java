@@ -37,6 +37,8 @@ public class Session {
             "Error: Session end time must be after the start time.";
     public static final String MESSAGE_CONSTRAINTS_OVERLAP =
             "Error: Weekly session slots must not overlap.";
+    public static final String MESSAGE_CONSTRAINTS_MISSING_END_TIME = "Error: Weekly and biweekly sessions must include both "
+            + "a start and end time, e.g. WEEKLY:MON-1300-1400.";
 
     private static final Pattern ONE_OFF_PATTERN = Pattern.compile(
             "^(?<date>\\d{4}-\\d{2}-\\d{2})\\s+(?<time>\\d{2}:\\d{2})$");
@@ -116,13 +118,7 @@ public class Session {
 
         Matcher legacyRecurringMatcher = LEGACY_RECURRING_PATTERN.matcher(trimmed);
         if (legacyRecurringMatcher.matches()) {
-            SessionType type = SessionType.fromString(legacyRecurringMatcher.group("type"));
-            DayOfWeek day = parseDayOfWeek(legacyRecurringMatcher.group("day"));
-            LocalTime start = parseTime(legacyRecurringMatcher.group("time"));
-            RecurringSlot slot = new RecurringSlot(day, start, start);
-            List<RecurringSlot> sortedSlots = sortRecurringSlots(List.of(slot));
-            String canonical = buildRecurringCanonical(type, sortedSlots);
-            return new Session(type, null, -1, null, sortedSlots, canonical, clock);
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS_MISSING_END_TIME);
         }
 
         Matcher multiSlotMatcher = MULTI_SLOT_PATTERN.matcher(trimmed);

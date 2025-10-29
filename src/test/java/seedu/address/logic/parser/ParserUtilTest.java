@@ -28,6 +28,7 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
     private static final String INVALID_SESSION = "2024-13-40 25:00";
+    private static final String INVALID_LEGACY_SESSION = "WEEKLY:MON 18:00";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -205,6 +206,12 @@ public class ParserUtilTest {
     @Test
     public void parseSession_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseSession(INVALID_SESSION));
+    }
+
+    @Test
+    public void parseSession_missingEndTime_throwsParseException() {
+        ParseException exception = assertThrows(ParseException.class, () -> ParserUtil.parseSession(INVALID_LEGACY_SESSION));
+        assertEquals(Session.MESSAGE_CONSTRAINTS_MISSING_END_TIME, exception.getMessage());
     }
 
     @Test

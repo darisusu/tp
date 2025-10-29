@@ -11,8 +11,10 @@ public class PersonSessionComparator implements Comparator<Person> {
 
     @Override
     public int compare(Person p1, Person p2) {
-        LocalDateTime n1 = p1.getSession().getNextOccurrence().orElse(null);
-        LocalDateTime n2 = p2.getSession().getNextOccurrence().orElse(null);
+        Session s1 = p1.getSession();
+        Session s2 = p2.getSession();
+        LocalDateTime n1 = s1 == null ? null : s1.getNextOccurrence().orElse(null);
+        LocalDateTime n2 = s2 == null ? null : s2.getNextOccurrence().orElse(null);
 
         if (n1 == null && n2 == null) {
             return 0;
