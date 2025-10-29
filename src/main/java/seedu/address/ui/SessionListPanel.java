@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -19,6 +20,9 @@ public class SessionListPanel extends UiPart<Region> {
     @FXML
     private ListView<Person> sessionListView;
 
+    /**
+     * Creates a {@code SessionListPanel} with the given {@code ObservableList}.
+     */
     public SessionListPanel(ObservableList<Person> personList) {
         super(FXML);
         sessionListView.setItems(personList);

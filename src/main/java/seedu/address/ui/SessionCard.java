@@ -25,6 +25,9 @@ public class SessionCard extends UiPart<Region> {
     @FXML
     private Label session;
 
+    /**
+     * Creates a {@code SessionCard} with the given {@code Person} and {@code Session} to display.
+     */
     public SessionCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
