@@ -11,6 +11,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Goal;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -82,7 +83,7 @@ public class PersonCard extends UiPart<Region> {
         gender.setText("Gender: " + valueOrPlaceholder(person.getGender(), g -> g.value));
         email.setText("Email: " + valueOrPlaceholder(person.getEmail(), Email::toString));
         deadline.setText("Payment Deadline: " + deadlineDisplay(person.getDeadline()));
-        goal.setText("Personal Goal: " + valueOrPlaceholder(person.getGoal(), g -> g.value));
+        goal.setText("Personal Goal: " + goalDisplay(person.getGoal()));
         bodyfat.setText("Bodyfat Percentage: " + valueWithUnit(person.getBodyfat(), Bodyfat::toString, "%"));
         paid.setText("Payment Status: " + paymentDisplay(person.getPaymentStatus()));
         session.setText("Session: " + valueOrPlaceholder(person.getSession(), Session::toStorageString));
@@ -93,6 +94,13 @@ public class PersonCard extends UiPart<Region> {
 
     private <T> String valueOrPlaceholder(T value, java.util.function.Function<T, String> mapper) {
         return value == null ? "Not specified" : mapper.apply(value);
+    }
+
+    private String goalDisplay(Goal goalValue) {
+        if (goalValue == null || goalValue.value.isEmpty()) {
+            return "Not specified";
+        }
+        return goalValue.value;
     }
 
     private <T> String valueWithUnit(T value, java.util.function.Function<T, String> formatter) {

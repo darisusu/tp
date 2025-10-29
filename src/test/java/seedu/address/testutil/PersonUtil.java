@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BODYFAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HEIGHT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAID;
@@ -42,13 +43,26 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        sb.append(PREFIX_HEIGHT + String.valueOf(person.getHeight().value) + " ");
-        sb.append(PREFIX_WEIGHT + String.valueOf(person.getWeight().value) + " ");
-        sb.append(PREFIX_AGE + String.valueOf(person.getAge().value) + " ");
-        sb.append(PREFIX_GENDER + person.getGender().value + " ");
+        if (person.getGoal() != null && !person.getGoal().value.isEmpty()) {
+            sb.append(PREFIX_GOAL + person.getGoal().value + " ");
+        }
+        if (person.getHeight() != null) {
+            sb.append(PREFIX_HEIGHT + String.valueOf(person.getHeight().value) + " ");
+        }
+        if (person.getWeight() != null) {
+            sb.append(PREFIX_WEIGHT + String.valueOf(person.getWeight().value) + " ");
+        }
+        if (person.getAge() != null) {
+            sb.append(PREFIX_AGE + String.valueOf(person.getAge().value) + " ");
+        }
+        if (person.getGender() != null) {
+            sb.append(PREFIX_GENDER + person.getGender().value + " ");
+        }
         sb.append(PREFIX_DEADLINE + person.getDeadline().toStorageString() + " ");
         sb.append(PREFIX_PAID + person.getPaymentStatus().toString() + " ");
-        sb.append(PREFIX_BODYFAT + String.valueOf(person.getBodyfat().value) + " ");
+        if (person.getBodyfat() != null) {
+            sb.append(PREFIX_BODYFAT + String.valueOf(person.getBodyfat().value) + " ");
+        }
         sb.append(PREFIX_SESSION + person.getSession().toStorageString() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
