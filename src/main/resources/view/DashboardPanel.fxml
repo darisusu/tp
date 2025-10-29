@@ -45,7 +45,7 @@
 
         <!-- Header: centered + white text -->
         <Label fx:id="rightHeader"
-               text="Unpaid Trainees"
+               text="Unpaid Clients"
                maxWidth="Infinity"
                alignment="CENTER"
                styleClass="dashboard-section-title"
