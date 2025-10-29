@@ -14,15 +14,142 @@
     -fx-font-size: 24px;
 }
 
-#commandReferenceView {
+#commandReferenceScrollPane {
     -fx-border-color: derive(#1d1d1d, 30%);
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-#commandReferenceView:focused {
+#commandReferenceScrollPane:focused {
     -fx-border-color: #00b4d8;
+}
+
+#commandReferenceScrollPane > .viewport {
+    -fx-background-color: transparent;
+}
+
+#commandReferenceContainer {
+    -fx-padding: 16 18 18 18;
+}
+
+.command-reference-heading {
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.command-reference-heading .text {
+    -fx-fill: white;
+}
+
+.command-reference-heading-h1 {
+    -fx-font-size: 24px;
+}
+
+.command-reference-heading-h2 {
+    -fx-font-size: 20px;
+}
+
+.command-reference-heading-h3 {
+    -fx-font-size: 16px;
+}
+
+.command-reference-heading-h4 {
+    -fx-font-size: 15px;
+}
+
+.command-reference-paragraph {
+    -fx-font-size: 12.5px;
+    -fx-fill: #e6e6e6;
+}
+
+.command-reference-paragraph .text {
+    -fx-fill: #e6e6e6;
+    -fx-font-family: "Segoe UI";
+}
+
+.command-reference-inline-strong {
+    -fx-font-weight: bold;
+}
+
+.command-reference-inline-emphasis {
+    -fx-font-style: italic;
+}
+
+.command-reference-inline-code {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-background-color: #2e2e2e;
+    -fx-text-fill: #f8f8f8;
+    -fx-padding: 2 4;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.command-reference-inline-link {
+    -fx-text-fill: #00b4d8;
+}
+
+.command-reference-inline-link:hover {
+    -fx-text-fill: #4dabf7;
+}
+
+.command-reference-code-block {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-background-color: #2e2e2e;
+    -fx-text-fill: #f8f8f8;
+    -fx-padding: 10;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-color: #4a4a4a;
+}
+
+.command-reference-bullet-list {
+    -fx-spacing: 6;
+}
+
+.command-reference-list-content > .command-reference-bullet-list,
+.command-reference-list-content > .command-reference-table {
+    -fx-padding: 6 0 0 16;
+}
+
+.command-reference-bullet {
+    -fx-text-fill: #00b4d8;
+    -fx-font-size: 14px;
+}
+
+.command-reference-list-content {
+    -fx-spacing: 6;
+}
+
+.command-reference-table {
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 1;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-background-color: #383838;
+    -fx-padding: 0;
+}
+
+.command-reference-table-header-cell {
+    -fx-background-color: #2a2a2a;
+}
+
+.command-reference-table-header-cell .label,
+.command-reference-table-header-cell .text {
+    -fx-text-fill: #00b4d8;
+    -fx-font-weight: bold;
+}
+
+.command-reference-table-cell,
+.command-reference-table-header-cell {
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 8 10;
+}
+
+.command-reference-table-cell .text,
+.command-reference-table-header-cell .text {
+    -fx-fill: #f5f5f5;
+    -fx-font-size: 11px;
 }
 
 #actionBar {
