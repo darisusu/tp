@@ -14,15 +14,113 @@
     -fx-font-size: 24px;
 }
 
-#commandReferenceView {
+#commandReferenceScroll {
+    -fx-background-color: transparent;
     -fx-border-color: derive(#1d1d1d, 30%);
     -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-#commandReferenceView:focused {
-    -fx-border-color: #00b4d8;
+#commandReferenceScroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+#commandReferenceContainer {
+    -fx-padding: 16 18 16 12;
+    -fx-background-color: transparent;
+}
+
+.markdown-heading {
+    -fx-padding: 8 0 0 0;
+}
+
+.markdown-heading .markdown-text {
+    -fx-text-fill: #f6f6f6;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.markdown-heading-1 .markdown-text {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.markdown-heading-2 .markdown-text {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.markdown-heading-3 .markdown-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.markdown-paragraph {
+    -fx-padding: 0 0 4 0;
+}
+
+.markdown-paragraph .markdown-text,
+.markdown-list-content .markdown-text,
+.markdown-table .label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #f0f0f0;
+}
+
+.markdown-strong {
+    -fx-font-weight: bold;
+}
+
+.markdown-code {
+    -fx-font-family: "Consolas", "Menlo", "Monaco", monospace;
+    -fx-font-size: 12px;
+    -fx-text-fill: #f5f5f5;
+    -fx-background-color: rgba(0, 0, 0, 0.35);
+    -fx-padding: 2 6;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-border-color: derive(#1d1d1d, 40%);
+}
+
+.markdown-list {
+    -fx-spacing: 6px;
+}
+
+.markdown-list-item {
+    -fx-spacing: 8px;
+}
+
+.markdown-bullet {
+    -fx-text-fill: #00b4d8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 2 0 0 0;
+}
+
+.markdown-table {
+    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-border-radius: 6px;
+    -fx-padding: 10;
+    -fx-hgap: 12px;
+    -fx-vgap: 6px;
+    -fx-background-color: rgba(255, 255, 255, 0.02);
+}
+
+.markdown-table-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: #f5f5f5;
+}
+
+.markdown-table-cell {
+    -fx-text-fill: #f0f0f0;
+}
+
+.markdown-table-row {
+    -fx-spacing: 12px;
+}
+
+.markdown-fallback {
+    -fx-text-fill: #f0f0f0;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
 }
 
 #actionBar {
