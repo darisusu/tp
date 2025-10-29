@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -372,6 +373,68 @@ public class Session {
         }
         return false;
     }
+
+    /**
+     * Returns the next upcoming LocalDateTime this session occurs at, relative to the session's clock.
+     * If no upcoming occurrence exists (e.g. a one-off in the past), returns Optional.empty().
+     */
+    public Optional<LocalDateTime> getNextOccurrence() {
+        LocalDateTime now = LocalDateTime.now(clock);
+
+        switch (type) {
+        case ONE_OFF:
+            if (oneOffDateTime != null && (oneOffDateTime.isAfter(now) || oneOffDateTime.isEqual(now))) {
+                return Optional.of(oneOffDateTime);
+            }
+            return Optional.empty();
+
+        case WEEKLY:
+        case BIWEEKLY:
+            if (recurringSlots.isEmpty()) {
+                return Optional.empty();
+            }
+            LocalDateTime soonest = null;
+            for (RecurringSlot slot : recurringSlots) {
+                // days until that weekday (0..6)
+                int daysUntil = (slot.day.getValue() - now.getDayOfWeek().getValue() + 7) % 7;
+                LocalDate candidateDate = now.toLocalDate().plusDays(daysUntil);
+                LocalDateTime candidate = LocalDateTime.of(candidateDate, slot.start);
+
+                // If candidate is before now (or it's today but slot already passed), advance
+                boolean sameDayButPassed = daysUntil == 0 && (slot.isInstant() ? candidate.toLocalTime().isBefore(now.toLocalTime())
+                        : slot.end.isBefore(now.toLocalTime()) || !slot.contains(now.toLocalTime()) && slot.start.isBefore(now.toLocalTime()));
+                if (candidate.isBefore(now) || sameDayButPassed) {
+                    int weeksToAdd = (type == SessionType.BIWEEKLY) ? 2 : 1;
+                    candidate = candidate.plusWeeks(weeksToAdd);
+                }
+
+                if (soonest == null || candidate.isBefore(soonest)) {
+                    soonest = candidate;
+                }
+            }
+            return Optional.ofNullable(soonest);
+
+        case MONTHLY:
+            if (time == null) {
+                return Optional.empty();
+            }
+            YearMonth currentMonth = YearMonth.from(now.toLocalDate());
+            int safeDay = Math.min(dayOfMonth, currentMonth.lengthOfMonth());
+            LocalDate candidateDate = currentMonth.atDay(safeDay);
+            LocalDateTime candidate = LocalDateTime.of(candidateDate, time);
+            if (!candidate.isAfter(now)) {
+                YearMonth nextMonth = currentMonth.plusMonths(1);
+                int safeNextDay = Math.min(dayOfMonth, nextMonth.lengthOfMonth());
+                candidateDate = nextMonth.atDay(safeNextDay);
+                candidate = LocalDateTime.of(candidateDate, time);
+            }
+            return Optional.of(candidate);
+
+        default:
+            return Optional.empty();
+        }
+    }
+
 
     private static boolean conflictsMonthlyWithRecurring(Session monthly, Session recurring) {
         if (recurring.recurringSlots.isEmpty()) {
