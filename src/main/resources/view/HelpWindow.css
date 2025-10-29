@@ -2,46 +2,21 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+#actionBar {
+    -fx-padding: 10 0 0 0;
+}
+
 #helpContainer .label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-opacity: 0.95;
 }
 
-#helpTitleLabel {
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
+#helpContainer .hyperlink {
+    -fx-text-fill: #7cd7ff;
 }
 
-#commandReferenceView {
-    -fx-border-color: derive(#1d1d1d, 30%);
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-#commandReferenceView:focused {
-    -fx-border-color: #00b4d8;
-}
-
-#actionBar {
-    -fx-padding: 10 0 0 0;
-}
-
-#actionBar .label {
-    -fx-text-fill: #cccccc;
-}
-
-.hyperlink {
-    -fx-text-fill: #00b4d8;
-}
-
-.hyperlink:hover {
-    -fx-text-fill: #4dabf7;
-}
-
-#copyButton {
+#actionBar .button {
     -fx-background-color: #2a2a2a;
     -fx-text-fill: white;
     -fx-font-family: "Segoe UI";
@@ -51,11 +26,11 @@
     -fx-padding: 6 14;
 }
 
-#copyButton:hover {
+#actionBar .button:hover {
     -fx-background-color: #3a3a3a;
 }
 
-#copyButton:armed {
+#actionBar .button:armed {
     -fx-background-color: #00b4d8;
     -fx-text-fill: black;
 }
