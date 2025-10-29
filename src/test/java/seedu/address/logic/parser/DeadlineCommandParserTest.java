@@ -6,6 +6,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +19,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeadlineCommand;
 import seedu.address.model.person.Deadline;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 public class DeadlineCommandParserTest {
     private static final ZoneId ZONE = ZoneOffset.UTC;
