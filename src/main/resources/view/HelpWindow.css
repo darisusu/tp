@@ -14,14 +14,14 @@
     -fx-font-size: 24px;
 }
 
-#commandReferenceView {
+#commandReferenceArea {
     -fx-border-color: derive(#1d1d1d, 30%);
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-#commandReferenceView:focused {
+#commandReferenceArea:focused {
     -fx-border-color: #00b4d8;
 }
 
