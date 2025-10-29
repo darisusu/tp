@@ -13,7 +13,7 @@ import seedu.address.model.person.Phone;
  */
 public class DeadlineCard extends UiPart<Region> {
 
-    private static final String FXML = "SessionListCard.fxml";
+    private static final String FXML = "DeadlineListCard.fxml";
 
     public final Person person;
 
@@ -34,7 +34,7 @@ public class DeadlineCard extends UiPart<Region> {
         this.person = person;
 
         name.setText("Name: " + person.getName().fullName);
-        phone.setText("Phone Number: " + valueOrPlaceholder(person.getPhone(), Phone::toString));
+        phone.setText(valueOrPlaceholder(person.getPhone(), Phone::toString));
         deadline.setText("Payment Deadline: " + deadlineDisplay(person.getDeadline()));
     }
 

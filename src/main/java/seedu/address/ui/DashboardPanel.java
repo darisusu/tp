@@ -52,7 +52,7 @@ public class DashboardPanel extends UiPart<Region> {
     @FXML private Pane rightListPlaceholder;
     @FXML private Pane leftListPlaceholder;
 
-    private PersonListPanel unpaidListPanel;
+    private DeadlineListPanel unpaidListPanel;
     private SessionListPanel sessionListPanel;
 
     public DashboardPanel() {
@@ -70,7 +70,7 @@ public class DashboardPanel extends UiPart<Region> {
                 new SortedList<>(unpaidOnly, new PersonDeadlineComparator(true));
 
         // Render into the right column
-        unpaidListPanel = new PersonListPanel(unpaidByDeadline);
+        unpaidListPanel = new DeadlineListPanel(unpaidByDeadline);
         Node listRoot = unpaidListPanel.getRoot();
 
         rightListPlaceholder.getChildren().setAll(listRoot);
