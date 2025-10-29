@@ -27,3 +27,5 @@ docs/_markbind/logs/
 release/
 *.zip
 **/javafx/lib/
+
+data/addressbook.json
