@@ -401,8 +401,10 @@ public class Session {
                 LocalDateTime candidate = LocalDateTime.of(candidateDate, slot.start);
 
                 // If candidate is before now (or it's today but slot already passed), advance
-                boolean sameDayButPassed = daysUntil == 0 && (slot.isInstant() ? candidate.toLocalTime().isBefore(now.toLocalTime())
-                        : slot.end.isBefore(now.toLocalTime()) || !slot.contains(now.toLocalTime()) && slot.start.isBefore(now.toLocalTime()));
+                boolean sameDayButPassed = daysUntil == 0 && (slot.isInstant()
+                        ? candidate.toLocalTime().isBefore(now.toLocalTime())
+                        : slot.end.isBefore(now.toLocalTime())
+                        || !slot.contains(now.toLocalTime()) && slot.start.isBefore(now.toLocalTime()));
                 if (candidate.isBefore(now) || sameDayButPassed) {
                     int weeksToAdd = (type == SessionType.BIWEEKLY) ? 2 : 1;
                     candidate = candidate.plusWeeks(weeksToAdd);
