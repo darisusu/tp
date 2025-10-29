@@ -19,13 +19,22 @@
         <RowConstraints vgrow="ALWAYS"/>
     </rowConstraints>
 
-    <!-- LEFT column (white background) -->
+    <!-- LEFT column: Upcoming sessions -->
     <VBox fx:id="leftColumn"
           GridPane.columnIndex="0"
           GridPane.rowIndex="0"
           spacing="8"
-          VBox.vgrow="ALWAYS"
-          style="-fx-background-color: white; -fx-padding: 8;"/>
+          VBox.vgrow="ALWAYS">
+
+        <Label fx:id="leftHeader"
+               text="Upcoming Sessions"
+               maxWidth="Infinity"
+               alignment="CENTER"
+               styleClass="dashboard-section-title"
+               style="-fx-text-fill: white;"/>
+
+        <StackPane fx:id="leftListPlaceholder" VBox.vgrow="ALWAYS"/>
+    </VBox>
 
     <!-- RIGHT column -->
     <VBox fx:id="rightColumn"
@@ -36,7 +45,7 @@
 
         <!-- Header: centered + white text -->
         <Label fx:id="rightHeader"
-               text="Unpaid Trainees"
+               text="Unpaid Clients"
                maxWidth="Infinity"
                alignment="CENTER"
                styleClass="dashboard-section-title"

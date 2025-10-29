@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDeadlineComparator;
+import seedu.address.model.person.PersonSessionComparator;
 
 /**
  * UI component for the Dashboard screen.
@@ -49,8 +50,10 @@ public class DashboardPanel extends UiPart<Region> {
     @FXML private VBox leftColumn;
     @FXML private VBox rightColumn;
     @FXML private Pane rightListPlaceholder;
+    @FXML private Pane leftListPlaceholder;
 
-    private PersonListPanel unpaidListPanel;
+    private DeadlineListPanel unpaidListPanel;
+    private SessionListPanel sessionListPanel;
 
     public DashboardPanel() {
         super(FXML);
@@ -67,10 +70,21 @@ public class DashboardPanel extends UiPart<Region> {
                 new SortedList<>(unpaidOnly, new PersonDeadlineComparator(true));
 
         // Render into the right column
-        unpaidListPanel = new PersonListPanel(unpaidByDeadline);
+        unpaidListPanel = new DeadlineListPanel(unpaidByDeadline);
         Node listRoot = unpaidListPanel.getRoot();
 
         rightListPlaceholder.getChildren().setAll(listRoot);
+        VBox.setVgrow(listRoot, Priority.ALWAYS);
+    }
+
+    /** Binds the left column to a list of persons sorted by upcoming session date. */
+    public void bindLeftList(ObservableList<Person> masterList) {
+        // Sort by next session date ascending (soonest first)
+        var sortedBySession = new SortedList<>(masterList, new PersonSessionComparator());
+
+        sessionListPanel = new SessionListPanel(sortedBySession);
+        Node listRoot = sessionListPanel.getRoot();
+        leftListPlaceholder.getChildren().setAll(listRoot);
         VBox.setVgrow(listRoot, Priority.ALWAYS);
     }
 }
