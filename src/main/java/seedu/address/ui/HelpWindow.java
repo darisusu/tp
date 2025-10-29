@@ -2,20 +2,14 @@ package seedu.address.ui;
 
 import java.awt.Desktop;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
@@ -27,14 +21,6 @@ public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
 
-    public static final String HELP_MESSAGE = "Need a quick refresher?"
-            + "\nBrowse the full command reference below...";
-    public static final String COMMAND_REFERENCE_RESOURCE = "/help/CommandReference.md";
-    public static final String COMMAND_REFERENCE_FALLBACK = "Command reference unavailable. "
-            + "Please make sure CommandReference.md is packaged with the app.";
-
-    private static final String COMMAND_REFERENCE_TEXT_STYLE_CLASS = "command-reference-plain";
-
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
@@ -42,16 +28,7 @@ public class HelpWindow extends UiPart<Stage> {
     private Button copyButton;
 
     @FXML
-    private Label helpMessage;
-
-    @FXML
-    private ScrollPane commandReferenceScrollPane;
-
-    @FXML
-    private VBox commandReferenceContainer;
-
-    @FXML
-    private Hyperlink userGuideLink;
+    private WebView browser;
 
     /**
      * Creates a new HelpWindow.
@@ -60,11 +37,7 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow(Stage root) {
         super(FXML, root);
-        helpMessage.setText(HELP_MESSAGE);
-        commandReferenceScrollPane.setFitToWidth(true);
-        commandReferenceContainer.setFillWidth(true);
-        renderCommandReference();
-        userGuideLink.setText(USERGUIDE_URL);
+        configureBrowser();
     }
 
     /**
@@ -157,34 +130,8 @@ public class HelpWindow extends UiPart<Stage> {
         }
     }
 
-    private String loadCommandReferenceMarkdown() {
-        try (InputStream inputStream = HelpWindow.class.getResourceAsStream(COMMAND_REFERENCE_RESOURCE)) {
-            if (inputStream == null) {
-                logger.warning("Command reference resource not found: " + COMMAND_REFERENCE_RESOURCE);
-                return COMMAND_REFERENCE_FALLBACK;
-            }
-
-            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            logger.warning("Failed to load command reference: " + e.getMessage());
-            return COMMAND_REFERENCE_FALLBACK;
-        }
-    }
-
-    private void renderCommandReference() {
-        String markdown = loadCommandReferenceMarkdown();
-        TextFlow rendered = createPlainTextFlow(markdown);
-        commandReferenceContainer.getChildren().setAll(rendered);
-    }
-
-    private static TextFlow createPlainTextFlow(String content) {
-        TextFlow flow = new TextFlow();
-        flow.setLineSpacing(4);
-        flow.setPrefWidth(0);
-        flow.setMaxWidth(Double.MAX_VALUE);
-        flow.getStyleClass().add(COMMAND_REFERENCE_TEXT_STYLE_CLASS);
-        Text text = new Text(content);
-        flow.getChildren().add(text);
-        return flow;
+    private void configureBrowser() {
+        WebEngine webEngine = browser.getEngine();
+        webEngine.load(USERGUIDE_URL);
     }
 }

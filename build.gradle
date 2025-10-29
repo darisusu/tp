@@ -15,7 +15,7 @@ java {
 application {
     mainClass = 'seedu.address.Main'
     applicationDefaultJvmArgs = [
-            '--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml'
+            '--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml,javafx.web'
     ]
 }
 
@@ -23,7 +23,7 @@ javafx {
     // 17.x to match JDK 17
     version = '17.0.7'
     // modules you actually use:
-    modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml']
+    modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
 repositories {
@@ -65,7 +65,7 @@ tasks.register('coverage', JacocoReport) {
 
 tasks.withType(JavaExec).configureEach {
     // defensively add modules in case a custom run task bypasses the plugin config
-    jvmArgs += ['--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml']
+    jvmArgs += ['--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml,javafx.web']
     standardInput = System.in
 }
 
