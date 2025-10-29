@@ -30,13 +30,15 @@ Hi Trainers!<br>
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `list` : Lists all clients.
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
+   
+   * `help` : Opens new window containing useful information.
 
    * `exit` : Exits the app.
 
@@ -149,6 +151,18 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+### Switching to the client list : `client`
+
+Switches the main component to the client list with all the clients' information. Will not do anything if already on the client list.
+
+Format: `client`
+
+### Switching to the dashboard : `dashboard`
+
+Switches the dashboard containing mainly upcoming payments and sessions information. Will not do anything if already on the dashboard.
+
+Format: `dashboard`
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -192,11 +206,11 @@ Examples:
 
 ### Saving the data
 
-FitBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+FitBook data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-FitBook data are saved automatically as a JSON file `[JAR file location]/data/FitBook.json`. Advanced users are welcome to update data directly by editing that data file.
+FitBook data is saved automatically as a JSON file `[JAR file location]/data/FitBook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 **Caution:**
@@ -261,5 +275,7 @@ Action     | Format, Examples
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`
+**View Client List**   | `client`
+**View Dashboard**   | `dashboard`
 **Sort**   | `sortbypaid`<br> e.g., `sortbypaid`
 **Help**   | `help`
