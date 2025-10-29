@@ -4,22 +4,51 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.node.BulletList;
+import org.commonmark.node.Code;
+import org.commonmark.node.CodeBlock;
+import org.commonmark.node.Emphasis;
+import org.commonmark.node.Heading;
+import org.commonmark.node.HardLineBreak;
+import org.commonmark.node.Link;
+import org.commonmark.node.ListItem;
 import org.commonmark.node.Node;
+import org.commonmark.node.OrderedList;
+import org.commonmark.node.Paragraph;
+import org.commonmark.node.SoftLineBreak;
+import org.commonmark.node.StrongEmphasis;
+import org.commonmark.node.TableBlock;
+import org.commonmark.node.TableBody;
+import org.commonmark.node.TableCell;
+import org.commonmark.node.TableHead;
+import org.commonmark.node.TableRow;
+import org.commonmark.node.Text;
 import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextFlow;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
@@ -42,90 +71,19 @@ public class HelpWindow extends UiPart<Stage> {
     private static final Parser MARKDOWN_PARSER =
             Parser.builder().extensions(MARKDOWN_EXTENSIONS).build();
 
-    private static final HtmlRenderer HTML_RENDERER =
-            HtmlRenderer.builder().extensions(MARKDOWN_EXTENSIONS).build();
-
-    private static final String HTML_TEMPLATE_PREFIX = """
-<html><head><meta charset="UTF-8" />
-<style>
-body {
-    background-color: #383838;
-    color: #e6e6e6;
-    font-family: 'Segoe UI', 'Segoe UI Semibold', sans-serif;
-    margin: 0;
-    padding: 16px;
-}
-
-h1, h2, h3, h4, h5 {
-    color: white;
-    font-weight: 300;
-}
-
-a {
-    color: #00b4d8;
-    text-decoration: none;
-}
-a:hover {
-    color: #4dabf7;
-}
-
-code, pre {
-    font-family: 'Consolas', 'Courier New', monospace;
-    background: #2e2e2e;
-    color: #f8f8f8;
-    padding: 2px 4px;
-    border-radius: 4px;
-}
-pre {
-    padding: 10px;
-    border-radius: 6px;
-    overflow: auto;
-}
-
-ul {
-    padding-left: 20px;
-}
-
-li {
-    margin-bottom: 6px;
-}
-
-/* Table styling */
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #383838;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-th, td {
-    border: 1px solid #4a4a4a;
-    padding: 8px 10px;
-    text-align: left;
-    font-size: 11pt;
-    color: #f5f5f5;
-}
-
-th {
-    background-color: #2a2a2a;
-    color: #00b4d8;
-    font-weight: 600;
-}
-
-tr:nth-child(even) {
-    background-color: #3c3e3f;
-}
-
-tr:nth-child(odd) {
-    background-color: #515658;
-}
-</style></head><body>
-                                """;
-
-    private static final String HTML_TEMPLATE_SUFFIX = "</body></html>";
+    private static final String HEADING_STYLE_CLASS = "command-reference-heading";
+    private static final String PARAGRAPH_STYLE_CLASS = "command-reference-paragraph";
+    private static final String INLINE_STRONG_STYLE_CLASS = "command-reference-inline-strong";
+    private static final String INLINE_EMPHASIS_STYLE_CLASS = "command-reference-inline-emphasis";
+    private static final String INLINE_CODE_STYLE_CLASS = "command-reference-inline-code";
+    private static final String INLINE_LINK_STYLE_CLASS = "command-reference-inline-link";
+    private static final String CODE_BLOCK_STYLE_CLASS = "command-reference-code-block";
+    private static final String BULLET_LIST_STYLE_CLASS = "command-reference-bullet-list";
+    private static final String BULLET_STYLE_CLASS = "command-reference-bullet";
+    private static final String LIST_CONTENT_STYLE_CLASS = "command-reference-list-content";
+    private static final String TABLE_STYLE_CLASS = "command-reference-table";
+    private static final String TABLE_CELL_STYLE_CLASS = "command-reference-table-cell";
+    private static final String TABLE_HEADER_CELL_STYLE_CLASS = "command-reference-table-header-cell";
 
 
 
@@ -139,7 +97,10 @@ tr:nth-child(odd) {
     private Label helpMessage;
 
     @FXML
-    private WebView commandReferenceView;
+    private ScrollPane commandReferenceScrollPane;
+
+    @FXML
+    private VBox commandReferenceContainer;
 
     @FXML
     private Hyperlink userGuideLink;
@@ -152,9 +113,9 @@ tr:nth-child(odd) {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
-        commandReferenceView.getEngine().setJavaScriptEnabled(false);
-        commandReferenceView.getEngine().loadContent(loadCommandReferenceHtml());
-        commandReferenceView.setContextMenuEnabled(false);
+        commandReferenceScrollPane.setFitToWidth(true);
+        commandReferenceContainer.setFillWidth(true);
+        renderCommandReference();
         userGuideLink.setText(USERGUIDE_URL);
     }
 
@@ -262,11 +223,345 @@ tr:nth-child(odd) {
         }
     }
 
-    private String loadCommandReferenceHtml() {
+    private void renderCommandReference() {
         String markdown = loadCommandReferenceMarkdown();
         Node document = MARKDOWN_PARSER.parse(markdown);
-        String htmlBody = HTML_RENDERER.render(document);
-        return HTML_TEMPLATE_PREFIX + htmlBody + HTML_TEMPLATE_SUFFIX;
+        List<javafx.scene.Node> renderedBlocks = renderMarkdownDocument(document);
+
+        if (renderedBlocks.isEmpty()) {
+            TextFlow fallback = createTextFlowFromText(COMMAND_REFERENCE_FALLBACK);
+            commandReferenceContainer.getChildren().setAll(fallback);
+            return;
+        }
+
+        commandReferenceContainer.getChildren().setAll(renderedBlocks);
+    }
+
+    private static List<javafx.scene.Node> renderMarkdownDocument(Node document) {
+        List<javafx.scene.Node> blocks = new ArrayList<>();
+        for (Node child = document.getFirstChild(); child != null; child = child.getNext()) {
+            appendBlock(blocks, child);
+        }
+        return blocks;
+    }
+
+    private static void appendBlock(List<javafx.scene.Node> target, Node block) {
+        if (block instanceof Heading) {
+            target.add(createHeading((Heading) block));
+            return;
+        }
+
+        if (block instanceof Paragraph) {
+            target.add(createParagraph((Paragraph) block));
+            return;
+        }
+
+        if (block instanceof CodeBlock) {
+            target.add(createCodeBlock((CodeBlock) block));
+            return;
+        }
+
+        if (block instanceof BulletList) {
+            target.add(createBulletList((BulletList) block));
+            return;
+        }
+
+        if (block instanceof OrderedList) {
+            target.add(createOrderedList((OrderedList) block));
+            return;
+        }
+
+        if (block instanceof TableBlock) {
+            target.add(createTable((TableBlock) block));
+            return;
+        }
+
+        if (block instanceof org.commonmark.node.ThematicBreak) {
+            target.add(new Separator());
+            return;
+        }
+
+        // Fallback: render nested children
+        for (Node child = block.getFirstChild(); child != null; child = child.getNext()) {
+            appendBlock(target, child);
+        }
+    }
+
+    private static TextFlow createHeading(Heading heading) {
+        TextFlow flow = createTextFlow(heading, HEADING_STYLE_CLASS,
+                HEADING_STYLE_CLASS + "-h" + Math.min(heading.getLevel(), 4));
+        flow.setMaxWidth(Double.MAX_VALUE);
+        return flow;
+    }
+
+    private static TextFlow createParagraph(Paragraph paragraph) {
+        TextFlow flow = createTextFlow(paragraph, PARAGRAPH_STYLE_CLASS);
+        flow.setMaxWidth(Double.MAX_VALUE);
+        return flow;
+    }
+
+    private static TextFlow createTextFlowFromText(String content) {
+        TextFlow flow = new TextFlow();
+        flow.getStyleClass().add(PARAGRAPH_STYLE_CLASS);
+        flow.setLineSpacing(4);
+        flow.setPrefWidth(0);
+        flow.setMaxWidth(Double.MAX_VALUE);
+        Text text = new Text(content);
+        flow.getChildren().add(text);
+        return flow;
+    }
+
+    private static Label createCodeBlock(CodeBlock codeBlock) {
+        Label code = new Label(codeBlock.getLiteral().stripTrailing());
+        code.getStyleClass().add(CODE_BLOCK_STYLE_CLASS);
+        code.setWrapText(true);
+        code.setMaxWidth(Double.MAX_VALUE);
+        return code;
+    }
+
+    private static VBox createBulletList(BulletList list) {
+        VBox listBox = new VBox();
+        listBox.getStyleClass().add(BULLET_LIST_STYLE_CLASS);
+        listBox.setSpacing(8);
+
+        for (Node itemNode = list.getFirstChild(); itemNode != null; itemNode = itemNode.getNext()) {
+            if (!(itemNode instanceof ListItem)) {
+                continue;
+            }
+            listBox.getChildren().add(createBulletListItem((ListItem) itemNode, "\u2022"));
+        }
+
+        return listBox;
+    }
+
+    private static VBox createOrderedList(OrderedList list) {
+        VBox listBox = new VBox();
+        listBox.getStyleClass().add(BULLET_LIST_STYLE_CLASS);
+        listBox.setSpacing(8);
+
+        int index = 0;
+        for (Node itemNode = list.getFirstChild(); itemNode != null; itemNode = itemNode.getNext()) {
+            if (!(itemNode instanceof ListItem)) {
+                continue;
+            }
+            int itemNumber = list.getStartNumber() + index;
+            listBox.getChildren().add(createBulletListItem((ListItem) itemNode, itemNumber + "."));
+            index++;
+        }
+
+        return listBox;
+    }
+
+    private static HBox createBulletListItem(ListItem listItem, String bulletText) {
+        HBox row = new HBox(8);
+        row.setAlignment(Pos.TOP_LEFT);
+
+        Label bullet = new Label(bulletText);
+        bullet.getStyleClass().add(BULLET_STYLE_CLASS);
+        bullet.setWrapText(true);
+        bullet.setMinWidth(Region.USE_PREF_SIZE);
+
+        VBox content = new VBox();
+        content.getStyleClass().add(LIST_CONTENT_STYLE_CLASS);
+        content.setSpacing(6);
+        content.setFillWidth(true);
+
+        for (Node child = listItem.getFirstChild(); child != null; child = child.getNext()) {
+            appendBlock(content.getChildren(), child);
+        }
+
+        row.getChildren().addAll(bullet, content);
+        HBox.setHgrow(content, Priority.ALWAYS);
+
+        return row;
+    }
+
+    private static GridPane createTable(TableBlock tableBlock) {
+        GridPane grid = new GridPane();
+        grid.getStyleClass().add(TABLE_STYLE_CLASS);
+        grid.setHgap(0);
+        grid.setVgap(0);
+        grid.setMaxWidth(Double.MAX_VALUE);
+
+        int columnCount = determineTableColumnCount(tableBlock);
+        if (columnCount > 0) {
+            double columnPercent = 100.0 / columnCount;
+            for (int i = 0; i < columnCount; i++) {
+                ColumnConstraints constraints = new ColumnConstraints();
+                constraints.setPercentWidth(columnPercent);
+                constraints.setFillWidth(true);
+                constraints.setHgrow(Priority.ALWAYS);
+                grid.getColumnConstraints().add(constraints);
+            }
+        }
+
+        int rowIndex = 0;
+        for (Node section = tableBlock.getFirstChild(); section != null; section = section.getNext()) {
+            if (section instanceof TableHead) {
+                rowIndex = appendTableSection(grid, (TableHead) section, rowIndex, true);
+            } else if (section instanceof TableBody) {
+                rowIndex = appendTableSection(grid, (TableBody) section, rowIndex, false);
+            }
+        }
+
+        return grid;
+    }
+
+    private static int appendTableSection(GridPane grid, Node section, int startingRow, boolean header) {
+        int currentRow = startingRow;
+        for (Node rowNode = section.getFirstChild(); rowNode != null; rowNode = rowNode.getNext()) {
+            if (!(rowNode instanceof TableRow)) {
+                continue;
+            }
+
+            int columnIndex = 0;
+            for (Node cellNode = rowNode.getFirstChild(); cellNode != null; cellNode = cellNode.getNext()) {
+                if (!(cellNode instanceof TableCell)) {
+                    continue;
+                }
+
+                VBox cell = createTableCell((TableCell) cellNode, header);
+                grid.add(cell, columnIndex, currentRow);
+                columnIndex++;
+            }
+
+            currentRow++;
+        }
+        return currentRow;
+    }
+
+    private static int determineTableColumnCount(TableBlock tableBlock) {
+        for (Node section = tableBlock.getFirstChild(); section != null; section = section.getNext()) {
+            for (Node rowNode = section.getFirstChild(); rowNode != null; rowNode = rowNode.getNext()) {
+                if (rowNode instanceof TableRow) {
+                    int columns = 0;
+                    for (Node cellNode = rowNode.getFirstChild(); cellNode != null; cellNode = cellNode.getNext()) {
+                        if (cellNode instanceof TableCell) {
+                            columns++;
+                        }
+                    }
+                    if (columns > 0) {
+                        return columns;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    private static VBox createTableCell(TableCell cell, boolean header) {
+        VBox container = new VBox();
+        container.getStyleClass().add(header ? TABLE_HEADER_CELL_STYLE_CLASS : TABLE_CELL_STYLE_CLASS);
+        container.setPadding(new Insets(8, 10, 8, 10));
+        container.setAlignment(Pos.CENTER_LEFT);
+        container.setFillWidth(true);
+
+        TextFlow content = createTextFlow(cell, PARAGRAPH_STYLE_CLASS);
+        content.setMaxWidth(Double.MAX_VALUE);
+        container.getChildren().add(content);
+
+        return container;
+    }
+
+    private static TextFlow createTextFlow(Node node, String... styleClasses) {
+        TextFlow flow = new TextFlow();
+        flow.setLineSpacing(4);
+        flow.setPrefWidth(0);
+        flow.getStyleClass().addAll(styleClasses);
+        appendInlineChildren(node, flow);
+        return flow;
+    }
+
+    private static void appendInlineChildren(Node parent, TextFlow flow) {
+        for (Node child = parent.getFirstChild(); child != null; child = child.getNext()) {
+            if (child instanceof Text) {
+                flow.getChildren().add(createText(((Text) child).getLiteral(), null));
+            } else if (child instanceof StrongEmphasis) {
+                flow.getChildren().add(createText(collectLiteral(child), INLINE_STRONG_STYLE_CLASS));
+            } else if (child instanceof Emphasis) {
+                flow.getChildren().add(createText(collectLiteral(child), INLINE_EMPHASIS_STYLE_CLASS));
+            } else if (child instanceof Code) {
+                Label code = new Label(((Code) child).getLiteral());
+                code.getStyleClass().add(INLINE_CODE_STYLE_CLASS);
+                flow.getChildren().add(code);
+            } else if (child instanceof SoftLineBreak) {
+                flow.getChildren().add(createText(" ", null));
+            } else if (child instanceof HardLineBreak) {
+                flow.getChildren().add(createText(System.lineSeparator(), null));
+            } else if (child instanceof Link) {
+                flow.getChildren().add(createHyperlink((Link) child));
+            } else {
+                appendInlineChildren(child, flow);
+            }
+        }
+    }
+
+    private static Text createText(String content, String styleClass) {
+        Text textNode = new Text(content);
+        if (styleClass != null) {
+            textNode.getStyleClass().add(styleClass);
+        }
+        return textNode;
+    }
+
+    private static Hyperlink createHyperlink(Link link) {
+        String label = collectLiteral(link);
+        Hyperlink hyperlink = new Hyperlink(label);
+        hyperlink.getStyleClass().add(INLINE_LINK_STYLE_CLASS);
+        String destination = link.getDestination();
+        if (destination != null && !destination.isBlank()) {
+            hyperlink.setOnAction(event -> openExternalLink(destination));
+        }
+        return hyperlink;
+    }
+
+    private static void openExternalLink(String destination) {
+        if (!Desktop.isDesktopSupported()) {
+            return;
+        }
+
+        Desktop desktop = Desktop.getDesktop();
+        if (!desktop.isSupported(Desktop.Action.BROWSE)) {
+            return;
+        }
+
+        try {
+            desktop.browse(java.net.URI.create(destination));
+        } catch (IOException e) {
+            logger.warning("Failed to open link: " + e.getMessage());
+        }
+    }
+
+    private static String collectLiteral(Node node) {
+        StringBuilder builder = new StringBuilder();
+        collectLiteral(node, builder);
+        return builder.toString();
+    }
+
+    private static void collectLiteral(Node node, StringBuilder builder) {
+        if (node instanceof Text) {
+            builder.append(((Text) node).getLiteral());
+            return;
+        }
+
+        if (node instanceof Code) {
+            builder.append(((Code) node).getLiteral());
+            return;
+        }
+
+        if (node instanceof SoftLineBreak) {
+            builder.append(' ');
+            return;
+        }
+
+        if (node instanceof HardLineBreak) {
+            builder.append(System.lineSeparator());
+            return;
+        }
+
+        for (Node child = node.getFirstChild(); child != null; child = child.getNext()) {
+            collectLiteral(child, builder);
+        }
     }
 
 }
