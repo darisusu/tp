@@ -69,9 +69,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get());
-        Goal goal = argMultimap.getValue(PREFIX_GOAL).isPresent()
-                ? ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).get())
-                : null;
+        Goal goal = ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).orElse(""));
         Paid paid = ParserUtil.parsePaid(argMultimap.getValue(PREFIX_PAID).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Height height = argMultimap.getValue(PREFIX_HEIGHT).isPresent()
