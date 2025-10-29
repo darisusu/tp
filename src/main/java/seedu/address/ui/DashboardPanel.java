@@ -82,7 +82,7 @@ public class DashboardPanel extends UiPart<Region> {
         // Sort by next session date ascending (soonest first)
         var sortedBySession = new SortedList<>(masterList, new PersonSessionComparator());
 
-        SessionListPanel sessionListPanel = new SessionListPanel(sortedBySession);
+        sessionListPanel = new SessionListPanel(sortedBySession);
         Node listRoot = sessionListPanel.getRoot();
         leftListPlaceholder.getChildren().setAll(listRoot);
         VBox.setVgrow(listRoot, Priority.ALWAYS);
