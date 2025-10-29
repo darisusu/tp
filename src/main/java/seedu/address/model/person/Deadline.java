@@ -27,10 +27,13 @@ public class Deadline {
     private final Optional<LocalDate> value;
 
     private static Clock clock = Clock.systemDefaultZone();
-    public static void useClock(Clock newClock) { clock = requireNonNull(newClock); }
 
     private Deadline(Optional<LocalDate> value) {
         this.value = requireNonNull(value);
+    }
+
+    public static void useClock(Clock newClock) {
+        clock = requireNonNull(newClock);
     }
 
     /**
@@ -74,8 +77,8 @@ public class Deadline {
             return false;
         }
 
-        LocalDate today = LocalDate.now(clock);         // “current date”
-        LocalDate latest = today.plusYears(1);          // “one year from now”
+        LocalDate today = LocalDate.now(clock);
+        LocalDate latest = today.plusYears(1);
         // strictly after today, and not after latest
         return parsed.isAfter(today) && !parsed.isAfter(latest);
     }
