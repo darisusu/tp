@@ -2,14 +2,34 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonDeadlineComparatorTest {
+
+    private static final ZoneId ZONE = ZoneOffset.UTC;
+    private static final Clock FIXED_CLOCK =
+            Clock.fixed(LocalDate.of(2025, 1, 1).atStartOfDay(ZONE).toInstant(), ZONE);
+
+    @BeforeEach
+    void freezeClock() {
+        Deadline.useClock(FIXED_CLOCK);
+    }
+
+    @AfterEach
+    void unfreezeClock() {
+        Deadline.useClock(Clock.systemDefaultZone());
+    }
 
     @Test
     public void compare_ascending_ordersByEarliestAndNoDeadlineLast() {
