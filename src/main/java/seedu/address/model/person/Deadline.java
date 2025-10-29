@@ -24,9 +24,9 @@ public class Deadline {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private final Optional<LocalDate> value;
-
     private static Clock clock = Clock.systemDefaultZone();
+
+    private final Optional<LocalDate> value;
 
     private Deadline(Optional<LocalDate> value) {
         this.value = requireNonNull(value);
