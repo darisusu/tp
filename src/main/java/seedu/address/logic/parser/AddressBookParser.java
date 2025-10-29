@@ -26,10 +26,10 @@ import seedu.address.logic.commands.HeightCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PaidCommand;
+import seedu.address.logic.commands.SessionCommand;
 import seedu.address.logic.commands.SortByDeadlineCommand;
 import seedu.address.logic.commands.SortByPaidCommand;
 import seedu.address.logic.commands.SortBySessionCommand;
-import seedu.address.logic.commands.SessionCommand;
 import seedu.address.logic.commands.WeightCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 

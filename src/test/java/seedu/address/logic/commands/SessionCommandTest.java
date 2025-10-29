@@ -99,10 +99,12 @@ public class SessionCommandTest {
 
     @Test
     public void equals() {
-        final SessionCommand standardCommand = new SessionCommand(INDEX_FIRST_PERSON, Session.fromString(VALID_SESSION_AMY));
+        final SessionCommand standardCommand = new SessionCommand(INDEX_FIRST_PERSON,
+            Session.fromString(VALID_SESSION_AMY));
 
         // same values -> returns true
-        SessionCommand commandWithSameValues = new SessionCommand(INDEX_FIRST_PERSON, Session.fromString(VALID_SESSION_AMY));
+        SessionCommand commandWithSameValues = new SessionCommand(INDEX_FIRST_PERSON,
+            Session.fromString(VALID_SESSION_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -115,9 +117,11 @@ public class SessionCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new SessionCommand(INDEX_SECOND_PERSON, Session.fromString(VALID_SESSION_AMY))));
+        assertFalse(standardCommand.equals(new SessionCommand(INDEX_SECOND_PERSON,
+            Session.fromString(VALID_SESSION_AMY))));
 
         // different session -> returns false
-        assertFalse(standardCommand.equals(new SessionCommand(INDEX_FIRST_PERSON, Session.fromString(SESSION_STUB))));
+        assertFalse(standardCommand.equals(new SessionCommand(INDEX_FIRST_PERSON,
+            Session.fromString(SESSION_STUB))));
     }
 }

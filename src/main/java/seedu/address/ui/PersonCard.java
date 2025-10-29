@@ -8,18 +8,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Age;
 import seedu.address.model.person.Bodyfat;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Gender;
-import seedu.address.model.person.Goal;
-import seedu.address.model.person.Height;
 import seedu.address.model.person.Paid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Session;
-import seedu.address.model.person.Weight;
 
 /**
  * An UI component that displays information of a {@code Person}.

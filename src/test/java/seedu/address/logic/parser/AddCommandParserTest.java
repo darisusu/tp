@@ -172,6 +172,16 @@ public class AddCommandParserTest {
     }
 
     @Test
+    public void parse_optionalFieldsMissing_success() {
+        // zero tags
+        Person expectedPerson = new PersonBuilder(AMY).withGoal("").withPaid("false")
+                .withWeight("60").withBodyfat("18.5").withSession(VALID_SESSION_AMY).withTags().build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + HEIGHT_DESC_AMY + WEIGHT_DESC_AMY + AGE_DESC_AMY + GENDER_DESC_AMY + DEADLINE_DESC_AMY
+                + PAID_DESC_AMY + BODYFAT_DESC_AMY + SESSION_DESC_AMY, new AddCommand(expectedPerson));
+    }
+
+    @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
@@ -180,33 +190,15 @@ public class AddCommandParserTest {
                 expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + DEADLINE_DESC_BOB + PAID_DESC_BOB + SESSION_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
                 expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB
-                        + DEADLINE_DESC_BOB + PAID_DESC_BOB + SESSION_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
                 expectedMessage);
 
         // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB
-                        + DEADLINE_DESC_BOB + PAID_DESC_BOB + SESSION_DESC_BOB,
-                expectedMessage);
-
-        // missing deadline prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + PAID_DESC_BOB + SESSION_DESC_BOB,
-                expectedMessage);
-
-        // missing paid prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + DEADLINE_DESC_BOB + SESSION_DESC_BOB,
-                expectedMessage);
-
-        // missing session prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + DEADLINE_DESC_BOB + PAID_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
                 expectedMessage);
 
         // all prefixes missing
@@ -224,15 +216,21 @@ public class AddCommandParserTest {
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + DEADLINE_DESC_BOB + PAID_DESC_BOB + SESSION_DESC_BOB, Phone.MESSAGE_CONSTRAINTS);
+                + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
-                + DEADLINE_DESC_BOB + PAID_DESC_BOB + SESSION_DESC_BOB, Email.MESSAGE_CONSTRAINTS);
+                + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Email.MESSAGE_CONSTRAINTS);
 
         // invalid address
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + DEADLINE_DESC_BOB + PAID_DESC_BOB + SESSION_DESC_BOB, Address.MESSAGE_CONSTRAINTS);
+                + HEIGHT_DESC_BOB + WEIGHT_DESC_BOB + AGE_DESC_BOB + GENDER_DESC_BOB + DEADLINE_DESC_BOB
+                + PAID_DESC_BOB + BODYFAT_DESC_BOB + SESSION_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Address.MESSAGE_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB

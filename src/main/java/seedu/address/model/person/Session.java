@@ -37,7 +37,8 @@ public class Session {
             "Error: Session end time must be after the start time.";
     public static final String MESSAGE_CONSTRAINTS_OVERLAP =
             "Error: Weekly session slots must not overlap.";
-    public static final String MESSAGE_CONSTRAINTS_MISSING_END_TIME = "Error: Weekly and biweekly sessions must include both "
+    public static final String MESSAGE_CONSTRAINTS_MISSING_END_TIME =
+            "Error: Weekly and biweekly sessions must include both "
             + "a start and end time, e.g. WEEKLY:MON-1300-1400.";
 
     private static final Pattern ONE_OFF_PATTERN = Pattern.compile(

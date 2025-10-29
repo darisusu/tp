@@ -210,7 +210,10 @@ public class ParserUtilTest {
 
     @Test
     public void parseSession_missingEndTime_throwsParseException() {
-        ParseException exception = assertThrows(ParseException.class, () -> ParserUtil.parseSession(INVALID_LEGACY_SESSION));
+        ParseException exception = org.junit.jupiter.api.Assertions.assertThrows(
+            ParseException.class, () ->
+                ParserUtil.parseSession(INVALID_LEGACY_SESSION)
+        );
         assertEquals(Session.MESSAGE_CONSTRAINTS_MISSING_END_TIME, exception.getMessage());
     }
 
