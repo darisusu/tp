@@ -6,26 +6,14 @@
     -fx-padding: 10 0 0 0;
 }
 
-#actionBar .label {
-    -fx-text-fill: #cccccc;
-}
-
 #helpContainer .label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-opacity: 0.95;
 }
 
-#helpTitleLabel {
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-font-size: 18px;
-}
-
-#browser {
-    -fx-border-color: derive(#1d1d1d, 30%);
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
+#helpContainer .hyperlink {
+    -fx-text-fill: #7cd7ff;
 }
 
 #actionBar .button {

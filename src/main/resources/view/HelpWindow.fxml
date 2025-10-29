@@ -5,11 +5,11 @@
 <?import javafx.geometry.Pos?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 <?import javafx.stage.Stage?>
 
 
@@ -24,15 +24,19 @@
         <URL value="@HelpWindow.css" />
       </stylesheets>
 
-      <VBox alignment="TOP_LEFT" fx:id="helpContainer" spacing="18.0">
+      <VBox alignment="TOP_LEFT" fx:id="helpContainer" spacing="12.0">
         <children>
-          <Label fx:id="helpTitleLabel" text="Need a quick refresher?" wrapText="true" />
-          <WebView fx:id="browser" id="browser" prefHeight="400.0" VBox.vgrow="ALWAYS" />
+          <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+              <Label text="Refer to the user guide:" wrapText="true" />
+              <Hyperlink onAction="#openUserGuide"
+                        text="https://se-education.org/addressbook-level3/UserGuide.html" />
+            </children>
+          </HBox>
           <HBox alignment="CENTER_LEFT" fx:id="actionBar" spacing="10.0">
             <children>
-              <Label text="AddressBook user guide" />
               <Button mnemonicParsing="false" onAction="#openUserGuide" text="Open in Browser" />
-              <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL" />
+              <Button mnemonicParsing="false" onAction="#copyUrl" text="Copy URL" />
             </children>
           </HBox>
         </children>
