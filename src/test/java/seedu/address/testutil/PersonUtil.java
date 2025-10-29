@@ -43,7 +43,7 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
-        if (person.getGoal() != null && !person.getGoal().value.isEmpty()) {
+        if (person.getGoal() != null) {
             sb.append(PREFIX_GOAL + person.getGoal().value + " ");
         }
         if (person.getHeight() != null) {
