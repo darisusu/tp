@@ -82,7 +82,7 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SCHEDULE bf/BODYFAT [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [bf/BODYFAT] [t/TAG]…​`
 
 <box type="tip" seamless>
 **Tip:** A person can have any number of tags (including 0)
@@ -95,6 +95,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+Notes:
+* `n/NAME`, `p/PHONE_NUMBER`, `e/EMAIL`, `a/ADDRESS`, `dl/DEADLINE`, `paid/PAID`, and `s/SCHEDULE` must all be provided. Omitting any of these prefixes will result in an error.
+* You can supply any subset of optional prefixes (`goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`) in one command.
 
 ### Listing all persons : `list`
 
@@ -240,20 +243,23 @@ _Details coming soon ..._
 
 ## Session Formatting Guide:
 
+Use the `session` command to update a trainee's scheduled session using the same formats listed below. For example,
+`session 2 s/WEEKLY:TUE-1900-2000` updates the second trainee's schedule. FitBook will reject the command if the new
+session clashes with another trainee.
+
 * One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
 * Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
 * Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
 * Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
-* Legacy inputs like `WEEKLY:MONDAY 18:00` are still accepted and will be converted to the new storage format automatically.
 - Use the following formats when specifying session timings with the s/(schedule) prefix.
 - Note: Fitbook will automatically handle conflicts between overlapping sessions with error message.
 
 | **Type** | **Format** | **Example** |
 |-----------|-------------|-------------|
 | **One-off** | `YYYY-MM-DD HH:MM` | `2025-06-10 14:30` |
-| **Weekly (1 slot)** | `WEEKLY:DAY HH:MM` | `weekly:mon 18:00` |
+| **Weekly (single slot)** | `WEEKLY:DAY-START-END` | `weekly:mon-1800-1930` |
 | **Weekly (multi-slot)** | `WEEKLY:DAY-START-END-DAY-START-END` | `weekly:mon-1800-1930-tue-1800-1900` |
-| **Biweekly** | `BIWEEKLY:DAY HH:MM` | `biweekly:fri 09:00` |
+| **Biweekly** | `BIWEEKLY:DAY-START-END` | `biweekly:fri-0900-1030` |
 | **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
 
 - DAY accepts: mon, tue, wed, thu, fri, sat, sun.
@@ -269,7 +275,7 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] …` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`

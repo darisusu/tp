@@ -35,6 +35,7 @@ public final class PersonDeadlineComparator implements Comparator<Person> {
     }
 
     private static Optional<LocalDate> extract(Person p) {
-        return p.getDeadline().asOptional();
+        Deadline deadline = p.getDeadline();
+        return deadline == null ? Optional.empty() : deadline.asOptional();
     }
 }

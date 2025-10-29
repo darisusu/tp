@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -41,8 +41,14 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Goal goal, Height height, Weight weight,
             Age age, Gender gender, Deadline deadline, Paid paid, Bodyfat bodyfat, Session session, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, goal, height, weight, age, gender, paid, bodyfat, session,
-                tags);
+        requireNonNull(name);
+        requireNonNull(tags);
+        requireNonNull(phone);
+        requireNonNull(email);
+        requireNonNull(address);
+        requireNonNull(deadline);
+        requireNonNull(paid);
+        requireNonNull(session);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -149,17 +155,17 @@ public class Person {
 
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
-                && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email)
-                && address.equals(otherPerson.address)
-                && deadline.equals(otherPerson.deadline)
-                && goal.equals(otherPerson.goal)
-                && height.equals(otherPerson.height)
-                && weight.equals(otherPerson.weight)
-                && age.equals(otherPerson.age)
-                && gender.equals(otherPerson.gender)
-                && bodyfat.equals(otherPerson.bodyfat)
-                && session.equals(otherPerson.session)
+                && Objects.equals(phone, otherPerson.phone)
+                && Objects.equals(email, otherPerson.email)
+                && Objects.equals(address, otherPerson.address)
+                && Objects.equals(deadline, otherPerson.deadline)
+                && Objects.equals(goal, otherPerson.goal)
+                && Objects.equals(height, otherPerson.height)
+                && Objects.equals(weight, otherPerson.weight)
+                && Objects.equals(age, otherPerson.age)
+                && Objects.equals(gender, otherPerson.gender)
+                && Objects.equals(bodyfat, otherPerson.bodyfat)
+                && Objects.equals(session, otherPerson.session)
                 && tags.equals(otherPerson.tags);
     }
 
