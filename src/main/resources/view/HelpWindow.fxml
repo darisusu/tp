@@ -29,7 +29,7 @@
         <children>
           <Label fx:id="helpTitleLabel" text="Need a hand?" />
           <Label fx:id="helpMessage" wrapText="true" />
-          <WebView fx:id="commandReferenceView" contextMenuEnabled="false" focusTraversable="false"
+          <WebView fx:id="commandReferenceView" focusTraversable="false"
                    prefHeight="360.0" VBox.vgrow="ALWAYS" />
           <HBox alignment="CENTER_LEFT" fx:id="actionBar" spacing="10.0">
             <children>
