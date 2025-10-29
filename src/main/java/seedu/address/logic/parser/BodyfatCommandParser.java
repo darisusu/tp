@@ -24,12 +24,22 @@ public class BodyfatCommandParser implements Parser<BodyfatCommand> {
     public BodyfatCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_BODYFAT);
-
         Index index;
+
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BodyfatCommand.MESSAGE_USAGE), ive);
+        }
+
+        if (!argMultimap.getValue(PREFIX_BODYFAT).isPresent()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    BodyfatCommand.MESSAGE_USAGE));
+        }
+
+        String raw = argMultimap.getValue(PREFIX_BODYFAT).get();
+        if (!Bodyfat.isValidBodyfat(raw)) {
+            throw new ParseException(Bodyfat.MESSAGE_CONSTRAINTS);
         }
 
         String bodyfatValue = argMultimap.getValue(PREFIX_BODYFAT).orElse("");

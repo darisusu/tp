@@ -55,7 +55,7 @@ public class CommandTestUtil {
     public static final String VALID_GENDER_BOB = "male";
     public static final Deadline VALID_DEADLINE_AMY = Deadline.fromString("2025-12-31");
     public static final Deadline VALID_DEADLINE_BOB = Deadline.fromString("2025-12-31");
-    public static final String VALID_PAID_AMY = "false";
+    public static final String VALID_PAID_AMY = "true";
     public static final String VALID_PAID_BOB = "false";
     public static final String VALID_BODYFAT_AMY = "18.5";
     public static final String VALID_BODYFAT_BOB = "20.0";
