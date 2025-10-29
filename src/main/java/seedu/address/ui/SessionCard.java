@@ -19,6 +19,8 @@ public class SessionCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label id;
+    @FXML
     private Label name;
     @FXML
     private Label session;
@@ -30,6 +32,7 @@ public class SessionCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
 
+        id.setText(displayedIndex + ". ");
         name.setText("Name: " + person.getName().fullName);
         session.setText("Session: " + valueOrPlaceholder(person.getSession(), Session::toStorageString));
     }

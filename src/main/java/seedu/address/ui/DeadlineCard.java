@@ -20,6 +20,8 @@ public class DeadlineCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label id;
+    @FXML
     private Label name;
     @FXML
     private Label phone;
@@ -33,6 +35,7 @@ public class DeadlineCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
 
+        id.setText(displayedIndex + ". ");
         name.setText("Name: " + person.getName().fullName);
         phone.setText(valueOrPlaceholder(person.getPhone(), Phone::toString));
         deadline.setText("Payment Deadline: " + deadlineDisplay(person.getDeadline()));
