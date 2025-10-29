@@ -26,6 +26,7 @@ import seedu.address.logic.commands.HeightCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PaidCommand;
+import seedu.address.logic.commands.SessionCommand;
 import seedu.address.logic.commands.SortByDeadlineCommand;
 import seedu.address.logic.commands.SortByPaidCommand;
 import seedu.address.logic.commands.SortBySessionCommand;
@@ -125,6 +126,9 @@ public class AddressBookParser {
 
         case SortByPaidCommand.COMMAND_WORD:
             return new SortByPaidCommandParser().parse(arguments);
+
+        case SessionCommand.COMMAND_WORD:
+            return new SessionCommandParser().parse(arguments);
 
         case SortBySessionCommand.COMMAND_WORD:
             return new SortBySessionCommand();

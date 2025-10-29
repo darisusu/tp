@@ -93,13 +93,13 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         deadline = source.getDeadline().toStorageString();
-        goal = source.getGoal().value;
-        height = String.valueOf(source.getHeight().value); // convert int → String
-        weight = String.valueOf(source.getWeight().value); // convert Double → String
-        age = String.valueOf(source.getAge().value); // convert int → String
-        gender = source.getGender().value; // convert Gender to String
-        paid = source.getPaymentStatus().toString(); // Convert Paid to String
-        bodyfat = source.getBodyfat().toString();
+        goal = source.getGoal() == null ? null : source.getGoal().value;
+        height = source.getHeight() == null ? null : String.valueOf(source.getHeight().value);
+        weight = source.getWeight() == null ? null : String.valueOf(source.getWeight().value);
+        age = source.getAge() == null ? null : String.valueOf(source.getAge().value);
+        gender = source.getGender() == null ? null : source.getGender().value;
+        paid = source.getPaymentStatus().toString();
+        bodyfat = source.getBodyfat() == null ? null : source.getBodyfat().toString();
         session = source.getSession().toStorageString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -125,100 +125,114 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
+        final Phone modelPhone;
         if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
-        }
-        if (!Phone.isValidPhone(phone)) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Phone.class.getSimpleName()));
+        } else if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        } else {
+            modelPhone = new Phone(phone);
         }
-        final Phone modelPhone = new Phone(phone);
 
+        final Email modelEmail;
         if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(email)) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Email.class.getSimpleName()));
+        } else if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        } else {
+            modelEmail = new Email(email);
         }
-        final Email modelEmail = new Email(email);
 
+        final Address modelAddress;
         if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
-        }
-        if (!Address.isValidAddress(address)) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Address.class.getSimpleName()));
+        } else if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        }
-        final Address modelAddress = new Address(address);
-
-        final String rawDeadline = (deadline == null) ? "" : deadline;
-
-        if (!Deadline.isValidDeadline(rawDeadline)) {
-            throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
+        } else {
+            modelAddress = new Address(address);
         }
 
-        final Deadline modelDeadline = Deadline.fromString(rawDeadline);
-
-        if (goal == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Goal.class.getSimpleName()));
+        final Deadline modelDeadline;
+        if (deadline == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Deadline.class.getSimpleName()));
+        } else {
+            if (!Deadline.isValidDeadline(deadline)) {
+                throw new IllegalValueException(Deadline.MESSAGE_CONSTRAINTS);
+            }
+            modelDeadline = Deadline.fromString(deadline);
         }
-        final Goal modelGoal = new Goal(goal);
 
+        final Goal modelGoal = goal == null ? null : new Goal(goal);
+
+        final Height modelHeight;
         if (height == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Height.class.getSimpleName()));
-        }
-        if (!Height.isValidHeight(height)) {
+            modelHeight = null;
+        } else if (!Height.isValidHeight(height)) {
             throw new IllegalValueException(Height.MESSAGE_CONSTRAINTS);
+        } else {
+            modelHeight = new Height(height);
         }
-        final Height modelHeight = new Height(height);
 
+        final Weight modelWeight;
         if (weight == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Weight.class.getSimpleName()));
-        }
-        if (!Weight.isValidWeight(weight)) {
+            modelWeight = null;
+        } else if (!Weight.isValidWeight(weight)) {
             throw new IllegalValueException(Weight.MESSAGE_CONSTRAINTS);
+        } else {
+            modelWeight = new Weight(weight);
         }
-        final Weight modelWeight = new Weight(weight);
 
-
+        final Age modelAge;
         if (age == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Age.class.getSimpleName()));
-        }
-        if (!Age.isValidAge(age)) {
+            modelAge = null;
+        } else if (!Age.isValidAge(age)) {
             throw new IllegalValueException(Age.MESSAGE_CONSTRAINTS);
+        } else {
+            modelAge = new Age(age);
         }
-        final Age modelAge = new Age(age);
 
+        final Gender modelGender;
         if (gender == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Gender.class.getSimpleName()));
-        }
-        if (!Gender.isValidGender(gender)) {
+            modelGender = null;
+        } else if (!Gender.isValidGender(gender)) {
             throw new IllegalValueException(Gender.MESSAGE_CONSTRAINTS);
+        } else {
+            modelGender = new Gender(gender);
         }
-        final Gender modelGender = new Gender(gender);
 
+        final Paid modelPaid;
         if (paid == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Paid.class.getSimpleName()));
-        }
-        if (!Paid.isValidPaid(paid)) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Paid.class.getSimpleName()));
+        } else if (!Paid.isValidPaid(paid)) {
             throw new IllegalValueException(Paid.MESSAGE_CONSTRAINTS);
+        } else {
+            modelPaid = new Paid(paid);
         }
-        final Paid modelPaid = new Paid(paid); // Convert string to Paid
 
+        final Bodyfat modelBodyfat;
         if (bodyfat == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Bodyfat.class.getSimpleName()));
-        }
-        if (!Bodyfat.isValidBodyfat(bodyfat)) {
+            modelBodyfat = null;
+        } else if (!Bodyfat.isValidBodyfat(bodyfat)) {
             throw new IllegalValueException(Bodyfat.MESSAGE_CONSTRAINTS);
+        } else {
+            modelBodyfat = new Bodyfat(bodyfat);
         }
-        final Bodyfat modelBodyfat = new Bodyfat(bodyfat);
 
-        if (session == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Session.class.getSimpleName()));
-        }
         final Session modelSession;
-        try {
-            modelSession = Session.fromString(session);
-        } catch (IllegalArgumentException ex) {
-            throw new IllegalValueException(ex.getMessage(), ex);
+        if (session == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Session.class.getSimpleName()));
+        } else {
+            try {
+                modelSession = Session.fromString(session);
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalValueException(ex.getMessage(), ex);
+            }
         }
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
