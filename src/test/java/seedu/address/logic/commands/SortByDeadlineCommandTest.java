@@ -5,19 +5,40 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
 public class SortByDeadlineCommandTest {
+
+    private static final ZoneId ZONE = ZoneOffset.UTC;
+    private static final Clock FIXED_CLOCK =
+            Clock.fixed(LocalDate.of(2025, 1, 1).atStartOfDay(ZONE).toInstant(), ZONE);
+
+    @BeforeEach
+    void freezeClock() {
+        Deadline.useClock(FIXED_CLOCK);
+    }
+
+    @AfterEach
+    void unfreezeClock() {
+        Deadline.useClock(Clock.systemDefaultZone());
+    }
 
     @Test
     public void execute_sortAscending_reordersListEarliestFirst() throws Exception {
