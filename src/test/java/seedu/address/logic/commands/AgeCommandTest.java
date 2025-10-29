@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -74,7 +73,7 @@ public class AgeCommandTest {
     @Test
     public void execute_invalidAge_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Age("150")); // >120 not allowed
-        assertThrows(IllegalArgumentException.class, () -> new Age("-5"));  // negative not allowed
+        assertThrows(IllegalArgumentException.class, () -> new Age("-5")); // negative not allowed
         assertThrows(IllegalArgumentException.class, () -> new Age("abc")); // non-numeric
     }
 
