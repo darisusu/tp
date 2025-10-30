@@ -89,7 +89,8 @@ public class DeadlineCommandTest {
         Deadline newDeadline = Deadline.fromString("2025-06-15");
         DeadlineCommand command = new DeadlineCommand(INDEX_FIRST_PERSON, newDeadline);
 
-        String expectedMessage = String.format(DeadlineCommand.MESSAGE_ADD_DEADLINE_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage =
+                String.format(DeadlineCommand.MESSAGE_ADD_DEADLINE_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -104,7 +105,8 @@ public class DeadlineCommandTest {
 
         DeadlineCommand command = new DeadlineCommand(INDEX_FIRST_PERSON, Deadline.empty());
 
-        String expectedMessage = String.format(DeadlineCommand.MESSAGE_DELETE_DEADLINE_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage =
+                String.format(DeadlineCommand.MESSAGE_DELETE_DEADLINE_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
