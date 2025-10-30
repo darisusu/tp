@@ -39,13 +39,9 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
                     DeadlineCommand.MESSAGE_USAGE));
         }
 
-        // 3) Validate & build the value object ("" => clear)
+        // 3) Validate & build the value object ("" => clear) using ParserUtil for detailed messages
         String raw = map.getValue(PREFIX_DEADLINE).get(); // present by now
-        if (!Deadline.isValidDeadline(raw)) {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
-        }
-
-        Deadline deadline = Deadline.fromString(raw);
+        Deadline deadline = ParserUtil.parseDeadline(raw);
         return new DeadlineCommand(index, deadline);
     }
 }

@@ -31,12 +31,9 @@ public class GenderCommandParser implements Parser<GenderCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GenderCommand.MESSAGE_USAGE), ive);
         }
 
-        String gender = argMultimap.getValue(PREFIX_GENDER).orElse("");
-
-        if (!Gender.isValidGender(gender)) {
-            throw new ParseException(Gender.MESSAGE_CONSTRAINTS);
-        }
-
-        return new GenderCommand(index, new Gender(gender));
+        String genderRaw = argMultimap.getValue(PREFIX_GENDER).orElse("");
+        // Trim and validate via ParserUtil for consistent behavior across commands
+        Gender gender = ParserUtil.parseGender(genderRaw);
+        return new GenderCommand(index, gender);
     }
 }

@@ -157,10 +157,39 @@ public class ParserUtil {
     public static Deadline parseDeadline(String deadline) throws ParseException {
         requireNonNull(deadline);
         String trimmed = deadline.trim();
-        if (!Deadline.isValidDeadline(trimmed)) {
-            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);
+        // Empty is allowed (clear)
+        if (trimmed.isEmpty()) {
+            return Deadline.fromString("");
         }
-        return Deadline.fromString(deadline);
+
+        // Shape/format check first
+        if (!trimmed.matches(Deadline.VALIDATION_REGEX)) {
+            throw new ParseException("Deadline must be in format yyyy-MM-dd (e.g., 2025-12-31)");
+        }
+
+        // Calendar validity and range checks
+        try {
+            // This will also verify real calendar dates (e.g., 2025-02-30 rejected)
+            Deadline candidate = Deadline.fromString(trimmed);
+            return candidate;
+        } catch (IllegalArgumentException ex) {
+            // Deadline.fromString currently throws using a generic constraint message; refine here
+            // Re-run finer checks to distinguish calendar vs range
+            try {
+                java.time.LocalDate parsed = java.time.LocalDate.parse(trimmed,
+                        java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                java.time.LocalDate today = java.time.LocalDate.now();
+                java.time.LocalDate latest = today.plusYears(1);
+                if (!parsed.isAfter(today) || parsed.isAfter(latest)) {
+                    throw new ParseException(
+                            "Deadline must be strictly after today and no later than one year from today.", ex);
+                }
+                // Should not reach here; fallback to generic
+                throw new ParseException(Deadline.MESSAGE_CONSTRAINTS, ex);
+            } catch (java.time.format.DateTimeParseException dtpe) {
+                throw new ParseException("Provided date is not a valid calendar date (e.g., 2025-02-30)", dtpe);
+            }
+        }
     }
 
     /**
