@@ -25,6 +25,16 @@ public class WeightCommandParserTest {
     }
 
     @Test
+    public void parse_withIncidentalSpaces_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String spacedFront = targetIndex.getOneBased() + " " + PREFIX_WEIGHT + " " + VALID_WEIGHT;
+        String spacedBack = targetIndex.getOneBased() + " " + PREFIX_WEIGHT + VALID_WEIGHT + "  ";
+        WeightCommand expected = new WeightCommand(INDEX_FIRST_PERSON, new Weight(VALID_WEIGHT));
+        assertParseSuccess(parser, spacedFront, expected);
+        assertParseSuccess(parser, spacedBack, expected);
+    }
+
+    @Test
     public void parse_invalidValue_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_WEIGHT + "0";

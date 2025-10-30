@@ -42,8 +42,8 @@ public class AgeCommand extends Command {
      * @param age of the person to be updated to
      */
     public AgeCommand(Index index, Age age) {
-        requireAllNonNull(index, age);
-
+        requireAllNonNull(index);
+        // age may be null to indicate clearing the field
         this.index = index;
         this.age = age;
     }
@@ -85,7 +85,7 @@ public class AgeCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !age.toString().isEmpty() ? MESSAGE_ADD_AGE_SUCCESS : MESSAGE_DELETE_AGE_SUCCESS;
+        String message = age == null ? MESSAGE_DELETE_AGE_SUCCESS : MESSAGE_ADD_AGE_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
@@ -102,6 +102,6 @@ public class AgeCommand extends Command {
 
         AgeCommand e = (AgeCommand) other;
         return index.equals(e.index)
-                && age.equals(e.age);
+                && java.util.Objects.equals(age, e.age);
     }
 }

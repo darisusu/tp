@@ -37,11 +37,8 @@ public class WeightCommandParser implements Parser<WeightCommand> {
         }
 
         String rawWeight = argMultimap.getValue(PREFIX_WEIGHT).get();
-        if (!Weight.isValidWeight(rawWeight)) {
-            throw new ParseException(Weight.MESSAGE_CONSTRAINTS);
-        }
-
-        Weight weight = new Weight(rawWeight);
+        String trimmed = rawWeight.trim();
+        Weight weight = ParserUtil.parseWeight(trimmed);
         return new WeightCommand(index, weight);
     }
 }

@@ -41,11 +41,10 @@ public class AgeCommandParser implements Parser<AgeCommand> {
 
         // 3) Validate & build the value object ("" => clear)
         String raw = map.getValue(PREFIX_AGE).get(); // present by now
-        if (!Age.isValidAge(raw)) {
-            throw new ParseException(Age.MESSAGE_CONSTRAINTS);
-        }
+        String trimmed = raw.trim();
 
-        Age age = new Age(raw);
+        // Empty value means clear the field
+        Age age = trimmed.isEmpty() ? null : ParserUtil.parseAge(trimmed);
         return new AgeCommand(index, age);
     }
 }
