@@ -39,8 +39,7 @@ public class Height {
             return false;
         }
     }
-    
-//toString method to return the height in cm
+
     @Override
     public String toString() {
         return value + " cm";
