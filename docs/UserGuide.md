@@ -293,7 +293,7 @@ There is a limit of 100 characters for the goal field.
 
 ---
 
-### `deadline` — Update a goal deadline
+### `deadline` — Update a payment deadline
 **Format:** `deadline INDEX dl/DATE`  
 **Example:** `deadline 4 dl/2025-12-31`
 
