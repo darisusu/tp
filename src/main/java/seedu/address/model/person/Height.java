@@ -12,7 +12,8 @@ public class Height {
     /*
      * Error message if height is in incorrect format.
      */
-    public static final String MESSAGE_CONSTRAINTS = "Height should be a positive integer in cm (e.g. 170)";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Height must be an integer in centimeters between 50 and 250 (e.g. 170)";
 
     public final int value; // the height in cm and int
 
@@ -29,12 +30,12 @@ public class Height {
 
     /**
      * Returns true if a given string is a valid height.
-     * Only positive numbers under 300cm.
+     * Only whole numbers between 50cm and 250cm (inclusive).
      */
     public static boolean isValidHeight(String heightInput) {
         try {
             int height = Integer.parseInt(heightInput);
-            return height > 0;
+            return height >= 50 && height <= 250;
         } catch (NumberFormatException e) {
             return false;
         }
