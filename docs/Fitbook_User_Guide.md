@@ -183,6 +183,7 @@ FitBook automatically detects and rejects conflicting session timings.
 **Format:** `goal INDEX goal/GOAL`  
 **Example:** `goal 1 goal/Complete a triathlon`  
 Use `goal/` with no text to clear the goal.
+There is a limit of 100 characters for the goal field.
 
 ---
 
@@ -197,6 +198,7 @@ Use `goal/` with no text to clear the goal.
 **Example:** `paid 3 paid/true`
 
 Use `true` if the client has paid, or `false` otherwise.
+Clients with paid status of `false` will be displayed in the dashboard under Unpaid Clients.
 
 ---
 
@@ -211,6 +213,13 @@ Examples:
 - `age 1 age/26`
 - `bodyfat 1 bf/17.2`
 - `gender 5 g/non-binary`
+
+Constraints:
+- Height: Must be an integer between 90 and 300
+- Weight: Must be an integer between 20 and 500
+- Age: Must be an integer between 1 and 120
+- Bodyfat: Must be an integer between 5.0 and 60.0, with at most one decimal place
+- Gender: Must one of the following: `male`, `female`, `other`, `non-binary`, `prefer not to say`
 
 ---
 
