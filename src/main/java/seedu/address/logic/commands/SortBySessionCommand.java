@@ -14,7 +14,7 @@ public class SortBySessionCommand extends Command {
     public static final String COMMAND_WORD = "sortbysession";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts the person list by sessions (earliest first by default). \n"
-            + "Example: " + COMMAND_WORD + " desc";
+            + "Example: " + COMMAND_WORD;
     public static final String MESSAGE_SUCCESS = "List sorted by sessions (upcoming first)";
 
     @Override

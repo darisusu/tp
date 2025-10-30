@@ -131,7 +131,7 @@ public class AddressBookParser {
             return new SessionCommandParser().parse(arguments);
 
         case SortBySessionCommand.COMMAND_WORD:
-            return new SortBySessionCommand();
+            return new SortBySessionCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
