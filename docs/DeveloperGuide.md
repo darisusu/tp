@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# FitBook Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,17 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project adapts design, code, and documentation ideas from the SE-EDU AddressBook-Level3 project.
+
+* SE-EDU AB-3: architecture, component structure, and documentation scaffolding
+* JavaFX (OpenJFX 17.0.7): UI framework
+* Jackson (BOM 2.17.2): JSON serialization (jackson-databind, jackson-datatype-jsr310)
+* JUnit Jupiter 5.10.2: testing framework
+* Checkstyle 11.0.0: code style checks
+* JaCoCo: test coverage reporting
+* Shadow plugin 8.1.1: fat-jar packaging
+
+Links and licenses are available from the respective upstream repositories.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -410,7 +420,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Trainer enters the `addsession` command with client name, date, and time.
+1. Trainer enters the `session` command with client index, date, and time.
 2. FitBook checks for scheduling conflicts.
 3. FitBook adds the session to the client’s record and confirms.
 
@@ -433,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Trainer enters the `pay` command with client name and payment details.
+1. Trainer enters the `paid` command with client index and payment details.
 2. FitBook updates the client’s payment history.
 3. FitBook displays updated balance or confirmation.
 
@@ -451,7 +461,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Trainer enters the `view` command with client name.
+1. Trainer enters the `find` command with client name.
 2. FitBook displays the client’s recorded stats and past sessions.
 
    Use case ends.
@@ -460,6 +470,64 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. Client name not found.
     * 1a1. FitBook displays an error message.
+    * Use case ends.
+
+---
+
+#### **Use case: UC06 – Sort clients by paid status**
+
+**MSS**
+
+1. Trainer enters the `sortbypaid` command.
+2. FitBook sorts the client list with **unpaid clients first**, followed by paid clients.
+3. FitBook displays a confirmation message and the re-ordered list.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. There are extra arguments after `sortbypaid`.
+    * 1a1. FitBook shows an error message with the correct usage.
+    * Use case ends.
+
+* 2a. The list is empty.
+    * 2a1. FitBook shows an empty list message (no change in data).
+    * Use case ends.
+
+* 2b. Multiple clients share the same paid status.
+    * 2b1. FitBook keeps a stable order or applies a tie-breaker (e.g., by name) as defined in the comparator.
+    * Use case ends.
+
+---
+
+#### **Use case: UC07 – Sort clients by upcoming session**
+
+**MSS**
+
+1. Trainer enters the `sortbysession` command.
+2. FitBook determines each client’s **next upcoming session** relative to the current date-time.
+3. FitBook sorts the client list in **ascending order of next upcoming session** (earliest first).
+4. Clients **without any upcoming session** are placed **after** those with upcoming sessions.
+5. FitBook displays a confirmation message and the re-ordered list.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. There are extra arguments after `sortbysession`.
+    * 1a1. FitBook shows an error message with the correct usage.
+    * Use case ends.
+
+* 2a. A client has only past sessions.
+    * 2a1. FitBook treats them as having **no upcoming session** and places them after clients with upcoming sessions.
+    * Use case resumes at step 3.
+
+* 3a. Multiple clients share the same upcoming session timestamp.
+    * 3a1. FitBook keeps a stable order or applies a tie-breaker (e.g., by name) as defined in the comparator.
+    * Use case ends.
+
+* 3b. The list is empty.
+    * 3b1. FitBook shows an empty list message (no change in data).
     * Use case ends.
 
 ---
@@ -510,7 +578,7 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch aqnd shutdown
+### Launch and shutdown
 
 1. Initial launch
 
