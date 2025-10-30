@@ -6,8 +6,8 @@ pageNav: 3
 
 # FitBook User Guide
 
-### Welcome Trainers!  
-FitBook is a desktop app built for personal trainers and fitness coaches who manage multiple clients. 
+### Welcome Trainers!
+FitBook is a desktop app built for personal trainers and fitness coaches who manage multiple clients.
 It helps you stay organized, so that you can spend more time focusing on your clients' fitness journeys.
 
 This is all done through a simple Command Line Interface (CLI) with a clean Graphical User Interface (GUI).
@@ -19,6 +19,8 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 - **Track progress** – Record and update height, weight, body fat percentage, age, and gender data over time.
 - **Set goals** – Assign and monitor fitness goals with deadlines for each client.
 - **Organize efficiently** – Use tags to categorize clients and sort lists by payment status or deadlines.
+- **Stay secure and portable** – Your data is stored locally in JSON format, allowing easy backup and transfer across devices.
+- **Boost productivity** – With automated saving and intuitive command structure, trainers can manage 50+ clients effortlessly.
 
 
 ![FitBook Interface](images/Ui.png)
@@ -60,7 +62,7 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
     - `exit` – Exits the application
 
 6. Refer to the [Command Reference](#command-reference) below for full details.
-   
+
 [↑ Back to top](#fitbook-user-guide)
 
 ---
@@ -101,7 +103,7 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 ---
 ## UI Guide
 
-The UI comprises a few components, which can be manipulated via the commands below. 
+The UI comprises a few components, which can be manipulated via the commands below.
 When entering the app, the user will see a dashboard component taking up the bulk of the screen.
 The dashboard contains two lists:
 1. Upcoming Sessions:
@@ -111,14 +113,14 @@ The dashboard contains two lists:
     - Lists the current clients who have not paid (`paid` is false)
     - Each card contains only the client name, deadline date, and phone number
 
-Pressing the client button on the left, the dashboard will be replaced with the full client list, 
-containing the full information of every client. Here, the user can further use commands like 
+Pressing the client button on the left, the dashboard will be replaced with the full client list,
+containing the full information of every client. Here, the user can further use commands like
 `find`, `sortbydeadline` to refine or reorder the results shown in the list.
 
 To the left, there is a sidebar with four buttons. The top two buttons allow the user to toggle
-between the dashboard and the main client list. 
+between the dashboard and the main client list.
 The Help button opens a new window containing a link to the user guide.
-The Exit button will close the program. 
+The Exit button will close the program.
 All the buttons' functionalities can also be accessed via text commands, as seen below.
 
 At the bottom lies the CommandBox and ResultDisplay. The user can input their commands into the CommandBox.
@@ -206,7 +208,7 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `find` — Search clients by name
-**Format:** `find KEYWORD [MORE_KEYWORDS]…`  
+**Format:** `find KEYWORD [MORE_KEYWORDS]…`
 **Example:** `find alex bernice`
 
 **Guidance:**
@@ -222,7 +224,7 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `delete` — Remove a client
-**Format:** `delete INDEX`  
+**Format:** `delete INDEX`
 **Example:** `delete 3`
 
 **Guidance:**
@@ -232,7 +234,7 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `clear` — Delete all clients
-**Format:** `clear`  
+**Format:** `clear`
 
 > ⚠️ **Warning:** This action **cannot be undone**.
 
@@ -248,7 +250,7 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `sortbydeadline` — Sort clients by payment deadline
-**Format:** `sortbydeadline [asc/desc]`  
+**Format:** `sortbydeadline [asc/desc]`
 **Examples:**
 - `sortbydeadline` or `sortbydeadline asc` → ascending
 - `sortbydeadline desc` → descending
@@ -266,7 +268,7 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `session` — Update a client’s scheduled session
-**Format:** `session INDEX s/SESSION`  
+**Format:** `session INDEX s/SESSION`
 **Example:** `session 1 s/WEEKLY:MON-1800-1930`
 
 FitBook automatically detects and rejects conflicting session timings.
@@ -287,8 +289,8 @@ FitBook automatically detects and rejects conflicting session timings.
 ---
 
 ### `goal` — Set or clear a fitness goal
-**Format:** `goal INDEX goal/GOAL`  
-**Example:** `goal 1 goal/Complete a triathlon`  
+**Format:** `goal INDEX goal/GOAL`
+**Example:** `goal 1 goal/Complete a triathlon`
 Use `goal/` with no text to clear the goal.
 There is a limit of 100 characters for the goal field.
 
@@ -301,7 +303,7 @@ There is a limit of 100 characters for the goal field.
 ---
 
 ### `paid` — Record payment status
-**Format:** `paid INDEX paid/STATUS`  
+**Format:** `paid INDEX paid/STATUS`
 **Example:** `paid 3 paid/true`
 
 Use `true` if the client has paid, or `false` otherwise.
@@ -341,7 +343,7 @@ Constraints:
 ---
 
 ### `help` — Open help window
-**Format:** `help`  
+**Format:** `help`
 Displays a new window with a link to the user guide.
 
 ![help_window_screenshot](images/helpMessage.png)
@@ -368,7 +370,7 @@ Data is stored at:
 ```
 
 ### Editing data manually
-Advanced users may edit the JSON file directly.  
+Advanced users may edit the JSON file directly.
 ⚠️ Invalid edits (e.g. malformed JSON) will cause FitBook to start with an empty dataset. Always back up before editing.
 
 [↑ Back to top](#fitbook-user-guide)
@@ -377,26 +379,30 @@ Advanced users may edit the JSON file directly.
 
 ## FAQ
 
-**Q:** How do I transfer my data to another computer?  
+**Q:** How do I transfer my data to another computer?
 **A:** Copy the entire FitBook home folder (including the `data` folder) to the other computer and run the same `.jar` file there.
 
 [↑ Back to top](#fitbook-user-guide)
 
 ---
 
+
 ## Known Issues
 
-1. **Multiple screens:**  
-   If you move the app to a secondary monitor and later use only one screen, FitBook may reopen off-screen.  
-   **Fix:** Delete `preferences.json` before relaunching.
+1. **Multiple screens:**
+   Moving FitBook to another monitor and reopening may cause it to appear off-screen.
+   **Fix:** Delete `preferences.json` and relaunch.
 
-2. **Minimized Help window:**  
-   If you minimize the Help window and run `help` again, the existing window stays minimized.  
-   **Fix:** Manually restore it from your taskbar.
+2. **Minimized Help window:**
+   Running `help` again will not reopen a minimized window.
+   **Fix:** Restore it manually from your taskbar.
+
+3. **Locale-specific date formats:**
+   If your system locale is not `en-SG`, date parsing errors may occur.
+   **Fix:** Set your system locale to English (Singapore) or use the `yyyy-MM-dd` format.
 
 [↑ Back to top](#fitbook-user-guide)
 
 
 ---
 *End of User Guide.*
-
