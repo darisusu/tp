@@ -131,14 +131,14 @@ This is the main medium users are expected to interact with the program.
 
 This section lists all available commands and how to use them.
 
-> **Format conventions**
+> ### Format conventions
 > - Words in `UPPER_CASE` are parameters you should replace with your own values.
 > - Items in `[square brackets]` are optional.
 > - Items followed by `…` can be repeated multiple times.
 > - Commands that update clients use the `INDEX` from the displayed list (starting at 1).
 > - Prefixes such as `n/` for name let you provide parameters in **any order**.
 
-> ⚠️ **Important Input Rule**
+> ### ⚠️ Important Input Rule
 >
 > You **must not include the `/` character in any input values**, except where it is used as a command prefix (e.g., `n/`, `p/`, `e/`).
 >
@@ -209,6 +209,10 @@ Displays the entire client list.
 - Multiple keywords perform an OR-search (matches if any keyword is present)
 - Only full words will be matched e.g. `Han` will not match `Hans`
 - Matches are displayed in the client list
+
+
+  ![result for 'find alex bernice'](images/findAlexBernice.png)
+
 
 ---
 
@@ -333,7 +337,10 @@ Constraints:
 
 ### `help` — Open help window
 **Format:** `help`  
-Displays available commands and tips.
+Displays a new window with a link to the user guide.
+
+![help_window_screenshot](images/helpMessage.png)
+
 
 ---
 
