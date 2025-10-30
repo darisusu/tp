@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -27,13 +30,37 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listIsNotFiltered_showsSameList_andSwitchesToClientView() {
+        CommandResult expected = new CommandResult(ListCommand.MESSAGE_SUCCESS,
+                /* showHelp */ false,
+                /* exit */ false,
+                /* showClient */ true,
+                /* showSession */ false);
+        assertCommandSuccess(new ListCommand(), model, expected, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
+    public void execute_listIsFiltered_showsEverything_andSwitchesToClientView() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        CommandResult expected = new CommandResult(ListCommand.MESSAGE_SUCCESS,
+                /* showHelp */ false,
+                /* exit */ false,
+                /* showClient */ true,
+                /* showSession */ false);
+        assertCommandSuccess(new ListCommand(), model, expected, expectedModel);
+    }
+
+    @Test
+    public void execute_switchesToClientView_setsUiFlagsCorrectly() {
+        // Execute directly to inspect CommandResult flags
+        ListCommand command = new ListCommand();
+        CommandResult result = command.execute(model);
+
+        assertEquals(ListCommand.MESSAGE_SUCCESS, result.getFeedbackToUser());
+        // Mirrors ClientCommand: (message, showHelp=false, exit=false, showClientList=true, showSessionList=false)
+        assertFalse(result.isShowHelp());
+        assertFalse(result.isExit());
+        assertTrue(result.isClient());
+        assertFalse(result.isDashboard());
     }
 }
