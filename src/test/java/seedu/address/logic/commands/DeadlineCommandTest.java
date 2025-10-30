@@ -32,7 +32,8 @@ import seedu.address.testutil.PersonBuilder;
 public class DeadlineCommandTest {
 
     private static final ZoneId ZONE = ZoneOffset.UTC;
-    private static final Clock FIXED_CLOCK = Clock.fixed(LocalDate.of(2025, 1, 1).atStartOfDay(ZONE).toInstant(), ZONE);
+    private static final Clock FIXED_CLOCK = Clock.fixed(LocalDate.of(2025, 1, 1)
+            .atStartOfDay(ZONE).toInstant(), ZONE);
 
     private Model model;
 
