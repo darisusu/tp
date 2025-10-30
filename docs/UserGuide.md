@@ -7,10 +7,13 @@ pageNav: 3
 # FitBook User Guide
 
 ### Welcome Trainers!  
-**FitBook** is a **desktop app for managing clients**, optimized for use via a Command Line Interface (CLI) while retaining a modern Graphical User Interface (GUI). Whether you're tech-savvy or new to command-line tools, FitBook’s intuitive commands make it easy to track clients, payments, and progress — all at your fingertips.
+FitBook is a desktop app built for personal trainers and fitness coaches who manage multiple clients. 
+It helps you stay organized, so that you can spend more time focusing on your clients' fitness journeys.
+
+This is all done through a simple Command Line Interface (CLI) with a clean Graphical User Interface (GUI).
 
 **FitBook helps you:**
-- **Manage clianets information** – Store and update clients contact details, body statistics, and personal data.
+- **Manage clients information** – Store and update clients contact details, body statistics, and personal data.
 - **Track payments** – Monitor payment status and upcoming deadlines.
 - **Schedule sessions** – Organize one-off, weekly, biweekly, or monthly training sessions with automatic conflict detection.
 - **Track progress** – Record and update height, weight, body fat percentage, age, and gender data over time.
@@ -19,6 +22,19 @@ pageNav: 3
 
 
 ![FitBook Interface](images/Ui.png)
+
+---
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Command Summary](#command-summary)
+- [UI Guide](#ui-guide)
+- [Command Reference](#command-reference)
+- [Data Handling](#data-handling)
+- [FAQ](#faq)
+- [Known Issues](#known-issues)
+
+
 
 ---
 
@@ -40,10 +56,44 @@ pageNav: 3
 5. Try these example commands for starters:
     - `client` - Switches the main component from the dashboard to the full client list
     - `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false` - Adds a new client with basic information
-    - `delete 1` – Deletes the  first client in the list
+    - `delete 1` – Deletes the first client in the list
     - `exit` – Exits the application
 
 6. Refer to the [Command Reference](#command-reference) below for full details.
+   
+[↑ Back to top](#fitbook-user-guide)
+
+---
+## Command Summary
+
+> Tip: You can click on the commands below to jump to their detailed explanations.
+
+| **Command** | **Description** | **Example** |
+|--------------|----------------|--------------|
+| [`add`](#add--add-a-client) | Add a new client | `add n/John Doe p/98765432 e/john@example.com ...` |
+| [`edit`](#edit--edit-a-client) | Edit an existing client | `edit 2 n/James Tan e/jamestan@example.com` |
+| [`list`](#list--view-all-clients) | View all clients | `list` |
+| [`find`](#find--search-clients-by-name) | Search for clients by name | `find John Jane` |
+| [`delete`](#delete--remove-a-client) | Delete a client | `delete 3` |
+| [`clear`](#clear--delete-all-clients) | Delete all clients | `clear` |
+| [`sortbypaid`](#sortbypaid--sort-clients-by-payment-status) | Sort clients by payment status | `sortbypaid` |
+| [`sortbydeadline`](#sortbydeadline--sort-clients-by-payment-deadline) | Sort clients by payment deadline | `sortbydeadline desc` |
+| [`sortbysession`](#sortbysession--sort-clients-by-upcoming-session) | Sort clients by upcoming session | `sortbysession` |
+| [`session`](#session--update-a-clients-scheduled-session) | Update a client’s scheduled session | `session 1 s/WEEKLY:MON-1800-1930` |
+| [`goal`](#goal--set-or-clear-a-fitness-goal) | Set or clear a fitness goal | `goal 1 goal/Run a marathon` |
+| [`deadline`](#deadline--update-a-goal-deadline) | Update a goal deadline | `deadline 2 dl/2025-12-31` |
+| [`paid`](#paid--record-payment-status) | Record payment status | `paid 3 paid/true` |
+| [`height`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update height | `height 1 h/170` |
+| [`weight`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update weight | `weight 1 w/70` |
+| [`age`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update age | `age 1 age/25` |
+| [`bodyfat`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update body fat | `bodyfat 1 bf/18.5` |
+| [`gender`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update gender | `gender 1 g/female` |
+| [`client`](#client--switch-to-client-list-view) | Switch to client list view | `client` |
+| [`dashboard`](#dashboard--switch-to-dashboard-view) | Switch to dashboard view | `dashboard` |
+| [`help`](#help--open-help-window) | Open help window | `help` |
+| [`exit`](#exit--close-the-program) | Exit the program | `exit` |
+
+[↑ Back to top](#fitbook-user-guide)
 
 ---
 ## UI Guide
@@ -62,7 +112,7 @@ Pressing the client button on the left, the dashboard will be replaced with the 
 containing the full information of every client. Here, the user can further use commands like 
 `find`, `sortbydeadline` to refine or reorder the results shown in the list.
 
-To the left, there is a sidebar with four buttons. The top two buttons allows the user to toggle
+To the left, there is a sidebar with four buttons. The top two buttons allow the user to toggle
 between the dashboard and the main client list. 
 The Help button opens a new window containing a link to the user guide.
 The Exit button will close the program. 
@@ -71,6 +121,8 @@ All the buttons' functionalities can also be accessed via text commands, as seen
 At the bottom lies the CommandBox and ResultDisplay. The user can input their commands into the CommandBox.
 Results of the command input will be immediately shown in the ResultDisplay, including error messages.
 This is the main medium users are expected to interact with the program.
+
+[↑ Back to top](#fitbook-user-guide)
 
 
 ---
@@ -85,6 +137,18 @@ This section lists all available commands and how to use them.
 > - Items followed by `…` can be repeated multiple times.
 > - Commands that update clients use the `INDEX` from the displayed list (starting at 1).
 > - Prefixes such as `n/` for name let you provide parameters in **any order**.
+
+> ⚠️ **Important Input Rule**
+>
+> You **must not include the `/` character in any input values**, except where it is used as a command prefix (e.g., `n/`, `p/`, `e/`).
+>
+> Using `/` inside actual data fields — such as names (`s/o`), addresses, goals, or tags — will cause the command to fail or be misinterpreted.
+>
+>
+>> ❌ **Incorrect:** `add n/John s/o Doe ...`
+>>
+>> ✅ **Correct:** `add n/John s|o Doe ...` (use a different character instead of `/`)
+
 
 ---
 
@@ -161,9 +225,8 @@ Displays the entire client list.
 ### `clear` — Delete all clients
 **Format:** `clear`  
 
-<box type="warning" seamless> 
-⚠️ This action cannot be undone. 
-</box>
+> ⚠️ **Warning:** This action **cannot be undone**.
+
 
 
 ---
@@ -277,6 +340,8 @@ Displays available commands and tips.
 ### `exit` — Close the program
 **Format:** `exit`
 
+[↑ Back to top](#fitbook-user-guide)
+
 ---
 
 ## Data Handling
@@ -294,12 +359,16 @@ Data is stored at:
 Advanced users may edit the JSON file directly.  
 ⚠️ Invalid edits (e.g. malformed JSON) will cause FitBook to start with an empty dataset. Always back up before editing.
 
+[↑ Back to top](#fitbook-user-guide)
+
 ---
 
 ## FAQ
 
 **Q:** How do I transfer my data to another computer?  
 **A:** Copy the entire FitBook home folder (including the `data` folder) to the other computer and run the same `.jar` file there.
+
+[↑ Back to top](#fitbook-user-guide)
 
 ---
 
@@ -313,12 +382,9 @@ Advanced users may edit the JSON file directly.
    If you minimize the Help window and run `help` again, the existing window stays minimized.  
    **Fix:** Manually restore it from your taskbar.
 
----
+[↑ Back to top](#fitbook-user-guide)
 
-## Appendix: Session Formatting Guide 
-
-See the [session](#session--update-a--scheduled-session) command above for details.
 
 ---
-
 *End of User Guide.*
+
