@@ -35,7 +35,7 @@ public class ListCommandTest {
                 /* showHelp */ false,
                 /* exit */ false,
                 /* showClient */ true,
-                /* showSession */ false);
+                /* showDashboard */ false);
         assertCommandSuccess(new ListCommand(), model, expected, expectedModel);
     }
 
@@ -46,7 +46,7 @@ public class ListCommandTest {
                 /* showHelp */ false,
                 /* exit */ false,
                 /* showClient */ true,
-                /* showSession */ false);
+                /* showDashboard */ false);
         assertCommandSuccess(new ListCommand(), model, expected, expectedModel);
     }
 

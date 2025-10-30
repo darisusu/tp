@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# FitBook Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,17 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project adapts design, code, and documentation ideas from the SE-EDU AddressBook-Level3 project.
+
+* SE-EDU AB-3: architecture, component structure, and documentation scaffolding
+* JavaFX (OpenJFX 17.0.7): UI framework
+* Jackson (BOM 2.17.2): JSON serialization (jackson-databind, jackson-datatype-jsr310)
+* JUnit Jupiter 5.10.2: testing framework
+* Checkstyle 11.0.0: code style checks
+* JaCoCo: test coverage reporting
+* Shadow plugin 8.1.1: fat-jar packaging
+
+Links and licenses are available from the respective upstream repositories.
 
 --------------------------------------------------------------------------------------------------------------------
 
