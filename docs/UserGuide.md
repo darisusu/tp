@@ -66,7 +66,10 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 ---
 ## Command Summary
 
-> Tip: You can click on the commands below to jump to their detailed explanations.
+> 💡 Tip: You can click on the commands below to jump to their detailed explanations.
+
+> ⚠️ **Note:** Please review the [Important Input Rule](#important-input-rule) before entering commands to avoid errors.
+
 
 | **Command** | **Description** | **Example** |
 |--------------|----------------|--------------|
@@ -149,6 +152,7 @@ This section lists all available commands and how to use them.
 >>
 >> ✅ **Correct:** `add n/John s|o Doe ...` (use a different character instead of `/`)
 
+[↑ Back to Command Summary](#command-summary)
 
 ---
 
