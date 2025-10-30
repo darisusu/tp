@@ -6,326 +6,194 @@ pageNav: 3
 
 # FitBook User Guide
 
-Hi Trainers!<br>
-**FitBook** is a **desktop app for managing trainees, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). Whether you're tech-savvy or new to command-line interfaces, FitBook's simple command format makes it easy to learn and use effectively.
+### Welcome Trainers!  
+**FitBook** is a **desktop app for managing clients**, optimized for use via a Command Line Interface (CLI) while retaining a modern Graphical User Interface (GUI). Whether you're tech-savvy or new to command-line tools, FitBook’s intuitive commands make it easy to track clients, payments, and progress — all at your fingertips.
 
 **FitBook helps you:**
-* **Manage client information** - Store and update trainee contact details, body statistics, and personal information
-* **Track payments** - Monitor payment status and deadlines, helping you identify clients who need payment follow-up
-* **Schedule sessions** - Organize one-off, weekly, biweekly, or monthly training sessions with automatic conflict detection
-* **Track progress** - Record and update height, weight, body fat percentage, age, and gender data over time
-* **Set goals** - Assign and track fitness goals with deadlines for each trainee
-* **Organize efficiently** - Use tags to categorize clients and sort lists by payment status or deadlines
+- **Manage clianets information** – Store and update clients contact details, body statistics, and personal data.
+- **Track payments** – Monitor payment status and upcoming deadlines.
+- **Schedule sessions** – Organize one-off, weekly, biweekly, or monthly training sessions with automatic conflict detection.
+- **Track progress** – Record and update height, weight, body fat percentage, age, and gender data over time.
+- **Set goals** – Assign and monitor fitness goals with deadlines for each client.
+- **Organize efficiently** – Use tags to categorize clients and sort lists by payment status or deadlines.
 
-With a few simple commands, you can utilise **FitBook's** in-built functions to manage all your trainees right at your fingertips!
 
 ![FitBook Interface](images/Ui.png)
 
-<!-- * Table of Contents -->
-<page-nav-print />
+---
 
---------------------------------------------------------------------------------------------------------------------
+## Quick Start
 
-## Quick start
+1. Ensure you have **Java 17 or above** installed.
+    - **Mac users:** Follow the [installation guide](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+2. Download the latest `.jar` file from your team’s [GitHub Releases](https://github.com/AY2526S1-CS2103T-F09-4/tp/releases).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+3. Copy the `.jar` file to any folder — this will serve as your **FitBook home folder**.
 
-1. Copy the file to the folder you want to use as the _home folder_ for your FitBook.
+4. Open a terminal and run:
+   ```bash
+   java -jar FitBook.jar
+   ```
+   The GUI should appear within a few seconds, showing you a dashboard. Sample data will be pre-loaded.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar FitBook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+5. Try these example commands for starters:
+    - `client` - Switches the main component from the dashboard to the full client list
+    - `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false` - Adds a new client with basic information
+    - `delete 1` – Deletes the  first client in the list
+    - `exit` – Exits the application
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+6. Refer to the [Command Reference](#command-reference) below for full details.
 
-   * `list` : Lists all clients.
+---
+## UI Guide
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FitBook.
+The UI comprises a few components, which can be manipulated via the commands below. 
+When entering the app, the user will see a dashboard component taking up the bulk of the screen.
+The dashboard contains two lists:
+1. Upcoming Sessions:
+    - Lists the current clients in order of nearest upcoming session from current datetime
+    - Each card contains only the client name and their session type
+2. Unpaid Clients:
+    - Lists the current clients who have not paid (`paid` is false)
+    - Each card contains only the client name, deadline date, and phone number
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+Pressing the client button on the left, the dashboard will be replaced with the full client list, 
+containing the full information of every client. Here, the user can further use commands like 
+`find`, `sortbydeadline` to refine or reorder the results shown in the list.
 
-   * `clear` : Deletes all contacts.
-   
-   * `help` : Opens new window containing useful information.
+To the left, there is a sidebar with four buttons. The top two buttons allows the user to toggle
+between the dashboard and the main client list. 
+The Help button opens a new window containing a link to the user guide.
+The Exit button will close the program. 
+All the buttons' functionalities can also be accessed via text commands, as seen below.
 
-   * `exit` : Exits the app.
+At the bottom lies the CommandBox and ResultDisplay. The user can input their commands into the CommandBox.
+Results of the command input will be immediately shown in the ResultDisplay, including error messages.
+This is the main medium users are expected to interact with the program.
 
-1. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
-## Command summary
+## Command Reference
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [bf/BODYFAT] [t/TAG]…`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**View Client List**   | `client`
-**View Dashboard**   | `dashboard`
-**Sort by Paid**   | `sortbypaid`<br> e.g., `sortbypaid`
-**Sort by Deadline**   | `sortbydeadline [asc/desc]`<br> e.g., `sortbydeadline desc`
-**Help**   | `help`
+This section lists all available commands and how to use them.
 
---------------------------------------------------------------------------------------------------------------------
+> **Format conventions**
+> - Words in `UPPER_CASE` are parameters you should replace with your own values.
+> - Items in `[square brackets]` are optional.
+> - Items followed by `…` can be repeated multiple times.
+> - Commands that update clients use the `INDEX` from the displayed list (starting at 1).
+> - Prefixes such as `n/` for name let you provide parameters in **any order**.
 
-## Features
+---
 
-<box type="info" seamless>
+### `add` — Add a client
 
-**Notes about the command format:**<br>
+**Format:**
+```
+add n/NAME p/PHONE e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [bf/BODYFAT] [t/TAG]…
+```
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+**Example:**
+```
+add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney
+```
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+**Guidance:**
+- Required prefixes: `n/`, `p/`, `e/`, `a/`, `dl/`, `paid/`, `s/`
+- Optional: `goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`
+- Units: height (cm), weight (kg), age (years), body fat (%)
+- `GENDER` accepts: `male`, `female`, `other`, `non-binary`, `prefer not to say`
+- `PAID` accepts `true` or `false`
+- `DEADLINE` format: `yyyy-MM-dd`
+- Automatically saves data after successful addition
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+---
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+### `edit` — Edit a client
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+**Format:**
+```
+edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [dl/DEADLINE] [paid/PAID] [bf/BODYFAT] [goal/GOAL] [t/TAG]…
+```
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+**Example:**
+```
+edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
+```
 
-### Help window : `help`
+**Guidance:**
+- Provide at least one field to update.
+- When specifying tags, existing tags are replaced with the new ones.
+- Automatically saves changes after editing.
 
-Opens a window which lists all the commands available in FitBook, as well as other usage tips and examples.
+---
 
-![help_window_screenshot](images/helpMessage.png)
+### `list` — View all clients
+**Format:** `list`  
+Displays the entire client list.
 
-Format: `help`
+---
 
-Examples:
-* `help` - Opens the help window displaying the command reference
+### `find` — Search clients by name
+**Format:** `find KEYWORD [MORE_KEYWORDS]…`  
+**Example:** `find alex bernice`
 
-<br>
+**Guidance:**
+- Case-insensitive search within names
+- Multiple keywords perform an OR-search (matches if any keyword is present)
+- Only full words will be matched e.g. `Han` will not match `Hans`
+- Matches are displayed in the client list
 
-### Adding a person: `add`
+---
 
-Adds a person to the address book.
+### `delete` — Remove a client
+**Format:** `delete INDEX`  
+**Example:** `delete 3`
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [bf/BODYFAT] [t/TAG]…​`
+**Guidance:**
+- Deletes the client at the given index in the displayed list.
+- Note: Index corresponds to the client list currently shown, which may be filtered or sorted.
 
-* Adds a new trainee to FitBook with the specified information.
-* All mandatory fields (`n/NAME`, `p/PHONE_NUMBER`, `e/EMAIL`, `a/ADDRESS`, `dl/DEADLINE`, `paid/PAID`, `s/SCHEDULE`) must be provided.
-* Optional fields can be included in the same command or added later using other commands.
-* The `SCHEDULE` parameter accepts various formats (one-off, weekly, biweekly, or monthly) as described in the Session Formatting Guide below.
+---
 
-<box type="tip" seamless>
-**Tip:** A person can have any number of tags (including 0)
-</box>
+### `clear` — Delete all clients
+**Format:** `clear`  
+⚠️ This action cannot be undone.
 
-<box type="idea" seamless>
-**Note:** `SCHEDULE` follows the formats outlined in the "Session Formatting Guide" section below.
-</box>
+---
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-Notes:
-* `n/NAME`, `p/PHONE_NUMBER`, `e/EMAIL`, `a/ADDRESS`, `dl/DEADLINE`, `paid/PAID`, and `s/SCHEDULE` must all be provided. Omitting any of these prefixes will result in an error.
-* You can supply any subset of optional prefixes (`goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`) in one command.
+### `sortbypaid` — Sort clients by payment status
+**Format:** `sortbypaid`
+- Unpaid clients (paid:`false`) appear first.
+- Paid clients (paid:`true`) appear last.
 
-<br>
+---
 
-### Listing all persons : `list`
+### `sortbydeadline` — Sort clients by payment deadline
+**Format:** `sortbydeadline [asc/desc]`  
+**Examples:**
+- `sortbydeadline` → ascending
+- `sortbydeadline desc` → descending
 
-Shows a list of all persons in the address book.
+**Guidance:**
+- Ascending: earliest → latest → no deadline
+- Descending: no deadline → latest → earliest
 
-Format: `list`
+---
 
-Examples:
-* `list` - Displays all trainees currently stored in FitBook
+### `sortbysession` — Sort clients by upcoming session
+**Format:** `sortbysession`
 
-<br>
+- Clients with nearest upcoming sessions will appear first
+---
 
-### Editing a person : `edit`
+### `session` — Update a client’s scheduled session
+**Format:** `session INDEX s/SESSION`  
+**Example:** `session 1 s/WEEKLY:MON-1800-1930`
 
-Edits an existing person in the address book.
-
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
-
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-<br>
-
-### Locating persons by name : `find`
-
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-<br>
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
-![result for 'delete 2'](images/deleteResult.png)
-
-<br>
-
-### Switching to the client list : `client`
-
-Switches the main component to the client list with all the clients' information. Will not do anything if already on the client list.
-
-Format: `client`
-
-Examples:
-* `client` - Switches the view to show the client list panel
-
-<br>
-
-### Switching to the dashboard : `dashboard`
-
-Switches the dashboard containing mainly upcoming payments and sessions information. Will not do anything if already on the dashboard.
-
-Format: `dashboard`
-
-Examples:
-* `dashboard` - Switches the view to show the dashboard with upcoming payments and sessions
-
-<br>
-
-### Clearing all entries : `clear`
-
-Clears all entries from the address book.
-
-### Exiting the program : `exit`
-
-Exits the program.
-
-<br>
-
-### Sorting persons by paid status : `sortbypaid`
-
-Sorts the person list by payment status (unpaid clients first, paid clients second).
-
-Format: `sortbypaid`
-
-* Sorts the current person list by paid status
-* Unpaid clients (paid: false) will appear first
-* Paid clients (paid: true) will appear second
-* The sorting is applied to the currently displayed list
-
-Examples:
-* `sortbypaid` - Sorts the current list by payment status
-
-![result for 'sortbypaid'](images/sortbypaidResult.png)
-
-<br>
-
-### Sorting persons by payment deadline : `sortbydeadline`
-
-Sorts the person list by payment deadline, in ascending or descending order.
-
-Format: `sortbydeadline [asc/desc]`
-
-* Sorts the current person list by payment deadline
-* Ascending order: Earliest, latest, no deadline
-* Descending order: No deadline, latest, earliest
-
-Examples:
-* `sortbydeadline` - Sorts the current list in ascending order
-* `sortbydeadline asc` - Sorts the current list in ascending order
-* `sortbydeadline desc` - Sorts the current list in descending order
-
-![result for 'sortbydeadline desc'](images/sortbydeadlineResult.png)
-
-<br>
-
-### Saving the data
-
-FitBook data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Editing the data file
-
-FitBook data is saved automatically as a JSON file `[JAR file location]/data/FitBook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<box type="warning" seamless>
-**Caution:**
-
-* If your changes to the data file makes its format invalid, FitBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
-
-* Certain edits can cause FitBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
---------------------------------------------------------------------------------------------------------------------
-
-## FAQ
-
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous FitBook home folder.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Known issues
-
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Session Formatting Guide:
-
-Use the `session` command to update a trainee's scheduled session using the same formats listed below. For example,
-`session 2 s/WEEKLY:TUE-1900-2000` updates the second trainee's schedule. FitBook will reject the command if the new
-session clashes with another trainee.
-
-* One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
-* Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
-* Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
-* Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
-* Use the following formats when specifying session timings with the `s/` (schedule) prefix.
-* Note: FitBook will automatically handle conflicts between overlapping sessions with an error message.
+FitBook automatically detects and rejects conflicting session timings.
 
 | **Type** | **Format** | **Example** |
 |-----------|-------------|-------------|
@@ -335,8 +203,118 @@ session clashes with another trainee.
 | **Biweekly** | `BIWEEKLY:DAY-START-END` | `biweekly:fri-0900-1030` |
 | **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
 
-- DAY accepts: mon, tue, wed, thu, fri, sat, sun.
-- Time values use the 24-hour format without separators (e.g. 1800 = 6:00 PM).
-- Multi-slot entries can list multiple day–time ranges in sequence.
-- Monthly sessions occur on the specified day of the month.
-- All times are interpreted in local time.
+- `DAY` accepts: mon, tue, wed, thu, fri, sat, sun
+- Time uses 24-hour format (`HHmm` or `HH:MM`)
+- Multi-slot sessions list multiple day–time ranges sequentially
+- All times are interpreted in local time
+
+---
+
+### `goal` — Set or clear a fitness goal
+**Format:** `goal INDEX goal/GOAL`  
+**Example:** `goal 1 goal/Complete a triathlon`  
+Use `goal/` with no text to clear the goal.
+There is a limit of 100 characters for the goal field.
+
+---
+
+### `deadline` — Update a goal deadline
+**Format:** `deadline INDEX dl/DATE`  
+**Example:** `deadline 4 dl/2025-12-31`
+
+---
+
+### `paid` — Record payment status
+**Format:** `paid INDEX paid/STATUS`  
+**Example:** `paid 3 paid/true`
+
+Use `true` if the client has paid, or `false` otherwise.
+Clients with paid status of `false` will be displayed in the dashboard under Unpaid Clients.
+
+---
+
+### `height`, `weight`, `age`, `bodyfat`, `gender` — Update individual attributes
+Each of these commands updates one attribute using the same format:
+```
+<attribute> INDEX prefix/VALUE
+```
+Examples:
+- `height 2 h/168`
+- `weight 2 w/68.5`
+- `age 1 age/26`
+- `bodyfat 1 bf/17.2`
+- `gender 5 g/non-binary`
+
+Constraints:
+- Height: Must be an integer between 90 and 300
+- Weight: Must be an integer between 20 and 500
+- Age: Must be an integer between 1 and 120
+- Bodyfat: Must be an integer between 5.0 and 60.0, with at most one decimal place
+- Gender: Must one of the following: `male`, `female`, `other`, `non-binary`, `prefer not to say`
+
+---
+
+### `client` — Switch to client list view
+**Format:** `client`
+
+---
+
+### `dashboard` — Switch to dashboard view
+**Format:** `dashboard`
+
+---
+
+### `help` — Open help window
+**Format:** `help`  
+Displays available commands and tips.
+
+---
+
+### `exit` — Close the program
+**Format:** `exit`
+
+---
+
+## Data Handling
+
+### Saving data
+FitBook automatically saves all data to the hard disk after any command that changes data. No manual save is required.
+
+### Data file location
+Data is stored at:
+```
+[JAR file location]/data/FitBook.json
+```
+
+### Editing data manually
+Advanced users may edit the JSON file directly.  
+⚠️ Invalid edits (e.g. malformed JSON) will cause FitBook to start with an empty dataset. Always back up before editing.
+
+---
+
+## FAQ
+
+**Q:** How do I transfer my data to another computer?  
+**A:** Copy the entire FitBook home folder (including the `data` folder) to the other computer and run the same `.jar` file there.
+
+---
+
+## Known Issues
+
+1. **Multiple screens:**  
+   If you move the app to a secondary monitor and later use only one screen, FitBook may reopen off-screen.  
+   **Fix:** Delete `preferences.json` before relaunching.
+
+2. **Minimized Help window:**  
+   If you minimize the Help window and run `help` again, the existing window stays minimized.  
+   **Fix:** Manually restore it from your taskbar.
+
+---
+
+## Appendix: Session Formatting Guide 
+
+See the [session](#session--update-a--scheduled-session) command above for details.
+
+---
+
+*End of User Guide.*
