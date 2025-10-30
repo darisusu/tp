@@ -46,6 +46,34 @@ Hi Trainers! 👋
 6. Refer to the [Command Reference](#command-reference) below for full details.
 
 ---
+## UI Guide
+
+The UI comprises a few components, which can be manipulated via the commands below. 
+When entering the app, the user will see a dashboard component taking up the bulk of the screen.
+The dashboard contains two lists:
+1. Upcoming Sessions:
+    - Lists the current clients in order of nearest upcoming session from current datetime
+    - Each card contains only the client name and their session type
+2. Unpaid Clients:
+    - Lists the current clients who have not paid (`paid` is false)
+    - Each card contains only the client name, deadline date, and phone number
+
+Pressing the client button on the left, the dashboard will be replaced with the full client list, 
+containing the full information of every client. Here, the user can further use commands like 
+`find`, `sortbydeadline` to refine or reorder the results shown in the list.
+
+To the left, there is a sidebar with four buttons. The top two buttons allows the user to toggle
+between the dashboard and the main client list. 
+The Help button opens a new window containing a link to the user guide.
+The Exit button will close the program. 
+All the buttons' functionalities can also be accessed via text commands, as seen below.
+
+At the bottom lies the CommandBox and ResultDisplay. The user can input their commands into the CommandBox.
+Results of the command input will be immediately shown in the ResultDisplay, including error messages.
+This is the main medium users are expected to interact with the program.
+
+
+---
 
 ## Command Reference
 
