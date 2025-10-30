@@ -18,13 +18,13 @@ public class AgeCommandParserTest {
     private final AgeCommandParser parser = new AgeCommandParser();
 
     @Test
-    public void parse_valid_noSpaces_success() throws Exception {
+    public void parse_validNoSpaces_success() throws Exception {
         AgeCommand cmd = parser.parse("1 age/25");
         assertEquals(new AgeCommand(Index.fromOneBased(1), new Age("25")), cmd);
     }
 
     @Test
-    public void parse_valid_withIncidentalSpaces_success() throws Exception {
+    public void parse_validIncidentalSpaces_success() throws Exception {
         AgeCommand cmd1 = parser.parse("1 age/ 25");
         assertEquals(new AgeCommand(Index.fromOneBased(1), new Age("25")), cmd1);
 
