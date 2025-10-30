@@ -200,7 +200,8 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 
 ### `list` — View all clients
 **Format:** `list`  
-Displays the entire client list.
+Displays the entire client list.<br>
+If user is on dashboard, it will redirect to the client tab.
 
 ---
 
@@ -249,7 +250,7 @@ Displays the entire client list.
 ### `sortbydeadline` — Sort clients by payment deadline
 **Format:** `sortbydeadline [asc/desc]`  
 **Examples:**
-- `sortbydeadline` → ascending
+- `sortbydeadline` or `sortbydeadline asc` → ascending
 - `sortbydeadline desc` → descending
 
 **Guidance:**
@@ -293,7 +294,7 @@ There is a limit of 100 characters for the goal field.
 
 ---
 
-### `deadline` — Update a goal deadline
+### `deadline` — Update a payment deadline
 **Format:** `deadline INDEX dl/DATE`  
 **Example:** `deadline 4 dl/2025-12-31`
 
