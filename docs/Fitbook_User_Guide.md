@@ -7,14 +7,14 @@ pageNav: 3
 # FitBook User Guide
 
 Hi Trainers! 👋  
-**FitBook** is a **desktop app for managing trainees**, optimized for use via a Command Line Interface (CLI) while retaining a modern Graphical User Interface (GUI). Whether you're tech-savvy or new to command-line tools, FitBook’s intuitive commands make it easy to track clients, payments, and progress — all at your fingertips.
+**FitBook** is a **desktop app for managing clients**, optimized for use via a Command Line Interface (CLI) while retaining a modern Graphical User Interface (GUI). Whether you're tech-savvy or new to command-line tools, FitBook’s intuitive commands make it easy to track clients, payments, and progress — all at your fingertips.
 
 **FitBook helps you:**
-- **Manage client information** – Store and update trainee contact details, body statistics, and personal data.
+- **Manage client information** – Store and update client contact details, body statistics, and personal data.
 - **Track payments** – Monitor payment status and upcoming deadlines.
 - **Schedule sessions** – Organize one-off, weekly, biweekly, or monthly training sessions with automatic conflict detection.
 - **Track progress** – Record and update height, weight, body fat percentage, age, and gender data over time.
-- **Set goals** – Assign and monitor fitness goals with deadlines for each trainee.
+- **Set goals** – Assign and monitor fitness goals with deadlines for each client.
 - **Organize efficiently** – Use tags to categorize clients and sort lists by payment status or deadlines.
 
 ![FitBook Interface](images/Ui.png)
@@ -55,12 +55,12 @@ This section lists all available commands and how to use them.
 > - Words in `UPPER_CASE` are parameters you should replace with your own values.
 > - Items in `[square brackets]` are optional.
 > - Items followed by `…` can be repeated multiple times.
-> - Commands that update trainees use the `INDEX` from the displayed list (starting at 1).
+> - Commands that update clients use the `INDEX` from the displayed list (starting at 1).
 > - Prefixes such as `n/` for name let you provide parameters in **any order**.
 
 ---
 
-### `add` — Add a trainee
+### `add` — Add a client
 
 **Format:**
 ```
@@ -83,7 +83,7 @@ add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/17
 
 ---
 
-### `edit` — Edit a trainee
+### `edit` — Edit a client
 
 **Format:**
 ```
@@ -102,13 +102,13 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 
 ---
 
-### `list` — View all trainees
+### `list` — View all clients
 **Format:** `list`  
-Displays the entire trainee list.
+Displays the entire client list.
 
 ---
 
-### `find` — Search trainees by name
+### `find` — Search clients by name
 **Format:** `find KEYWORD [MORE_KEYWORDS]…`  
 **Example:** `find alex bernice`
 
@@ -119,28 +119,28 @@ Displays the entire trainee list.
 
 ---
 
-### `delete` — Remove a trainee
+### `delete` — Remove a client
 **Format:** `delete INDEX`  
 **Example:** `delete 3`
 
-Deletes the trainee at the given index in the displayed list.
+Deletes the client at the given index in the displayed list.
 
 ---
 
-### `clear` — Delete all trainees
+### `clear` — Delete all clients
 **Format:** `clear`  
 ⚠️ This action cannot be undone.
 
 ---
 
-### `sortbypaid` — Sort trainees by payment status
+### `sortbypaid` — Sort clients by payment status
 **Format:** `sortbypaid`
-- Unpaid trainees (paid:`false`) appear first.
-- Paid trainees (paid:`true`) appear last.
+- Unpaid clients (paid:`false`) appear first.
+- Paid clients (paid:`true`) appear last.
 
 ---
 
-### `sortbydeadline` — Sort trainees by payment deadline
+### `sortbydeadline` — Sort clients by payment deadline
 **Format:** `sortbydeadline [asc/desc]`  
 **Examples:**
 - `sortbydeadline` → ascending
@@ -152,13 +152,13 @@ Deletes the trainee at the given index in the displayed list.
 
 ---
 
-### `sortbysession` — Sort trainees by upcoming session
+### `sortbysession` — Sort clients by upcoming session
 **Format:** `sortbysession`
 
 - Clients with nearest upcoming sessions will appear first
 ---
 
-### `session` — Update a trainee’s scheduled session
+### `session` — Update a client’s scheduled session
 **Format:** `session INDEX s/SESSION`  
 **Example:** `session 1 s/WEEKLY:MON-1800-1930`
 
@@ -196,7 +196,7 @@ Use `goal/` with no text to clear the goal.
 **Format:** `paid INDEX paid/STATUS`  
 **Example:** `paid 3 paid/true`
 
-Use `true` if the trainee has paid, or `false` otherwise.
+Use `true` if the client has paid, or `false` otherwise.
 
 ---
 
