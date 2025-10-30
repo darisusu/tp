@@ -160,7 +160,11 @@ Displays the entire client list.
 
 ### `clear` — Delete all clients
 **Format:** `clear`  
-⚠️ This action cannot be undone.
+
+<box type="warning" seamless> 
+⚠️ This action cannot be undone. 
+</box>
+
 
 ---
 
