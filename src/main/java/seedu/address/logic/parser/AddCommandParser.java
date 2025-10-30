@@ -50,12 +50,12 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER,
+                        PREFIX_ADDRESS, PREFIX_GOAL, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE,
+                        PREFIX_GENDER,
                         PREFIX_DEADLINE, PREFIX_PAID, PREFIX_SESSION, PREFIX_BODYFAT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER, PREFIX_DEADLINE,
-                PREFIX_PAID, PREFIX_SESSION, PREFIX_BODYFAT)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ADDRESS, PREFIX_DEADLINE, PREFIX_PAID, PREFIX_SESSION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -68,20 +68,25 @@ public class AddCommandParser implements Parser<AddCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-        Goal goal;
-        if (argMultimap.getValue(PREFIX_GOAL).isPresent()) {
-            goal = ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).get());
-        } else {
-            goal = new Goal("");
-        }
+        Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE).get());
+        Goal goal = ParserUtil.parseGoal(argMultimap.getValue(PREFIX_GOAL).orElse(""));
         Paid paid = ParserUtil.parsePaid(argMultimap.getValue(PREFIX_PAID).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        Height height = ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get());
-        Weight weight = ParserUtil.parseWeight(argMultimap.getValue(PREFIX_WEIGHT).get());
-        Age age = ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE).get());
-        Gender gender = ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER).get());
-        Bodyfat bodyfat = ParserUtil.parseBodyfat(argMultimap.getValue(PREFIX_BODYFAT).get());
+        Height height = argMultimap.getValue(PREFIX_HEIGHT).isPresent()
+                ? ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get())
+                : null;
+        Weight weight = argMultimap.getValue(PREFIX_WEIGHT).isPresent()
+                ? ParserUtil.parseWeight(argMultimap.getValue(PREFIX_WEIGHT).get())
+                : null;
+        Age age = argMultimap.getValue(PREFIX_AGE).isPresent()
+                ? ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE).get())
+                : null;
+        Gender gender = argMultimap.getValue(PREFIX_GENDER).isPresent()
+                ? ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER).get())
+                : null;
+        Bodyfat bodyfat = argMultimap.getValue(PREFIX_BODYFAT).isPresent()
+                ? ParserUtil.parseBodyfat(argMultimap.getValue(PREFIX_BODYFAT).get())
+                : null;
         Session session = ParserUtil.parseSession(argMultimap.getValue(PREFIX_SESSION).get());
 
         Person person = new Person(name, phone, email, address, goal, height, weight, age, gender,
@@ -97,4 +102,5 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
 }

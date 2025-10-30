@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Weight {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Weight should be a positive number (up to 2 decimal places), and should not be blank.";
+            "Weight should be a positive number (up to 2 decimal places), between 20 and 500, and should not be blank.";
 
     // Regex for: 1 or more digits, optionally followed by a decimal and 1 or 2 digits.
     public static final String VALIDATION_REGEX = "\\d+(\\.\\d{1,2})?";
@@ -37,8 +37,8 @@ public class Weight {
         }
         try {
             double weightValue = Double.parseDouble(test);
-            // Weight must be greater than zero
-            return weightValue > 0;
+            // Set lower and upper limits for weight
+            return weightValue > 20 && weightValue < 500;
         } catch (NumberFormatException e) {
             return false; // Should be caught by regex, but as a fallback
         }

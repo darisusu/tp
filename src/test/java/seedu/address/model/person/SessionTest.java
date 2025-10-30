@@ -19,16 +19,16 @@ public class SessionTest {
     }
 
     @Test
-    public void fromString_legacyWeekly_returnsCanonical() {
-        Session session = Session.fromString("weekly:monday 18:00");
-        assertEquals("WEEKLY:MON-1800-1800", session.toStorageString());
-    }
-
-    @Test
     public void fromString_validOneOff_returnsCanonical() {
         String date = LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
         Session session = Session.fromString(date + " 09:30");
         assertEquals(date + " 09:30", session.toStorageString());
+    }
+
+    @Test
+    public void fromString_legacyWeeklyFormat_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                Session.MESSAGE_CONSTRAINTS_MISSING_END_TIME, () -> Session.fromString("weekly:monday 18:00"));
     }
 
     @Test
@@ -40,13 +40,13 @@ public class SessionTest {
     @Test
     public void fromString_invalidTime_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class,
-                Session.MESSAGE_CONSTRAINTS_TIME, () -> Session.fromString("WEEKLY:MONDAY 25:00"));
+                Session.MESSAGE_CONSTRAINTS_TIME, () -> Session.fromString("WEEKLY:MON-2500-2600"));
     }
 
     @Test
     public void fromString_invalidDay_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class,
-                Session.MESSAGE_CONSTRAINTS_DAY, () -> Session.fromString("WEEKLY:FUNDAY 18:00"));
+                Session.MESSAGE_CONSTRAINTS_DAY, () -> Session.fromString("WEEKLY:FUNDAY-1800-1900"));
     }
 
     @Test
@@ -78,8 +78,10 @@ public class SessionTest {
     @Test
     public void conflictsWith_weeklyAndOneOffMatching_returnsTrue() {
         Session weekly = Session.fromString("WEEKLY:FRI-0900-1100");
+        // Account for if test runs on a Friday but after 0930
         String upcomingFriday = LocalDate.now()
-                .plusDays((5 - LocalDate.now().getDayOfWeek().getValue() + 7) % 7)
+                .plusDays(((5 - LocalDate.now().getDayOfWeek().getValue() + 7) % 7 + 7) % 7)
+                .plusWeeks(((5 - LocalDate.now().getDayOfWeek().getValue()) % 7 == 0) ? 1 : 0)
                 .format(DateTimeFormatter.ISO_LOCAL_DATE);
         Session oneOff = Session.fromString(upcomingFriday + " 09:30");
         assertTrue(weekly.conflictsWith(oneOff));

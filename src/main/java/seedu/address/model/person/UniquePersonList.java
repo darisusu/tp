@@ -116,6 +116,17 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts the person list by paid status (unpaid first, paid second).
+     */
+    public void sortByPaid() {
+        internalList.sort((person1, person2) -> {
+            Integer score1 = paymentSortScore(person1.getPaymentStatus());
+            Integer score2 = paymentSortScore(person2.getPaymentStatus());
+            return score1.compareTo(score2);
+        });
+    }
+
+    /**
      * Returns true if {@code toCheck}'s session conflicts with another person in the list.
      */
     public boolean hasSessionConflict(Person toCheck) {
@@ -129,7 +140,7 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.stream()
                 .filter(existing -> toIgnore == null || !existing.equals(toIgnore))
-                .anyMatch(existing -> existing.getSession().conflictsWith(toCheck.getSession()));
+                .anyMatch(existing -> sessionsConflict(existing.getSession(), toCheck.getSession()));
     }
 
     @Override
@@ -179,11 +190,22 @@ public class UniquePersonList implements Iterable<Person> {
     private boolean sessionsConflict(List<Person> persons) {
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
-                if (persons.get(i).getSession().conflictsWith(persons.get(j).getSession())) {
+                if (sessionsConflict(persons.get(i).getSession(), persons.get(j).getSession())) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private boolean sessionsConflict(Session first, Session second) {
+        requireNonNull(first);
+        requireNonNull(second);
+        return first.conflictsWith(second);
+    }
+
+    private int paymentSortScore(Paid paidStatus) {
+        requireNonNull(paidStatus);
+        return paidStatus.value ? 2 : 0;
     }
 }

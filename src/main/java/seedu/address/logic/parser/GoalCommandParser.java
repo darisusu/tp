@@ -31,6 +31,16 @@ public class GoalCommandParser implements Parser<GoalCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GoalCommand.MESSAGE_USAGE), ive);
         }
 
+        if (!argMultimap.getValue(PREFIX_GOAL).isPresent()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    GoalCommand.MESSAGE_USAGE));
+        }
+
+        String raw = argMultimap.getValue(PREFIX_GOAL).get(); // present by now
+        if (!Goal.isValidGoal(raw)) {
+            throw new ParseException(Goal.MESSAGE_CONSTRAINTS);
+        }
+
         String goal = argMultimap.getValue(PREFIX_GOAL).orElse("");
 
         return new GoalCommand(index, new Goal(goal));

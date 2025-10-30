@@ -1,12 +1,25 @@
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
-# AB-3 User Guide
+# FitBook User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Hi Trainers!<br>
+**FitBook** is a **desktop app for managing trainees, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). Whether you're tech-savvy or new to command-line interfaces, FitBook's simple command format makes it easy to learn and use effectively.
+
+**FitBook helps you:**
+* **Manage client information** - Store and update trainee contact details, body statistics, and personal information
+* **Track payments** - Monitor payment status and deadlines, helping you identify clients who need payment follow-up
+* **Schedule sessions** - Organize one-off, weekly, biweekly, or monthly training sessions with automatic conflict detection
+* **Track progress** - Record and update height, weight, body fat percentage, age, and gender data over time
+* **Set goals** - Assign and track fitness goals with deadlines for each trainee
+* **Organize efficiently** - Use tags to categorize clients and sort lists by payment status or deadlines
+
+With a few simple commands, you can utilise **FitBook's** in-built functions to manage all your trainees right at your fingertips!
+
+![FitBook Interface](images/Ui.png)
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -20,26 +33,46 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
 1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your FitBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar FitBook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `list` : Lists all clients.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FitBook.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `clear` : Deletes all contacts.
+   
+   * `help` : Opens new window containing useful information.
 
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Command summary
+
+Action     | Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [bf/BODYFAT] [t/TAG]…`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com`
+**Clear**  | `clear`
+**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**List**   | `list`
+**View Client List**   | `client`
+**View Dashboard**   | `dashboard`
+**Sort by Paid**   | `sortbypaid`<br> e.g., `sortbypaid`
+**Sort by Deadline**   | `sortbydeadline [asc/desc]`<br> e.g., `sortbydeadline desc`
+**Help**   | `help`
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -67,43 +100,57 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+### Help window : `help`
 
-Shows a message explaining how to access the help page.
+Opens a window which lists all the commands available in FitBook, as well as other usage tips and examples.
 
-![help message](images/helpMessage.png)
+![help_window_screenshot](images/helpMessage.png)
 
 Format: `help`
 
+Examples:
+* `help` - Opens the help window displaying the command reference
+
+<br>
 
 ### Adding a person: `add`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT age/AGE g/GENDER dl/DEADLINE paid/PAID s/SESSION bf/BODYFAT [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [bf/BODYFAT] [t/TAG]…​`
 
-Session format:
-
-* One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
-* Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
-* Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
-* Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
-* Legacy inputs like `WEEKLY:MONDAY 18:00` are still accepted and will be converted to the new storage format automatically.
+* Adds a new trainee to FitBook with the specified information.
+* All mandatory fields (`n/NAME`, `p/PHONE_NUMBER`, `e/EMAIL`, `a/ADDRESS`, `dl/DEADLINE`, `paid/PAID`, `s/SCHEDULE`) must be provided.
+* Optional fields can be included in the same command or added later using other commands.
+* The `SCHEDULE` parameter accepts various formats (one-off, weekly, biweekly, or monthly) as described in the Session Formatting Guide below.
 
 <box type="tip" seamless>
-
 **Tip:** A person can have any number of tags (including 0)
+</box>
+
+<box type="idea" seamless>
+**Note:** `SCHEDULE` follows the formats outlined in the "Session Formatting Guide" section below.
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+Notes:
+* `n/NAME`, `p/PHONE_NUMBER`, `e/EMAIL`, `a/ADDRESS`, `dl/DEADLINE`, `paid/PAID`, and `s/SCHEDULE` must all be provided. Omitting any of these prefixes will result in an error.
+* You can supply any subset of optional prefixes (`goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`) in one command.
+
+<br>
 
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
 
 Format: `list`
+
+Examples:
+* `list` - Displays all trainees currently stored in FitBook
+
+<br>
 
 ### Editing a person : `edit`
 
@@ -122,7 +169,9 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+<br>
+
+### Locating persons by name : `find`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -140,6 +189,8 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+<br>
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -154,31 +205,93 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+![result for 'delete 2'](images/deleteResult.png)
+
+<br>
+
+### Switching to the client list : `client`
+
+Switches the main component to the client list with all the clients' information. Will not do anything if already on the client list.
+
+Format: `client`
+
+Examples:
+* `client` - Switches the view to show the client list panel
+
+<br>
+
+### Switching to the dashboard : `dashboard`
+
+Switches the dashboard containing mainly upcoming payments and sessions information. Will not do anything if already on the dashboard.
+
+Format: `dashboard`
+
+Examples:
+* `dashboard` - Switches the view to show the dashboard with upcoming payments and sessions
+
+<br>
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
-
-Format: `clear`
 
 ### Exiting the program : `exit`
 
 Exits the program.
 
-Format: `exit`
+<br>
+
+### Sorting persons by paid status : `sortbypaid`
+
+Sorts the person list by payment status (unpaid clients first, paid clients second).
+
+Format: `sortbypaid`
+
+* Sorts the current person list by paid status
+* Unpaid clients (paid: false) will appear first
+* Paid clients (paid: true) will appear second
+* The sorting is applied to the currently displayed list
+
+Examples:
+* `sortbypaid` - Sorts the current list by payment status
+
+![result for 'sortbypaid'](images/sortbypaidResult.png)
+
+<br>
+
+### Sorting persons by payment deadline : `sortbydeadline`
+
+Sorts the person list by payment deadline, in ascending or descending order.
+
+Format: `sortbydeadline [asc/desc]`
+
+* Sorts the current person list by payment deadline
+* Ascending order: Earliest, latest, no deadline
+* Descending order: No deadline, latest, earliest
+
+Examples:
+* `sortbydeadline` - Sorts the current list in ascending order
+* `sortbydeadline asc` - Sorts the current list in ascending order
+* `sortbydeadline desc` - Sorts the current list in descending order
+
+![result for 'sortbydeadline desc'](images/sortbydeadlineResult.png)
+
+<br>
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+FitBook data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+FitBook data is saved automatically as a JSON file `[JAR file location]/data/FitBook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
-
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
+* If your changes to the data file makes its format invalid, FitBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
+
+* Certain edits can cause FitBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -190,7 +303,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous FitBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -201,14 +314,29 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Session Formatting Guide:
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
+Use the `session` command to update a trainee's scheduled session using the same formats listed below. For example,
+`session 2 s/WEEKLY:TUE-1900-2000` updates the second trainee's schedule. FitBook will reject the command if the new
+session clashes with another trainee.
+
+* One-off sessions use the form `YYYY-MM-DD HH:MM` and must be scheduled in the future.
+* Monthly sessions use `MONTHLY:DD HH:MM` (e.g. `MONTHLY:05 1830`).
+* Weekly and biweekly sessions accept one or more day–time ranges using `DAY-START-END` segments chained by hyphens, such as `WEEKLY:MON-1700-1930-TUE-1800-1900`.
+* Start and end times support `HHmm` or `HH:mm`. Each range must have the end time after the start time and ranges on the same day cannot overlap.
+* Use the following formats when specifying session timings with the `s/` (schedule) prefix.
+* Note: FitBook will automatically handle conflicts between overlapping sessions with an error message.
+
+| **Type** | **Format** | **Example** |
+|-----------|-------------|-------------|
+| **One-off** | `YYYY-MM-DD HH:MM` | `2025-06-10 14:30` |
+| **Weekly (single slot)** | `WEEKLY:DAY-START-END` | `weekly:mon-1800-1930` |
+| **Weekly (multi-slot)** | `WEEKLY:DAY-START-END-DAY-START-END` | `weekly:mon-1800-1930-tue-1800-1900` |
+| **Biweekly** | `BIWEEKLY:DAY-START-END` | `biweekly:fri-0900-1030` |
+| **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
+
+- DAY accepts: mon, tue, wed, thu, fri, sat, sun.
+- Time values use the 24-hour format without separators (e.g. 1800 = 6:00 PM).
+- Multi-slot entries can list multiple day–time ranges in sequence.
+- Monthly sessions occur on the specified day of the month.
+- All times are interpreted in local time.

@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'checkstyle'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'jacoco'
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
@@ -15,7 +15,7 @@ java {
 application {
     mainClass = 'seedu.address.Main'
     applicationDefaultJvmArgs = [
-            '--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml,javafx.web,javafx.media'
+            '--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml'
     ]
 }
 
@@ -23,12 +23,12 @@ javafx {
     // 17.x to match JDK 17
     version = '17.0.7'
     // modules you actually use:
-    modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media']
+    modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml']
 }
 
 repositories {
     mavenCentral()
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    // maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' } //remove snapshots
 }
 
 checkstyle {
@@ -65,17 +65,19 @@ tasks.register('coverage', JacocoReport) {
 
 tasks.withType(JavaExec).configureEach {
     // defensively add modules in case a custom run task bypasses the plugin config
-    jvmArgs += ['--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml,javafx.web,javafx.media']
+    jvmArgs += ['--add-modules', 'javafx.base,javafx.graphics,javafx.controls,javafx.fxml']
     standardInput = System.in
 }
 
 dependencies {
-    def jUnitVersion = '5.4.0'
+    def jUnitVersion = '5.10.2' // latest stable JUnit 5
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.7.4'
-    implementation 'org.commonmark:commonmark:0.21.0'
+    // Use modern Jackson via the official BOM (keeps all versions aligned)
+    implementation platform('com.fasterxml.jackson:jackson-bom:2.17.2')
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    // Unit tests
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
     testRuntimeOnly  "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
 }

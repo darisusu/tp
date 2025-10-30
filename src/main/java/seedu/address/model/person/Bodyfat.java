@@ -36,10 +36,12 @@ public class Bodyfat {
      * Acceptable range: 5.0–60.0 inclusive, up to 1 decimal place.
      */
     public static boolean isValidBodyfat(String bodyfatInput) {
+
+        if (!bodyfatInput.matches(VALIDATION_REGEX)) {
+            return false;
+        }
+
         try {
-            if (!bodyfatInput.matches(VALIDATION_REGEX)) {
-                return false;
-            }
             double bodyfat = Double.parseDouble(bodyfatInput);
             return bodyfat >= 5.0 && bodyfat <= 60.0;
         } catch (NumberFormatException e) {

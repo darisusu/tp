@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -33,9 +34,17 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private DashboardPanel dashboardPanel;
+    private SidebarPanel sidebarPanel;
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+
+    @FXML
+    private StackPane sidebarPlaceholder;
+
+    @FXML
+    private StackPane mainContentPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -131,8 +140,38 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        sidebarPanel = new SidebarPanel();
+        dashboardPanel = new DashboardPanel();
+
+        dashboardPanel.bindLeftList(logic.getFilteredPersonList());
+        dashboardPanel.bindRightList(logic.getFilteredPersonList());
+
+        sidebarPanel.setSidebarListener(new SidebarPanel.SidebarListener() {
+
+            @Override
+            public void onShowClients() {
+                showClients();
+            }
+
+            @Override
+            public void onShowDashboard() {
+                showDashboard();
+            }
+
+            @Override
+            public void onExit() {
+                handleExit();
+            }
+
+            @Override
+            public void onHelp() {
+                handleHelp();
+            }
+        });
+        sidebarPlaceholder.getChildren().setAll(sidebarPanel.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        mainContentPlaceholder.getChildren().setAll(dashboardPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -144,8 +183,8 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         welcomeLabel.setText("Welcome back, Trainer!");
-
     }
+
 
     /**
      * Sets the default size based on {@code guiSettings}.
@@ -156,6 +195,40 @@ public class MainWindow extends UiPart<Stage> {
         if (guiSettings.getWindowCoordinates() != null) {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+        }
+    }
+
+    /**
+     * Switches the main content area to show the dashboard, if not already displayed.
+     */
+    @FXML
+    public void showDashboard() {
+        Node current = mainContentPlaceholder.getChildren().isEmpty()
+                ? null
+                : mainContentPlaceholder.getChildren().get(0);
+
+        Node dashboardRoot = dashboardPanel.getRoot();
+
+        // Only switch if the dashboard isn't already displayed
+        if (current != dashboardRoot) {
+            mainContentPlaceholder.getChildren().setAll(dashboardRoot);
+        }
+    }
+
+    /**
+     * Switches the main content area to show the client list, if not already displayed.
+     */
+    @FXML
+    public void showClients() {
+        Node current = mainContentPlaceholder.getChildren().isEmpty()
+                ? null
+                : mainContentPlaceholder.getChildren().get(0);
+
+        Node clientListRoot = personListPanel.getRoot();
+
+        // Only switch if the client list isn't already displayed
+        if (current != clientListRoot) {
+            mainContentPlaceholder.getChildren().setAll(clientListRoot);
         }
     }
 
@@ -201,6 +274,14 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            if (commandResult.isClient()) {
+                showClients();
+            }
+
+            if (commandResult.isDashboard()) {
+                showDashboard();
+            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();

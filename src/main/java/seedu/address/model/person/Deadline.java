@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,17 +16,24 @@ import java.util.Optional;
 public class Deadline {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Deadlines should be in the format yyyy-MM-dd, or left empty to clear";
+            "Deadline must be either empty (to clear) or a date in format yyyy-MM-dd "
+                    + "that is strictly after today and no later than one (1) year from today.";
 
     // Matches strictly valid ISO-style dates like 2025-10-09
     public static final String VALIDATION_REGEX = "^$|^\\d{4}-\\d{2}-\\d{2}$";
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    private static Clock clock = Clock.systemDefaultZone();
+
     private final Optional<LocalDate> value;
 
     private Deadline(Optional<LocalDate> value) {
         this.value = requireNonNull(value);
+    }
+
+    public static void useClock(Clock newClock) {
+        clock = requireNonNull(newClock);
     }
 
     /**
@@ -39,7 +47,7 @@ public class Deadline {
             throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
         String s = raw.trim();
-        return s.isEmpty() ? Deadline.empty() : Deadline.of(LocalDate.parse(s));
+        return s.isEmpty() ? Deadline.empty() : Deadline.of(LocalDate.parse(s, FORMATTER));
     }
 
 
@@ -62,12 +70,17 @@ public class Deadline {
             return true;
         }
         // calendar check (rejects impossible dates, e.g., 2025-02-30)
+        LocalDate parsed;
         try {
-            LocalDate.parse(s);
-            return true;
+            parsed = LocalDate.parse(s, FORMATTER);
         } catch (DateTimeParseException e) {
             return false;
         }
+
+        LocalDate today = LocalDate.now(clock);
+        LocalDate latest = today.plusYears(1);
+        // strictly after today, and not after latest
+        return parsed.isAfter(today) && !parsed.isAfter(latest);
     }
 
 

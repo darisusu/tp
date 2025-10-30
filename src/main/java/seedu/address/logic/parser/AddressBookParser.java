@@ -12,7 +12,9 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AgeCommand;
 import seedu.address.logic.commands.BodyfatCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClientCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DashboardCommand;
 import seedu.address.logic.commands.DeadlineCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -24,6 +26,10 @@ import seedu.address.logic.commands.HeightCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PaidCommand;
+import seedu.address.logic.commands.SessionCommand;
+import seedu.address.logic.commands.SortByDeadlineCommand;
+import seedu.address.logic.commands.SortByPaidCommand;
+import seedu.address.logic.commands.SortBySessionCommand;
 import seedu.address.logic.commands.WeightCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -85,6 +91,12 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case DashboardCommand.COMMAND_WORD:
+            return new DashboardCommand();
+
+        case ClientCommand.COMMAND_WORD:
+            return new ClientCommand();
+
         case GoalCommand.COMMAND_WORD:
             return new GoalCommandParser().parse(arguments);
 
@@ -109,7 +121,17 @@ public class AddressBookParser {
         case WeightCommand.COMMAND_WORD:
             return new WeightCommandParser().parse(arguments);
 
+        case SortByDeadlineCommand.COMMAND_WORD:
+            return new SortByDeadlineCommandParser().parse(arguments);
 
+        case SortByPaidCommand.COMMAND_WORD:
+            return new SortByPaidCommandParser().parse(arguments);
+
+        case SessionCommand.COMMAND_WORD:
+            return new SessionCommandParser().parse(arguments);
+
+        case SortBySessionCommand.COMMAND_WORD:
+            return new SortBySessionCommand();
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

@@ -22,3 +22,10 @@ src/test/data/sandbox/
 .DS_Store
 docs/_site/
 docs/_markbind/logs/
+
+# Release bundles (too large for git)
+release/
+*.zip
+**/javafx/lib/
+
+data/addressbook.json
