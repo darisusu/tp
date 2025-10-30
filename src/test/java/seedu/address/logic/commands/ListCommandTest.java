@@ -30,7 +30,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList_andSwitchesToClientView() {
+    public void execute_notFiltered_switchesToClientView() {
         CommandResult expected = new CommandResult(ListCommand.MESSAGE_SUCCESS,
                 /* showHelp */ false,
                 /* exit */ false,
@@ -40,7 +40,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything_andSwitchesToClientView() {
+    public void execute_filtered_switchesToClientView() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         CommandResult expected = new CommandResult(ListCommand.MESSAGE_SUCCESS,
                 /* showHelp */ false,
