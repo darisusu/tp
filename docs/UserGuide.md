@@ -250,7 +250,7 @@ Examples:
 - `gender 5 g/non-binary`
 
 Constraints:
-- Height: Must be an integer between 90 and 300
+- Height: Must be an integer between 50 and 300
 - Weight: Must be an integer between 20 and 500
 - Age: Must be an integer between 1 and 120
 - Bodyfat: Must be an integer between 5.0 and 60.0, with at most one decimal place

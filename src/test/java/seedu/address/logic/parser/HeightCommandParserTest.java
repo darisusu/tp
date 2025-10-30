@@ -27,8 +27,13 @@ public class HeightCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_HEIGHT + "-10";
-        assertParseFailure(parser, userInput, Height.MESSAGE_CONSTRAINTS);
+        String negativeHeightInput = targetIndex.getOneBased() + " " + PREFIX_HEIGHT + "-10";
+        String tooShortHeightInput = targetIndex.getOneBased() + " " + PREFIX_HEIGHT + "40";
+        String tooTallHeightInput = targetIndex.getOneBased() + " " + PREFIX_HEIGHT + "305";
+
+        assertParseFailure(parser, negativeHeightInput, Height.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, tooShortHeightInput, Height.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, tooTallHeightInput, Height.MESSAGE_CONSTRAINTS);
     }
 
     @Test
