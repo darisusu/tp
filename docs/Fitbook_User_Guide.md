@@ -34,10 +34,10 @@ Hi Trainers! 👋
    ```bash
    java -jar FitBook.jar
    ```
-   The GUI should appear within a few seconds. Sample data will be pre-loaded.
+   The GUI should appear within a few seconds, showing you a dashboard. Sample data will be pre-loaded.
 
 5. Try these example commands:
-    - `list` – Lists all clients
+    - `client` - Switches the main component from the dashboard to the full client list
     - `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
     - `delete 3` – Deletes the 3rd client in the list
     - `help` – Opens the help window
@@ -150,6 +150,12 @@ Deletes the trainee at the given index in the displayed list.
 - Ascending: earliest → latest → no deadline
 - Descending: no deadline → latest → earliest
 
+---
+
+### `sortbysession` — Sort trainees by upcoming session
+**Format:** `sortbysession`
+
+- Clients with nearest upcoming sessions will appear first
 ---
 
 ### `session` — Update a trainee’s scheduled session
@@ -267,7 +273,7 @@ Advanced users may edit the JSON file directly.
 
 ## Appendix: Session Formatting Guide 
 
-See the [session](#session--update-a-trainees-scheduled-session) command above for details.
+See the [session](#session--update-a--scheduled-session) command above for details.
 
 ---
 
