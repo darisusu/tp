@@ -176,7 +176,7 @@ The sort by paid status feature allows trainers to sort their client list by pay
 
 The sortbypaid command is implemented through the following components:
 
-* `SortByPaidCommand` — The command class that executes the sorting operation
+* `SortByPaidCommand` — The command class that executes the sorting by payment operation
 * `SortByPaidCommandParser` — Parses the "sortbypaid" command input
 * `Model#sortPersonListByPaid()` — Interface method for sorting by paid status
 * `AddressBook#sortByPaid()` — Delegates sorting to the person list
@@ -186,7 +186,7 @@ The sorting logic uses `Boolean.compare()` to sort unpaid clients (false) before
 
 #### Class Diagram
 
-The following class diagram shows the relationship between the sortbypaid command and related classes:
+The following class diagram shows the relationship between the sortbypaid command and its related classes:
 
 <puml src="diagrams/SortByPaidCommandDiagram.puml" alt="SortByPaidCommand Class Diagram" />
 
@@ -319,14 +319,14 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * is a **personal trainer** or **fitness coach**
-* has a need to manage a **significant number of clients**
+* has a need to manage a **significant number of clients**, their **payment details**, and their **physical details**
 * needs to record and access **client session schedules, payments, body stats, and medical notes**
-* prefers a **desktop app** for better data visibility and keyboard efficiency
+* prefers a **desktop app** for better data visibility and keyboard efficiency as opposed to spreadsheets
 * can type fast and prefers **CLI commands** to mouse-driven GUIs
-* is reasonably comfortable with technology and command-based workflows
+* is reasonably comfortable with technology and command-based workflows (CLI)
 
 **Value proposition:**
-Manage client information, sessions, and progress more efficiently than with typical spreadsheet or GUI apps, improving organization and reducing admin time.
+Manage client information, sessions, and progress more efficiently than with typical spreadsheet or GUI apps, improving organization and reducing admin time and complexity.
 
 ---
 
