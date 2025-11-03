@@ -167,7 +167,7 @@ add n/NAME p/PHONE e/EMAIL a/ADDRESS dl/DEADLINE paid/PAID s/SCHEDULE [goal/GOAL
 
 **Example:**
 ```
-add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false bf/18.5 goal/Build muscle t/friend t/owesMoney
+add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 dl/2025-11-10 paid/false s/2025-11-12 18:00 goal/Build muscle h/170 w/70 age/25 g/male bf/18.5 t/friend t/owesMoney
 ```
 
 **Guidance:**
