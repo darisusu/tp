@@ -56,7 +56,7 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
    The GUI should appear within a few seconds, showing you a dashboard. Sample data will be pre-loaded.
 
 5. Try these example commands for starters:
-    - `client` - Switches the main component from the dashboard to the full client list
+    - `client` or `list` - Switches from the dashboard to the full client list view
     - `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false` - Adds a new client with basic information
     - `delete 1` – Deletes the first client in the list
     - `exit` – Exits the application
@@ -73,30 +73,29 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 > ⚠️ **Note:** Please review the [Important Input Rule](#important-input-rule) before entering commands to avoid errors.
 
 
-| **Command**                                                                  | **Description** | **Example** |
-|------------------------------------------------------------------------------|----------------|--------------|
-| [`add`](#add---add-a-client)                                                 | Add a new client | `add n/John Doe p/98765432 e/john@example.com ...` |
-| [`edit`](#edit---edit-a-client)                                              | Edit an existing client | `edit 2 n/James Tan e/jamestan@example.com` |
-| [`list`](#list---view-all-clients)                                           | View all clients | `list` |
-| [`find`](#find---search-clients-by-name)                                     | Search for clients by name | `find John Jane` |
-| [`delete`](#delete---remove-a-client)                                        | Delete a client | `delete 3` |
-| [`clear`](#clear---delete-all-clients)                                        | Delete all clients | `clear` |
-| [`sortbypaid`](#sortbypaid---sort-clients-by-payment-status)                  | Sort clients by payment status | `sortbypaid` |
-| [`sortbydeadline`](#sortbydeadline---sort-clients-by-payment-deadline)        | Sort clients by payment deadline | `sortbydeadline desc` |
-| [`sortbysession`](#sortbysession---sort-clients-by-upcoming-session)          | Sort clients by upcoming session | `sortbysession` |
-| [`session`](#session---update-a-clients-scheduled-session)                    | Update a client’s scheduled session | `session 1 s/WEEKLY:MON-1800-1930` |
-| [`goal`](#goal---set-or-clear-a-fitness-goal)                                 | Set or clear a fitness goal | `goal 1 goal/Run a marathon` |
-| [`deadline`](#deadline---update-a-goal-deadline)                              | Update a goal deadline | `deadline 2 dl/2025-12-31` |
-| [`paid`](#paid---record-payment-status)                                       | Record payment status | `paid 3 paid/true` |
-| [`height`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update height | `height 1 h/170` |
-| [`weight`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update weight | `weight 1 w/70` |
-| [`age`](#height-weight-age-bodyfat-gender---update-individual-attributes)     | Update age | `age 1 age/25` |
-| [`bodyfat`](#height-weight-age-bodyfat-gender---update-individual-attributes) | Update body fat | `bodyfat 1 bf/18.5` |
-| [`gender`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update gender | `gender 1 g/female` |
-| [`client`](#client---switch-to-client-list-view)                              | Switch to client list view | `client` |
-| [`dashboard`](#dashboard---switch-to-dashboard-view)                          | Switch to dashboard view | `dashboard` |
-| [`help`](#help---open-help-window)                                            | Open help window | `help` |
-| [`exit`](#exit---close-the-program)                                           | Exit the program | `exit` |
+| **Command**                                                                   | **Description**                     | **Example**                                        |
+|-------------------------------------------------------------------------------|-------------------------------------|----------------------------------------------------|
+| [`add`](#add---add-a-client)                                                  | Add a new client                    | `add n/John Doe p/98765432 e/john@example.com ...` |
+| [`edit`](#edit---edit-a-client)                                               | Edit an existing client             | `edit 2 n/James Tan e/jamestan@example.com`        |
+| [`list` / `client`](#list-or-client---view-all-clients)                       | View all clients                    | `list` or `client`                                 |
+| [`find`](#find---search-clients-by-name)                                      | Search for clients by name          | `find John Jane`                                   |
+| [`delete`](#delete---remove-a-client)                                         | Delete a client                     | `delete 3`                                         |
+| [`clear`](#clear---delete-all-clients)                                        | Delete all clients                  | `clear`                                            |
+| [`sortbypaid`](#sortbypaid---sort-clients-by-payment-status)                  | Sort clients by payment status      | `sortbypaid`                                       |
+| [`sortbydeadline`](#sortbydeadline---sort-clients-by-payment-deadline)        | Sort clients by payment deadline    | `sortbydeadline desc`                              |
+| [`sortbysession`](#sortbysession---sort-clients-by-upcoming-session)          | Sort clients by upcoming session    | `sortbysession`                                    |
+| [`session`](#session---update-a-clients-scheduled-session)                    | Update a client’s scheduled session | `session 1 s/WEEKLY:MON-1800-1930`                 |
+| [`goal`](#goal---set-or-clear-a-fitness-goal)                                 | Set or clear a fitness goal         | `goal 1 goal/Run a marathon`                       |
+| [`deadline`](#deadline---update-a-goal-deadline)                              | Update a goal deadline              | `deadline 2 dl/2025-12-31`                         |
+| [`paid`](#paid---record-payment-status)                                       | Record payment status               | `paid 3 paid/true`                                 |
+| [`height`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update height                       | `height 1 h/170`                                   |
+| [`weight`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update weight                       | `weight 1 w/70`                                    |
+| [`age`](#height-weight-age-bodyfat-gender---update-individual-attributes)     | Update age                          | `age 1 age/25`                                     |
+| [`bodyfat`](#height-weight-age-bodyfat-gender---update-individual-attributes) | Update body fat                     | `bodyfat 1 bf/18.5`                                |
+| [`gender`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update gender                       | `gender 1 g/female`                                |
+| [`dashboard`](#dashboard---switch-to-dashboard-view)                          | Switch to dashboard view            | `dashboard`                                        |
+| [`help`](#help---open-help-window)                                            | Open help window                    | `help`                                             |
+| [`exit`](#exit---close-the-program)                                           | Exit the program                    | `exit`                                             |
 
 [↑ Back to top](#fitbook-user-guide)
 
@@ -200,15 +199,25 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 
 ---
 
-### `list` - View all clients
+### `list` or `client` - View all clients
+
 **Format:** 
+
+Use either of the following commands:
 ```
 list
+client
 ``` 
 **Guidance:**
-- Displays the entire client list.<br>
-- If user is on dashboard, it will redirect to the client tab.
+- Both commands display the full client list view.
+- If the user is currently on the dashboard, these commands switch the view to the client list tab.
+- They do **not** modify any data — only change the displayed view.
+- You can use either command interchangeably.
 
+> 💡 **Design Note:**  
+> `list` is provided for users familiar with traditional CLI syntax,  
+>  While `client` offers a more intuitive, context-based option consistent with `dashboard`.  
+> Both are retained to improve accessibility and user experience.
 ---
 
 ### `find` - Search clients by name
@@ -395,14 +404,6 @@ ATTRIBUTE INDEX PREFIX/VALUE
 - Age: Integer between 1 and 120 (inclusive)
 - Bodyfat: Numeric value between 5.0 and 60.0 (inclusive, up to one decimal place)
 - Gender: Must be one of the following: `male`, `female`, `other`, `non-binary`, `prefer not to say`
-
----
-
-### `client` - Switch to client list view
-**Format:**
-```
-client
-```
 
 ---
 
