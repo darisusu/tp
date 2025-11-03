@@ -215,7 +215,7 @@ If user is on dashboard, it will redirect to the client tab.
 - Case-insensitive search within names
 - Multiple keywords perform an OR-search (matches if any keyword is present)
 - Only full words will be matched e.g. `Han` will not match `Hans`
-- Matches are displayed in the client list
+- Matches are displayed in the respective client and dashboard panels
 
 
   ![result for 'find alex bernice'](images/findAlexBernice.png)
