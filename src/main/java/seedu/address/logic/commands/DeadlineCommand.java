@@ -78,13 +78,13 @@ public class DeadlineCommand extends Command {
         if (deadline.equals(oldDeadline)) {
             return new CommandResult(String.format(
                     MESSAGE_DEADLINE_UNCHANGED,
-                    Messages.format(personToEdit)));
+                    Messages.format(personToEdit)) + warningSuffix(oldDeadline));
         }
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
+        return new CommandResult(generateSuccessMessage(editedPerson) + warningSuffix(deadline));
     }
 
     /**
@@ -95,6 +95,15 @@ public class DeadlineCommand extends Command {
     private String generateSuccessMessage(Person personToEdit) {
         String message = !deadline.isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
+    }
+
+    private static String warningSuffix(Deadline d) {
+        if (d == null || d.isEmpty()) return "";
+        boolean past = d.isPastOrToday();
+        boolean far = d.isMoreThanYearsAhead(1);
+        if (!past && !far) return "";
+        String reason = past ? "the date is in the past" : "the date is more than 1 year ahead";
+        return System.lineSeparator() + "Note: " + reason + "!";
     }
 
     @Override
