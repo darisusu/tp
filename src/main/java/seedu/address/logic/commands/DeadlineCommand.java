@@ -33,7 +33,7 @@ public class DeadlineCommand extends Command {
     public static final String MESSAGE_NOT_IMPLEMENTED_YET =
             "Deadline command not implemented yet";
 
-    public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Person: %1$s";
+    public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Updated deadline of Person: %1$s";
     public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed deadline from Person: %1$s";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format!\n%1$s";
 
