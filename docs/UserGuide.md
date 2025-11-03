@@ -185,7 +185,7 @@ add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 dl/2
 
 **Format:**
 ```
-edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [dl/DEADLINE] [paid/PAID] [bf/BODYFAT] [goal/GOAL] [t/TAG]…
+edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [age/AGE] [g/GENDER] [dl/DEADLINE] [paid/PAID] [s/SESSION] [bf/BODYFAT] [goal/GOAL] [t/TAG]…
 ```
 
 **Example:**
