@@ -38,7 +38,7 @@ public class DeadlineCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText("Name: " + person.getName().fullName);
         phone.setText(valueOrPlaceholder(person.getPhone(), Phone::toString));
-        deadline.setText("Payment Deadline: " + deadlineDisplay(person.getDeadline()));
+        deadline.setText(deadlineDisplay(person.getDeadline()));
     }
 
     private <T> String valueOrPlaceholder(T value, java.util.function.Function<T, String> mapper) {

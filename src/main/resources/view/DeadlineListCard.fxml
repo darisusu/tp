@@ -36,7 +36,7 @@
                 </VBox.margin>
             </Separator>
 
-            <Label styleClass="cell_medium_label" text="Deadline:" />
+            <Label styleClass="cell_medium_label" text="Payment Deadline:" />
             <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
             <Label styleClass="cell_medium_label" text="Phone Number:" />
             <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
