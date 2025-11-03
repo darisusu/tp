@@ -47,7 +47,7 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 
 2. Download the latest `.jar` file from your team’s [GitHub Releases](https://github.com/AY2526S1-CS2103T-F09-4/tp/releases).
 
-3. Copy the `.jar` file to any folder — this will serve as your **FitBook home folder**.
+3. Copy the `.jar` file to any folder - this will serve as your **FitBook home folder**.
 
 4. Open a terminal and run:
    ```bash
@@ -73,30 +73,30 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 > ⚠️ **Note:** Please review the [Important Input Rule](#important-input-rule) before entering commands to avoid errors.
 
 
-| **Command** | **Description** | **Example** |
-|--------------|----------------|--------------|
-| [`add`](#add--add-a-client) | Add a new client | `add n/John Doe p/98765432 e/john@example.com ...` |
-| [`edit`](#edit--edit-a-client) | Edit an existing client | `edit 2 n/James Tan e/jamestan@example.com` |
-| [`list`](#list--view-all-clients) | View all clients | `list` |
-| [`find`](#find--search-clients-by-name) | Search for clients by name | `find John Jane` |
-| [`delete`](#delete--remove-a-client) | Delete a client | `delete 3` |
-| [`clear`](#clear--delete-all-clients) | Delete all clients | `clear` |
-| [`sortbypaid`](#sortbypaid--sort-clients-by-payment-status) | Sort clients by payment status | `sortbypaid` |
-| [`sortbydeadline`](#sortbydeadline--sort-clients-by-payment-deadline) | Sort clients by payment deadline | `sortbydeadline desc` |
-| [`sortbysession`](#sortbysession--sort-clients-by-upcoming-session) | Sort clients by upcoming session | `sortbysession` |
-| [`session`](#session--update-a-clients-scheduled-session) | Update a client’s scheduled session | `session 1 s/WEEKLY:MON-1800-1930` |
-| [`goal`](#goal--set-or-clear-a-fitness-goal) | Set or clear a fitness goal | `goal 1 goal/Run a marathon` |
-| [`deadline`](#deadline--update-a-goal-deadline) | Update a goal deadline | `deadline 2 dl/2025-12-31` |
-| [`paid`](#paid--record-payment-status) | Record payment status | `paid 3 paid/true` |
-| [`height`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update height | `height 1 h/170` |
-| [`weight`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update weight | `weight 1 w/70` |
-| [`age`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update age | `age 1 age/25` |
-| [`bodyfat`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update body fat | `bodyfat 1 bf/18.5` |
-| [`gender`](#height-weight-age-bodyfat-gender--update-individual-attributes) | Update gender | `gender 1 g/female` |
-| [`client`](#client--switch-to-client-list-view) | Switch to client list view | `client` |
-| [`dashboard`](#dashboard--switch-to-dashboard-view) | Switch to dashboard view | `dashboard` |
-| [`help`](#help--open-help-window) | Open help window | `help` |
-| [`exit`](#exit--close-the-program) | Exit the program | `exit` |
+| **Command**                                                                  | **Description** | **Example** |
+|------------------------------------------------------------------------------|----------------|--------------|
+| [`add`](#add---add-a-client)                                                 | Add a new client | `add n/John Doe p/98765432 e/john@example.com ...` |
+| [`edit`](#edit---edit-a-client)                                              | Edit an existing client | `edit 2 n/James Tan e/jamestan@example.com` |
+| [`list`](#list---view-all-clients)                                           | View all clients | `list` |
+| [`find`](#find---search-clients-by-name)                                     | Search for clients by name | `find John Jane` |
+| [`delete`](#delete---remove-a-client)                                        | Delete a client | `delete 3` |
+| [`clear`](#clear---delete-all-clients)                                        | Delete all clients | `clear` |
+| [`sortbypaid`](#sortbypaid---sort-clients-by-payment-status)                  | Sort clients by payment status | `sortbypaid` |
+| [`sortbydeadline`](#sortbydeadline---sort-clients-by-payment-deadline)        | Sort clients by payment deadline | `sortbydeadline desc` |
+| [`sortbysession`](#sortbysession---sort-clients-by-upcoming-session)          | Sort clients by upcoming session | `sortbysession` |
+| [`session`](#session---update-a-clients-scheduled-session)                    | Update a client’s scheduled session | `session 1 s/WEEKLY:MON-1800-1930` |
+| [`goal`](#goal---set-or-clear-a-fitness-goal)                                 | Set or clear a fitness goal | `goal 1 goal/Run a marathon` |
+| [`deadline`](#deadline---update-a-goal-deadline)                              | Update a goal deadline | `deadline 2 dl/2025-12-31` |
+| [`paid`](#paid---record-payment-status)                                       | Record payment status | `paid 3 paid/true` |
+| [`height`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update height | `height 1 h/170` |
+| [`weight`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update weight | `weight 1 w/70` |
+| [`age`](#height-weight-age-bodyfat-gender---update-individual-attributes)     | Update age | `age 1 age/25` |
+| [`bodyfat`](#height-weight-age-bodyfat-gender---update-individual-attributes) | Update body fat | `bodyfat 1 bf/18.5` |
+| [`gender`](#height-weight-age-bodyfat-gender---update-individual-attributes)  | Update gender | `gender 1 g/female` |
+| [`client`](#client---switch-to-client-list-view)                              | Switch to client list view | `client` |
+| [`dashboard`](#dashboard---switch-to-dashboard-view)                          | Switch to dashboard view | `dashboard` |
+| [`help`](#help---open-help-window)                                            | Open help window | `help` |
+| [`exit`](#exit---close-the-program)                                           | Exit the program | `exit` |
 
 [↑ Back to top](#fitbook-user-guide)
 
@@ -147,7 +147,7 @@ This section lists all available commands and how to use them.
 >
 > You **must not include the `/` character in any input values**, except where it is used as a command prefix (e.g., `n/`, `p/`, `e/`).
 >
-> Using `/` inside actual data fields — such as names (`s/o`), addresses, goals, or tags — will cause the command to fail or be misinterpreted.
+> Using `/` inside actual data fields - such as names (`s/o`), addresses, goals, or tags - will cause the command to fail or be misinterpreted.
 >
 >
 >> ❌ **Incorrect:** `add n/John s/o Doe ...`
@@ -158,7 +158,7 @@ This section lists all available commands and how to use them.
 
 ---
 
-### `add` — Add a client
+### `add` - add a client
 
 **Format:**
 ```
@@ -181,7 +181,7 @@ add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 dl/2
 
 ---
 
-### `edit` — Edit a client
+### `edit` - Edit a client
 
 **Format:**
 ```
@@ -200,7 +200,7 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 
 ---
 
-### `list` — View all clients
+### `list` - View all clients
 **Format:** 
 ```
 list
@@ -211,7 +211,7 @@ list
 
 ---
 
-### `find` — Search clients by name
+### `find` - Search clients by name
 **Format:** 
 ```
 find KEYWORD [MORE_KEYWORDS]…
@@ -233,7 +233,7 @@ find alex bernice
 
 ---
 
-### `delete` — Remove a client
+### `delete` - Remove a client
 **Format:**
 ```
 delete INDEX
@@ -249,7 +249,7 @@ delete 3
 
 ---
 
-### `clear` — Delete all clients
+### `clear` - Delete all clients
 **Format:** 
 ```
 clear
@@ -260,7 +260,7 @@ clear
 
 ---
 
-### `sortbypaid` — Sort clients by payment status
+### `sortbypaid` - Sort clients by payment status
 **Format:** 
 ```
 sortbypaid
@@ -273,7 +273,7 @@ sortbypaid
 
 ---
 
-### `sortbydeadline` — Sort clients by payment deadline
+### `sortbydeadline` - Sort clients by payment deadline
 **Format:** 
 ```
 sortbydeadline [asc/desc]
@@ -290,7 +290,7 @@ sortbydeadline [asc/desc]
 
 ---
 
-### `sortbysession` — Sort clients by upcoming session
+### `sortbysession` - Sort clients by upcoming session
 **Format:** 
 ```
 sortbysession
@@ -300,7 +300,7 @@ sortbysession
 - Will switch back to client list to display sorted list.
 ---
 
-### `session` — Update a client’s scheduled session
+### `session` - Update a client’s scheduled session
 **Format:** 
 ```
 session INDEX s/SESSION
@@ -331,7 +331,7 @@ session 1 s/WEEKLY:MON-1800-1930
 
 ---
 
-### `goal` — Set or clear a fitness goal
+### `goal` - Set or clear a fitness goal
 **Format:** 
 ```
 goal INDEX goal/GOAL
@@ -346,7 +346,7 @@ goal 1 goal/Complete a triathlon
 
 ---
 
-### `deadline` — Update a payment deadline
+### `deadline` - Update a payment deadline
 **Format:** 
 ```
 deadline INDEX dl/DATE
@@ -358,7 +358,7 @@ deadline 4 dl/2025-12-31
 
 ---
 
-### `paid` — Record payment status
+### `paid` - Record payment status
 **Format:** 
 ```
 paid INDEX paid/STATUS
@@ -373,7 +373,7 @@ paid 3 paid/true
 
 ---
 
-### `height`, `weight`, `age`, `bodyfat`, `gender` — Update individual attributes
+### `height`, `weight`, `age`, `bodyfat`, `gender` - Update individual attributes
 Each of these commands updates one attribute using the same format:
 
 **Format:** 
@@ -398,7 +398,7 @@ ATTRIBUTE INDEX PREFIX/VALUE
 
 ---
 
-### `client` — Switch to client list view
+### `client` - Switch to client list view
 **Format:**
 ```
 client
@@ -406,7 +406,7 @@ client
 
 ---
 
-### `dashboard` — Switch to dashboard view
+### `dashboard` - Switch to dashboard view
 **Format:** 
 ```
 dashboard
@@ -414,7 +414,7 @@ dashboard
 
 ---
 
-### `help` — Open help window
+### `help` - Open help window
 **Format:** 
 ```
 help
@@ -428,7 +428,7 @@ Displays a new window with a link to the user guide.
 
 ---
 
-### `exit` — Close the program
+### `exit` - Close the program
 **Format:** 
 ```
 exit
