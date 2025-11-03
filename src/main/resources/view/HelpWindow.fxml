@@ -30,7 +30,7 @@
             <children>
               <Label text="Refer to the user guide:" wrapText="true" />
               <Hyperlink onAction="#openUserGuide"
-                        text="https://se-education.org/addressbook-level3/UserGuide.html" />
+                        text="https://ay2526s1-cs2103t-f09-4.github.io/tp/UserGuide.html" />
             </children>
           </HBox>
           <HBox alignment="CENTER_LEFT" fx:id="actionBar" spacing="10.0">
