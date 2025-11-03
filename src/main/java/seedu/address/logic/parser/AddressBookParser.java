@@ -76,26 +76,12 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+        case ClearCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD,
+             DashboardCommand.COMMAND_WORD, ClientCommand.COMMAND_WORD:
+            return new SingleWordCommandParser().parse(userInput);
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
-        case DashboardCommand.COMMAND_WORD:
-            return new DashboardCommand();
-
-        case ClientCommand.COMMAND_WORD:
-            return new ClientCommand();
 
         case GoalCommand.COMMAND_WORD:
             return new GoalCommandParser().parse(arguments);
