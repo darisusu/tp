@@ -201,15 +201,25 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 ---
 
 ### `list` — View all clients
-**Format:** `list`  
-Displays the entire client list.<br>
-If user is on dashboard, it will redirect to the client tab.
+**Format:** 
+```
+list
+``` 
+**Guidance:**
+- Displays the entire client list.<br>
+- If user is on dashboard, it will redirect to the client tab.
 
 ---
 
 ### `find` — Search clients by name
-**Format:** `find KEYWORD [MORE_KEYWORDS]…`
-**Example:** `find alex bernice`
+**Format:** 
+```
+find KEYWORD [MORE_KEYWORDS]…
+```
+**Example:** 
+```
+find alex bernice
+```
 
 **Guidance:**
 - Case-insensitive search within names
@@ -224,8 +234,14 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `delete` — Remove a client
-**Format:** `delete INDEX`
-**Example:** `delete 3`
+**Format:**
+```
+delete INDEX
+```
+**Example:** 
+```
+delete 3
+```
 
 **Guidance:**
 - Deletes the client at the given index in the displayed list.
@@ -234,8 +250,10 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `clear` — Delete all clients
-**Format:** `clear`
-
+**Format:** 
+```
+clear
+```
 > ⚠️ **Warning:** This action **cannot be undone**.
 
 
@@ -243,7 +261,12 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `sortbypaid` — Sort clients by payment status
-**Format:** `sortbypaid`
+**Format:** 
+```
+sortbypaid
+```
+
+**Guidance:**
 - Unpaid clients (paid:`false`) appear first.
 - Paid clients (paid:`true`) appear last.
 - Will switch back to client list to display sorted list.
@@ -251,11 +274,15 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `sortbydeadline` — Sort clients by payment deadline
-**Format:** `sortbydeadline [asc/desc]`
+**Format:** 
+```
+sortbydeadline [asc/desc]
+```
 **Examples:**
+```
 - `sortbydeadline` or `sortbydeadline asc` → ascending
 - `sortbydeadline desc` → descending
-
+```
 **Guidance:**
 - Ascending: earliest → latest → no deadline
 - Descending: no deadline → latest → earliest
@@ -264,17 +291,29 @@ If user is on dashboard, it will redirect to the client tab.
 ---
 
 ### `sortbysession` — Sort clients by upcoming session
-**Format:** `sortbysession`
-
+**Format:** 
+```
+sortbysession
+```
+**Guidance:**
 - Clients with nearest upcoming sessions will appear first
 - Will switch back to client list to display sorted list.
 ---
 
 ### `session` — Update a client’s scheduled session
-**Format:** `session INDEX s/SESSION`
-**Example:** `session 1 s/WEEKLY:MON-1800-1930`
+**Format:** 
+```
+session INDEX s/SESSION
+```
+**Example:** 
+```
+session 1 s/WEEKLY:MON-1800-1930
+```
+**Guidance:**
 
-FitBook automatically detects and rejects conflicting session timings.
+- FitBook automatically detects and rejects conflicting session timings.
+
+**Supported Session Formats:**
 
 | **Type** | **Format** | **Example** |
 |-----------|-------------|-------------|
@@ -284,6 +323,7 @@ FitBook automatically detects and rejects conflicting session timings.
 | **Biweekly** | `BIWEEKLY:DAY-START-END` | `biweekly:fri-0900-1030` |
 | **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
 
+**Additional Notes:**
 - `DAY` accepts: mon, tue, wed, thu, fri, sat, sun
 - Time uses 24-hour format (`HHmm` or `HH:MM`)
 - Multi-slot sessions list multiple day–time ranges sequentially
@@ -292,39 +332,62 @@ FitBook automatically detects and rejects conflicting session timings.
 ---
 
 ### `goal` — Set or clear a fitness goal
-**Format:** `goal INDEX goal/GOAL`
-**Example:** `goal 1 goal/Complete a triathlon`
-Use `goal/` with no text to clear the goal.
-There is a limit of 100 characters for the goal field.
+**Format:** 
+```
+goal INDEX goal/GOAL
+```
+**Example:** 
+```
+goal 1 goal/Complete a triathlon
+```
+**Guidance:**
+- Use `goal/` with no text to clear the goal. 
+- There is a limit of 100 characters for the goal field.
 
 ---
 
 ### `deadline` — Update a payment deadline
-**Format:** `deadline INDEX dl/DATE`  
-**Example:** `deadline 4 dl/2025-12-31`
+**Format:** 
+```
+deadline INDEX dl/DATE
+```
+**Example:** 
+```
+deadline 4 dl/2025-12-31
+```
 
 ---
 
 ### `paid` — Record payment status
-**Format:** `paid INDEX paid/STATUS`
-**Example:** `paid 3 paid/true`
-
-Use `true` if the client has paid, or `false` otherwise.
-Clients with paid status of `false` will be displayed in the dashboard under Unpaid Clients.
+**Format:** 
+```
+paid INDEX paid/STATUS
+```
+**Example:** 
+```
+paid 3 paid/true
+```
+**Guidance:**
+- Use `true` if the client has paid, or `false` otherwise. 
+- Clients with paid status of `false` will be displayed in the dashboard under Unpaid Clients.
 
 ---
 
 ### `height`, `weight`, `age`, `bodyfat`, `gender` — Update individual attributes
 Each of these commands updates one attribute using the same format:
+
+**Format:** 
 ```
-<attribute> INDEX prefix/VALUE
+INDEX prefix/VALUE
 ```
-Examples:
-- `height 2 h/168`
-- `weight 2 w/68.5`
-- `age 1 age/26`
-- `bodyfat 1 bf/17.2`
-- `gender 5 g/non-binary`
+**Examples:** 
+```
+- height 2 h/168
+- weight 2 w/68.5
+- age 1 age/26
+- bodyfat 1 bf/17.2
+- gender 5 g/non-binary
+```
 
 Constraints:
 - Height: Integer value between 50 and 300 (inclusive)
@@ -336,17 +399,28 @@ Constraints:
 ---
 
 ### `client` — Switch to client list view
-**Format:** `client`
+**Format:**
+```
+client
+```
 
 ---
 
 ### `dashboard` — Switch to dashboard view
-**Format:** `dashboard`
+**Format:** 
+```
+dashboard
+```
 
 ---
 
 ### `help` — Open help window
-**Format:** `help`
+**Format:** 
+```
+help
+```
+**Guidance:** 
+
 Displays a new window with a link to the user guide.
 
 ![help_window_screenshot](images/helpMessage.png)
@@ -355,7 +429,10 @@ Displays a new window with a link to the user guide.
 ---
 
 ### `exit` — Close the program
-**Format:** `exit`
+**Format:** 
+```
+exit
+```
 
 [↑ Back to top](#fitbook-user-guide)
 
