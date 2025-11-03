@@ -403,7 +403,9 @@ ATTRIBUTE INDEX PREFIX/VALUE
 - Weight: Numeric value greater than 20 and less than 500 (decimals allowed)
 - Age: Integer between 1 and 120 (inclusive)
 - Bodyfat: Numeric value between 5.0 and 60.0 (inclusive, up to one decimal place)
-- Gender: Must be one of the following: `male`, `female`, `other`, `non-binary`, `prefer not to say`
+- Gender: Accepts any one of the following: (case-insensitive)
+  - `male`, `female`, `other`, `non-binary`, `prefer not to say`
+  -  Short forms: `m`, `f`, `o`, `nb`, `pns` 
 
 ---
 
