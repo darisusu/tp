@@ -21,7 +21,7 @@ public class SortByPaidCommand extends Command {
     public CommandResult execute(Model model) {
         model.sortPersonListByPaid();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SORT_SUCCESS);
+        return new CommandResult(MESSAGE_SORT_SUCCESS, false, false, true, false);
     }
 
     @Override

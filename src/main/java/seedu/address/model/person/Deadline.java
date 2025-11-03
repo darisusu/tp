@@ -70,17 +70,12 @@ public class Deadline {
             return true;
         }
         // calendar check (rejects impossible dates, e.g., 2025-02-30)
-        LocalDate parsed;
         try {
-            parsed = LocalDate.parse(s, FORMATTER);
+            LocalDate.parse(s, FORMATTER);
+            return true;
         } catch (DateTimeParseException e) {
             return false;
         }
-
-        LocalDate today = LocalDate.now(clock);
-        LocalDate latest = today.plusYears(1);
-        // strictly after today, and not after latest
-        return parsed.isAfter(today) && !parsed.isAfter(latest);
     }
 
 
@@ -102,6 +97,14 @@ public class Deadline {
 
     public String toStorageString() {
         return value.map(LocalDate::toString).orElse("");
+    }
+
+    public boolean isPastOrToday() {
+        return value.map(d -> !d.isAfter(LocalDate.now(clock))).orElse(false);
+    }
+
+    public boolean isMoreThanYearsAhead(int years) {
+        return value.map(d -> d.isAfter(LocalDate.now(clock).plusYears(years))).orElse(false);
     }
 
     @Override

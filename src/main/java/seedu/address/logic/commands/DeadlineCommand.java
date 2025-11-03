@@ -33,8 +33,9 @@ public class DeadlineCommand extends Command {
     public static final String MESSAGE_NOT_IMPLEMENTED_YET =
             "Deadline command not implemented yet";
 
-    public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Added deadline to Person: %1$s";
+    public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Updated deadline of Person: %1$s";
     public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed deadline from Person: %1$s";
+    public static final String MESSAGE_DEADLINE_UNCHANGED = "Payment deadline unchanged - Same date!: %1$s";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format!\n%1$s";
 
     private final Index index;
@@ -73,10 +74,17 @@ public class DeadlineCommand extends Command {
                 personToEdit.getSession(),
                 personToEdit.getTags());
 
+        Deadline oldDeadline = personToEdit.getDeadline();
+        if (deadline.equals(oldDeadline)) {
+            return new CommandResult(String.format(
+                    MESSAGE_DEADLINE_UNCHANGED,
+                    Messages.format(personToEdit)) + warningSuffix(oldDeadline));
+        }
+
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
+        return new CommandResult(generateSuccessMessage(editedPerson) + warningSuffix(deadline));
     }
 
     /**
@@ -87,6 +95,15 @@ public class DeadlineCommand extends Command {
     private String generateSuccessMessage(Person personToEdit) {
         String message = !deadline.isEmpty() ? MESSAGE_ADD_DEADLINE_SUCCESS : MESSAGE_DELETE_DEADLINE_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
+    }
+
+    private static String warningSuffix(Deadline d) {
+        if (d == null || d.isEmpty()) { return ""; }
+        boolean past = d.isPastOrToday();
+        boolean far = d.isMoreThanYearsAhead(1);
+        if (!past && !far) { return ""; }
+        String reason = past ? "the date is in the past" : "the date is more than 1 year ahead";
+        return System.lineSeparator() + "Note: " + reason + "!";
     }
 
     @Override

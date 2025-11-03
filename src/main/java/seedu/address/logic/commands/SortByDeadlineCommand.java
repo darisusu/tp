@@ -30,7 +30,7 @@ public class SortByDeadlineCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.setPersonListComparator(new PersonDeadlineComparator(ascending));
-        return new CommandResult(ascending ? MESSAGE_SUCCESS_ASC : MESSAGE_SUCCESS_DESC);
+        return new CommandResult(ascending ? MESSAGE_SUCCESS_ASC : MESSAGE_SUCCESS_DESC, false, false, true, false);
     }
 
     @Override

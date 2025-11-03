@@ -21,7 +21,7 @@ public class SortBySessionCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.setPersonListComparator(new PersonSessionComparator());
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(MESSAGE_SUCCESS, false, false, true, false);
     }
 
     @Override
