@@ -68,8 +68,6 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 ---
 ## Command Summary
 
-> 💡 Tip: You can click on the commands below to jump to their detailed explanations.
-
 > ⚠️ **Note:** Please review the [Important Input Rule](#important-input-rule) before entering commands to avoid errors.
 
 
