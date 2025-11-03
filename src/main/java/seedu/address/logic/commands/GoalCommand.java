@@ -56,6 +56,9 @@ public class GoalCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+        if (goal.value.equals(personToEdit.getGoal().value)) {
+            throw new CommandException("New goal should be different from the old goal!");
+        }
         Person editedPerson = new Person(
                 personToEdit.getName(),
                 personToEdit.getPhone(),
