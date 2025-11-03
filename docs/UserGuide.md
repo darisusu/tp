@@ -378,7 +378,7 @@ Each of these commands updates one attribute using the same format:
 
 **Format:** 
 ```
-INDEX prefix/VALUE
+ATTRIBUTE INDEX PREFIX/VALUE
 ```
 **Examples:** 
 ```
