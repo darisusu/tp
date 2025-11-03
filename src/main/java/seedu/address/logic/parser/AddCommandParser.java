@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.stream.Collectors.toCollection;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
@@ -16,10 +17,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SESSION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -42,34 +43,20 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
-
-    private static final java.util.Set<String> KNOWN_PREFIXES = java.util.Set.of(
-            PREFIX_NAME.getPrefix(), PREFIX_PHONE.getPrefix(), PREFIX_EMAIL.getPrefix(), PREFIX_ADDRESS.getPrefix(),
-            PREFIX_DEADLINE.getPrefix(), PREFIX_PAID.getPrefix(), PREFIX_SESSION.getPrefix(), PREFIX_GOAL.getPrefix(),
-            PREFIX_HEIGHT.getPrefix(), PREFIX_WEIGHT.getPrefix(), PREFIX_AGE.getPrefix(), PREFIX_GENDER.getPrefix(),
-            PREFIX_BODYFAT.getPrefix(), PREFIX_TAG.getPrefix());
-
-    private static final java.util.regex.Pattern ANY_PREFIX_PATTERN =
-            java.util.regex.Pattern.compile("(?<=\\s|^)([A-Za-z]+/)");
-
-    private static void failIfUnknownPrefixes(String args) throws seedu.address.logic.parser.exceptions.ParseException {
-        java.util.regex.Matcher m = ANY_PREFIX_PATTERN.matcher(args);
-        while (m.find()) {
-            String raw = m.group(1); // e.g., "x/"
-            if (!KNOWN_PREFIXES.contains(raw)) {
-                String valid = String.join(" ", KNOWN_PREFIXES);
-                throw new seedu.address.logic.parser.exceptions.ParseException(
-                        String.format(Messages.MESSAGE_UNKNOWN_PREFIX, raw, valid));
-            }
-        }
-    }
+    private static final Set<String> KNOWN_PREFIXES = Stream.of(
+                    PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                    PREFIX_DEADLINE, PREFIX_PAID, PREFIX_SESSION,
+                    PREFIX_GOAL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER,
+                    PREFIX_BODYFAT, PREFIX_TAG
+            ).map(Prefix::getPrefix)
+            .collect(toCollection(LinkedHashSet::new));
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        failIfUnknownPrefixes(args);
+        PrefixGuards.ensureNoUnknownPrefixes(args, KNOWN_PREFIXES);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_GOAL, PREFIX_TAG, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE,
