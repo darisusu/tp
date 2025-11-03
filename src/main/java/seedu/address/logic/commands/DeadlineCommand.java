@@ -35,6 +35,7 @@ public class DeadlineCommand extends Command {
 
     public static final String MESSAGE_ADD_DEADLINE_SUCCESS = "Updated deadline of Person: %1$s";
     public static final String MESSAGE_DELETE_DEADLINE_SUCCESS = "Removed deadline from Person: %1$s";
+    public static final String MESSAGE_DEADLINE_UNCHANGED = "Payment deadline unchanged - Same date!: %1$s";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format!\n%1$s";
 
     private final Index index;
@@ -72,6 +73,13 @@ public class DeadlineCommand extends Command {
                 personToEdit.getBodyfat(),
                 personToEdit.getSession(),
                 personToEdit.getTags());
+
+        Deadline oldDeadline = personToEdit.getDeadline();
+        if (deadline.equals(oldDeadline)) {
+            return new CommandResult(String.format(
+                    MESSAGE_DEADLINE_UNCHANGED,
+                    Messages.format(personToEdit)));
+        }
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
