@@ -19,8 +19,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_WEIGHT;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
@@ -32,7 +35,13 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new EditCommand object
  */
 public class EditCommandParser implements Parser<EditCommand> {
-
+    private static final Set<String> KNOWN_PREFIXES = Stream.of(
+                    PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                    PREFIX_DEADLINE, PREFIX_PAID, PREFIX_SESSION,
+                    PREFIX_GOAL, PREFIX_HEIGHT, PREFIX_WEIGHT, PREFIX_AGE, PREFIX_GENDER,
+                    PREFIX_BODYFAT, PREFIX_TAG
+            ).map(Prefix::getPrefix)
+            .collect(Collectors.toCollection(LinkedHashSet::new));
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -46,6 +55,9 @@ public class EditCommandParser implements Parser<EditCommand> {
                         PREFIX_AGE, PREFIX_GENDER, PREFIX_PAID, PREFIX_SESSION, PREFIX_BODYFAT, PREFIX_TAG);
 
         Index index;
+        int preLen = argMultimap.getPreamble().length();
+        String remainder = args.substring(args.indexOf(argMultimap.getPreamble()) + preLen);
+        PrefixGuards.ensureNoUnknownPrefixes(remainder, KNOWN_PREFIXES);
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
