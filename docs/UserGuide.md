@@ -246,6 +246,7 @@ If user is on dashboard, it will redirect to the client tab.
 **Format:** `sortbypaid`
 - Unpaid clients (paid:`false`) appear first.
 - Paid clients (paid:`true`) appear last.
+- Will switch back to client list to display sorted list.
 
 ---
 
@@ -258,6 +259,7 @@ If user is on dashboard, it will redirect to the client tab.
 **Guidance:**
 - Ascending: earliest → latest → no deadline
 - Descending: no deadline → latest → earliest
+- Will switch back to client list to display sorted list.
 
 ---
 
@@ -265,6 +267,7 @@ If user is on dashboard, it will redirect to the client tab.
 **Format:** `sortbysession`
 
 - Clients with nearest upcoming sessions will appear first
+- Will switch back to client list to display sorted list.
 ---
 
 ### `session` — Update a client’s scheduled session
