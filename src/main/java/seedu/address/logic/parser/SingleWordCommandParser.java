@@ -37,13 +37,13 @@ public class SingleWordCommandParser implements Parser<Command> {
         }
 
         return switch (trimmedArgs.toLowerCase()) {
-            case "list" -> new ListCommand();
-            case "clear" -> new ClearCommand();
-            case "exit" -> new ExitCommand();
-            case "help" -> new HelpCommand();
-            case "dashboard" -> new DashboardCommand();
-            case "client" -> new ClientCommand();
-            default -> throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, trimmedArgs));
+        case "list" -> new ListCommand();
+        case "clear" -> new ClearCommand();
+        case "exit" -> new ExitCommand();
+        case "help" -> new HelpCommand();
+        case "dashboard" -> new DashboardCommand();
+        case "client" -> new ClientCommand();
+        default -> throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, trimmedArgs));
         };
     }
 }
