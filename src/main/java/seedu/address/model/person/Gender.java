@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Map;
+
 /**
  * Represents a Person's gender in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidGender(String)}
@@ -14,7 +16,20 @@ public class Gender {
      */
     public static final String MESSAGE_CONSTRAINTS =
             "Gender must be one of: male, female, other, non-binary, "
-            + "prefer not to say (or m/f/o/nb/pns)";
+            + "prefer not to say (or m/f/o/nb/pns). "
+            + "Case-insensitive inputs are accepted.";
+
+    private static final Map<String, String> NORMALIZED_GENDER_MAP = Map.ofEntries(
+            Map.entry("male", "male"),
+            Map.entry("m", "male"),
+            Map.entry("female", "female"),
+            Map.entry("f", "female"),
+            Map.entry("other", "other"),
+            Map.entry("o", "other"),
+            Map.entry("non-binary", "non-binary"),
+            Map.entry("nb", "non-binary"),
+            Map.entry("prefer not to say", "prefer not to say"),
+            Map.entry("pns", "prefer not to say"));
 
     public final String value; // the gender value
 
@@ -26,7 +41,7 @@ public class Gender {
     public Gender(String gender) {
         requireNonNull(gender);
         checkArgument(isValidGender(gender), MESSAGE_CONSTRAINTS);
-        this.value = gender.toLowerCase();
+        this.value = normalizeGender(gender);
     }
 
     /**
@@ -39,24 +54,15 @@ public class Gender {
             return false;
         }
 
-        String normalized = genderInput.toLowerCase().trim();
-
-        // Full forms
-        if (normalized.equals("male") || normalized.equals("female")
-                || normalized.equals("other") || normalized.equals("non-binary")
-                || normalized.equals("prefer not to say")) {
-            return true;
-        }
-
-        // Abbreviations
-        if (normalized.equals("m") || normalized.equals("f")
-                || normalized.equals("o") || normalized.equals("nb")
-                || normalized.equals("pns")) {
-            return true;
-        }
-
-        return false;
+        String normalizedKey = genderInput.toLowerCase().trim();
+        return NORMALIZED_GENDER_MAP.containsKey(normalizedKey);
     }
+
+    private static String normalizeGender(String genderInput) {
+        String normalizedKey = genderInput.toLowerCase().trim();
+        return NORMALIZED_GENDER_MAP.get(normalizedKey);
+    }
+
 
     @Override
     public String toString() {

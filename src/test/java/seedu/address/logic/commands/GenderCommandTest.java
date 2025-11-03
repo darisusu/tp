@@ -68,6 +68,22 @@ public class GenderCommandTest {
     }
 
     @Test
+    public void execute_abbreviation_expandsToFullForm() {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(firstPerson).withGender("prefer not to say").build();
+
+        GenderCommand genderCommand = new GenderCommand(INDEX_FIRST_PERSON, new Gender("pns"));
+
+        String expectedMessage = String.format(GenderCommand.MESSAGE_ADD_GENDER_SUCCESS,
+                Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(genderCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         GenderCommand genderCommand = new GenderCommand(outOfBoundIndex, new Gender(VALID_GENDER_BOB));
