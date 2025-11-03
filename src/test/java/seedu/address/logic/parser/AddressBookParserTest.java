@@ -54,8 +54,8 @@ public class AddressBookParserTest {
         // invalid: has extra arguments
         assertThrows(ParseException.class,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        "`clear` is a single-word command and takes no arguments."),
-                () -> parser.parseCommand(ClearCommand.COMMAND_WORD + " 3"));
+                        "`clear` is a single-word command and takes no arguments."), () ->
+                        parser.parseCommand(ClearCommand.COMMAND_WORD + " 3"));
     }
 
     @Test
@@ -80,8 +80,8 @@ public class AddressBookParserTest {
 
         assertThrows(ParseException.class,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        "`exit` is a single-word command and takes no arguments."),
-                () -> parser.parseCommand(ExitCommand.COMMAND_WORD + " 3"));
+                        "`exit` is a single-word command and takes no arguments."), () ->
+                        parser.parseCommand(ExitCommand.COMMAND_WORD + " 3"));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class AddressBookParserTest {
 
         assertThrows(ParseException.class,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        "`help` is a single-word command and takes no arguments."),
-                () -> parser.parseCommand(HelpCommand.COMMAND_WORD + " 3"));
+                        "`help` is a single-word command and takes no arguments."), () ->
+                        parser.parseCommand(HelpCommand.COMMAND_WORD + " 3"));
     }
 
     @Test
@@ -108,8 +108,8 @@ public class AddressBookParserTest {
 
         assertThrows(ParseException.class,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        "`list` is a single-word command and takes no arguments."),
-                () -> parser.parseCommand(ListCommand.COMMAND_WORD + " 3"));
+                        "`list` is a single-word command and takes no arguments."), () ->
+                        parser.parseCommand(ListCommand.COMMAND_WORD + " 3"));
     }
 
     @Test
