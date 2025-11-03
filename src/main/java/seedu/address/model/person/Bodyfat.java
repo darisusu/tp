@@ -13,7 +13,7 @@ public class Bodyfat {
      * Error message if body fat is in incorrect format.
      */
     public static final String MESSAGE_CONSTRAINTS =
-            "Bodyfat should be a number between 5.0 and 60.0, with at most 1 decimal place "
+            "Bodyfat should be a positive number between 5.0 and 60.0 (inclusive), with at most 1 decimal place "
                     + "(e.g. 18.5 or 25)";
 
     private static final String VALIDATION_REGEX = "^[0-9]{1,2}(\\.[0-9])?$|^60(\\.0)?$";

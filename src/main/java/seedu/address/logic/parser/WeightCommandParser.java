@@ -31,6 +31,7 @@ public class WeightCommandParser implements Parser<WeightCommand> {
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, WeightCommand.MESSAGE_USAGE), pe);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_WEIGHT);
 
         if (!argMultimap.getValue(PREFIX_WEIGHT).isPresent()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, WeightCommand.MESSAGE_USAGE));

@@ -31,6 +31,7 @@ public class DeadlineCommandParser implements Parser<DeadlineCommand> {
             throw new ParseException(String.format(DeadlineCommand.MESSAGE_INVALID_COMMAND_FORMAT,
                     DeadlineCommand.MESSAGE_USAGE), pe);
         }
+        map.verifyNoDuplicatePrefixesFor(PREFIX_DEADLINE);
 
         // 2) The dl/ prefix is compulsory for this command.
         //    (Value may be "" to clear, but the prefix itself must be present.)

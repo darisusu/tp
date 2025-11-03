@@ -31,6 +31,7 @@ public class HeightCommandParser implements Parser<HeightCommand> {
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HeightCommand.MESSAGE_USAGE), pe);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_HEIGHT);
 
         if (!argMultimap.getValue(PREFIX_HEIGHT).isPresent()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HeightCommand.MESSAGE_USAGE));
