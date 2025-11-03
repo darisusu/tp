@@ -30,6 +30,7 @@ public class GenderCommandParser implements Parser<GenderCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GenderCommand.MESSAGE_USAGE), ive);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_GENDER);
 
         String genderRaw = argMultimap.getValue(PREFIX_GENDER).orElse("");
         // Trim and validate via ParserUtil for consistent behavior across commands

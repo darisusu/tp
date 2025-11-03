@@ -31,6 +31,7 @@ public class SessionCommandParser implements Parser<SessionCommand> {
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SessionCommand.MESSAGE_USAGE), pe);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SESSION);
 
         if (!argMultimap.getValue(PREFIX_SESSION).isPresent()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SessionCommand.MESSAGE_USAGE));

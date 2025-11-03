@@ -30,6 +30,7 @@ public class GoalCommandParser implements Parser<GoalCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GoalCommand.MESSAGE_USAGE), ive);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_GOAL);
 
         if (!argMultimap.getValue(PREFIX_GOAL).isPresent()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,

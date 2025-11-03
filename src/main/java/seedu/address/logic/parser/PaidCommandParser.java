@@ -30,6 +30,7 @@ public class PaidCommandParser implements Parser<PaidCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PaidCommand.MESSAGE_USAGE), ive);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PAID);
 
         String paidString = argMultimap.getValue(PREFIX_PAID)
                 .orElseThrow(() ->

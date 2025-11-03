@@ -31,6 +31,7 @@ public class BodyfatCommandParser implements Parser<BodyfatCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BodyfatCommand.MESSAGE_USAGE), ive);
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_BODYFAT);
 
         if (!argMultimap.getValue(PREFIX_BODYFAT).isPresent()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
