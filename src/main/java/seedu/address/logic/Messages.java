@@ -34,15 +34,30 @@ public class Messages {
     /**
      * Formats the {@code person} for display to the user.
      */
+    // name, phone, email, address, goal, height, weight, age, gender, deadline, paid, session, tags
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName())
                 .append("; Phone: ")
-                .append(person.getPhone())
+                .append(person.getPhone().toString().isEmpty() ? "Not Specified" : person.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
+                .append(person.getEmail().toString().isEmpty() ? "Not Specified" : person.getEmail())
                 .append("; Address: ")
-                .append(person.getAddress())
+                .append(person.getAddress().toString().isEmpty() ? "Not Specified" : person.getAddress())
+                .append("; Goal: ")
+                .append(person.getGoal().toString().isEmpty() ? "Not Specified" : person.getGoal())
+                .append("; Height: ")
+                .append(person.getHeight().toString().isEmpty() ? "Not Specified" : person.getHeight())
+                .append("; Weight: ")
+                .append(person.getWeight().toString().isEmpty() ? "Not Specified" : person.getWeight())
+                .append("; Age: ")
+                .append(person.getAge().toString().isEmpty() ? "Not Specified" : person.getAge())
+                .append("; Gender: ")
+                .append(person.getGender().toString().isEmpty() ? "Not Specified" : person.getGender())
+                .append("; Deadline: ")
+                .append(person.getDeadline().toStorageString().isEmpty() ? "Not Specified" : person.getDeadline())
+                .append("; Paid: ")
+                .append(person.getPaymentStatus().toString().isEmpty() ? "Not Specified" : person.getPaymentStatus())
                 .append("; Session: ")
                 .append(person.getSession())
                 .append("; Tags: ");
