@@ -68,8 +68,6 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 ---
 ## Command Summary
 
-> 💡 Tip: You can click on the commands below to jump to their detailed explanations.
-
 > ⚠️ **Note:** Please review the [Important Input Rule](#important-input-rule) before entering commands to avoid errors.
 
 
@@ -463,7 +461,7 @@ Advanced users may edit the JSON file directly.
 
 ## FAQ
 
-**Q:** How do I transfer my data to another computer?
+**Q:** How do I transfer my data to another computer?<br>
 **A:** Copy the entire FitBook home folder (including the `data` folder) to the other computer and run the same `.jar` file there.
 
 [↑ Back to top](#fitbook-user-guide)
@@ -474,15 +472,15 @@ Advanced users may edit the JSON file directly.
 ## Known Issues
 
 1. **Multiple screens:**
-   Moving FitBook to another monitor and reopening may cause it to appear off-screen.
+   Moving FitBook to another monitor and reopening may cause it to appear off-screen.<br>
    **Fix:** Delete `preferences.json` and relaunch.
 
 2. **Minimized Help window:**
-   Running `help` again will not reopen a minimized window.
+   Running `help` again will not reopen a minimized window.<br>
    **Fix:** Restore it manually from your taskbar.
 
 3. **Locale-specific date formats:**
-   If your system locale is not `en-SG`, date parsing errors may occur.
+   If your system locale is not `en-SG`, date parsing errors may occur.<br>
    **Fix:** Set your system locale to English (Singapore) or use the `yyyy-MM-dd` format.
 
 [↑ Back to top](#fitbook-user-guide)
