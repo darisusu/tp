@@ -98,10 +98,10 @@ public class DeadlineCommand extends Command {
     }
 
     private static String warningSuffix(Deadline d) {
-        if (d == null || d.isEmpty()) return "";
+        if (d == null || d.isEmpty()) { return ""; }
         boolean past = d.isPastOrToday();
         boolean far = d.isMoreThanYearsAhead(1);
-        if (!past && !far) return "";
+        if (!past && !far) { return ""; }
         String reason = past ? "the date is in the past" : "the date is more than 1 year ahead";
         return System.lineSeparator() + "Note: " + reason + "!";
     }
