@@ -389,7 +389,7 @@ INDEX prefix/VALUE
 - gender 5 g/non-binary
 ```
 
-Constraints:
+**Guidance:**
 - Height: Integer value between 50 and 300 (inclusive)
 - Weight: Numeric value greater than 20 and less than 500 (decimals allowed)
 - Age: Integer between 1 and 120 (inclusive)
@@ -423,7 +423,7 @@ help
 
 Displays a new window with a link to the user guide.
 
-![help_window_screenshot](images/helpMessage.png)
+![help_window_screenshot](images/helpMessageUpdated.png)
 
 
 ---
