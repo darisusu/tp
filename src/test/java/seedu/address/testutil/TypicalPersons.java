@@ -44,24 +44,24 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withHeight("170").withWeight("70").withAge("32").withGender("male").withDeadline("2025-12-31")
             .withPaid("true").withBodyfat("19.5").withSession("WEEKLY:THU-1100-1200").withTags("friends").build();
-    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822241")
             .withEmail("werner@example.com").withAddress("michegan ave")
             .withHeight("160").withWeight("55").withAge("26").withGender("female").withDeadline("2025-12-31")
             .withPaid("true").withBodyfat("17.5").withSession("WEEKLY:FRI-1200-1300").build();
-    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94824271")
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withHeight("155").withWeight("50").withAge("24").withGender("female").withDeadline("2025-12-31")
             .withPaid("true").withBodyfat("16.0").withSession("WEEKLY:SAT-1300-1400").build();
-    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("94824421")
             .withEmail("anna@example.com").withAddress("4th street")
             .withHeight("185").withWeight("85").withAge("35").withGender("male").withDeadline("2025-12-31")
             .withPaid("true").withBodyfat("21.0").withSession("WEEKLY:SUN-1400-1500").build();
 
     // Manually added
-    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84824241")
             .withEmail("stefan@example.com").withAddress("little india")
             .withHeight("175").withAge("29").withGender("male").withSession("BIWEEKLY:MON-1800-1900").build();
-    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84821311")
             .withEmail("hans@example.com").withAddress("chicago ave")
             .withHeight("165").withAge("27").withGender("female").withSession("BIWEEKLY:TUE-1830-1930").build();
 

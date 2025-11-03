@@ -172,6 +172,7 @@ add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 dl/2
 **Guidance:**
 - Required prefixes: `n/`, `p/`, `e/`, `a/`, `dl/`, `paid/`, `s/`
 - Optional: `goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`
+- `PHONE` must contain exactly 8 digits (numbers only, no spaces or symbols)
 - Units: height (cm), weight (kg), age (years), body fat (%)
 - `GENDER` accepts: `male`, `female`, `other`, `non-binary`, `prefer not to say`
 - `PAID` accepts `true` or `false`
