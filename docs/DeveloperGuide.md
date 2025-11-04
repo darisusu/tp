@@ -485,7 +485,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. Client name not found.
-    * 1a1. FitBook displays an error message.
+    * 1a1. FitBook displays a message saying no results found for that keyword.
     * Use case ends.
 
 ---
