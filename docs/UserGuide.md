@@ -100,7 +100,9 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 ---
 ## UI Guide
 
-The UI comprises a few components, which can be manipulated via the commands below.
+The UI comprises a few main components, which can be manipulated via the commands below.
+![FitBook Interface](images/Ui.png)
+
 When entering the app, the user will see a dashboard component taking up the bulk of the screen.
 The dashboard contains two lists:
 1. Upcoming Sessions:
@@ -111,16 +113,24 @@ The dashboard contains two lists:
     - Each card contains only the client name, deadline date, and phone number
 
 Pressing the client button on the left, the dashboard will be replaced with the full client list,
-containing the full information of every client. Here, the user can further use commands like
-`find`, `sortbydeadline` to refine or reorder the results shown in the list.
+containing the full information of every client.
+![Client List](images/ClientList.png)
+Here, the user can further use commands like `find`, `sortbydeadline` to refine or reorder the results shown in the list.
 
-To the left, there is a sidebar with four buttons. The top two buttons allow the user to toggle
-between the dashboard and the main client list.
+To the left, there is a sidebar with four buttons.
+
+![Sidebar](images/Sidebar.png)
+
+The top two buttons allow the user to toggle between the dashboard and the main client list.
 The Help button opens a new window containing a link to the user guide.
 The Exit button will close the program.
 All the buttons' functionalities can also be accessed via text commands, as seen below.
 
-At the bottom lies the CommandBox and ResultDisplay. The user can input their commands into the CommandBox.
+At the bottom lies the CommandBox and ResultDisplay. 
+
+![CommandBox](images/CommandBox.png)
+
+The user can input their commands into the CommandBox.
 Results of the command input will be immediately shown in the ResultDisplay, including error messages.
 This is the main medium users are expected to interact with the program.
 
@@ -137,7 +147,8 @@ This section lists all available commands and how to use them.
 > - Words in `UPPER_CASE` are parameters you should replace with your own values.
 > - Items in `[square brackets]` are optional.
 > - Items followed by `…` can be repeated multiple times.
-> - Commands that update clients use the `INDEX` from the displayed list (starting at 1).
+> - Commands that update clients use the `INDEX` from the **full client list** (starting at 1). It does NOT refer to
+the index of the dashboard lists.
 > - Prefixes such as `n/` for name let you provide parameters in **any order**.
 
 > ### ⚠️ Important Input Rule
@@ -172,7 +183,7 @@ add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 dl/2
 - Optional: `goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`
 - `PHONE` must contain exactly 8 digits (numbers only, no spaces or symbols)
 - Units: height (cm), weight (kg), age (years), body fat (%)
-- `GENDER` accepts: `male`, `female`, `other`, `non-binary`, `prefer not to say`
+- `GENDER` accepts: `male`, `female`, `other`, `non-binary`, `prefer not to say` (case-insensitive, e.g., `Male`, `FEMALE`, `Non-Binary` are all accepted)
 - `PAID` accepts `true` or `false`
 - `DEADLINE` format: `yyyy-MM-dd`
 - Automatically saves data after successful addition
@@ -397,6 +408,8 @@ ATTRIBUTE INDEX PREFIX/VALUE
 - age 1 age/26
 - bodyfat 1 bf/17.2
 - gender 5 g/non-binary
+- gender 1 g/Male        (case-insensitive: accepts Male, male, MALE, etc.)
+- gender 2 g/FEMALE      (case-insensitive: accepts FEMALE, Female, female, etc.)
 ```
 
 **Guidance:**
@@ -404,9 +417,9 @@ ATTRIBUTE INDEX PREFIX/VALUE
 - Weight: Numeric value greater than 20 and less than 500 (decimals allowed)
 - Age: Integer between 1 and 120 (inclusive)
 - Bodyfat: Numeric value between 5.0 and 60.0 (inclusive, up to one decimal place)
-- Gender: Accepts any one of the following: (case-insensitive)
-  - `male`, `female`, `other`, `non-binary`, `prefer not to say`
-  -  Short forms: `m`, `f`, `o`, `nb`, `pns`
+- Gender: Accepts any one of the following (case-insensitive):
+  - `male`, `female`, `other`, `non-binary`, `prefer not to say` (or `Male`, `FEMALE`, `Non-Binary`, etc.)
+  - Short forms: `m`, `f`, `o`, `nb`, `pns` (also case-insensitive, e.g., `M`, `F`, `NB`) 
 
 ---
 
