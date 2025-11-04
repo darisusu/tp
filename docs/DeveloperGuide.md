@@ -128,19 +128,19 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="850" />
 
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the FitBook data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the FitBook, which `Person` references. This allows FitBook to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
@@ -154,7 +154,7 @@ The `Model` component,
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both FitBook data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
@@ -172,17 +172,96 @@ This section describes some noteworthy details on how certain features are imple
 
 The sort by paid status feature allows trainers to sort their client list by payment status, with unpaid clients appearing first for easy follow-up.
 
+#### What it does
+
+The `sortbypaid` command reorders the client list such that unpaid clients appear first, followed by paid clients. This helps trainers quickly identify which clients need payment follow-up.
+
+#### Parameters
+
+The command takes no parameters. It should be entered as `sortbypaid` with no additional arguments.
+
+#### Overview
+
+The feature is implemented through a chain of method calls across the Model component. When executed, it sorts the internal list of clients based on their payment status, ensuring unpaid clients (payment status = false) appear before paid clients (payment status = true).
+
+#### High-level flow
+
+1. User enters `sortbypaid` command
+2. `AddressBookParser` identifies the command and creates a `SortByPaidCommandParser`
+3. `SortByPaidCommandParser` validates that no arguments are provided
+4. `SortByPaidCommand` is created and executed
+5. The command calls `Model#sortPersonListByPaid()`
+6. The sorting is delegated through `AddressBook#sortByPaid()` to `UniquePersonList#sortByPaid()`
+7. The internal list is sorted using a comparator
+8. UI is automatically updated to reflect the new order
+
 #### Implementation
 
 The sortbypaid command is implemented through the following components:
 
 * `SortByPaidCommand` — The command class that executes the sorting by payment operation
-* `SortByPaidCommandParser` — Parses the "sortbypaid" command input
+* `SortByPaidCommandParser` — Parses the "sortbypaid" command input and validates no arguments are provided
 * `Model#sortPersonListByPaid()` — Interface method for sorting by paid status
 * `AddressBook#sortByPaid()` — Delegates sorting to the person list
 * `UniquePersonList#sortByPaid()` — Performs the actual sorting logic
 
-The sorting logic uses `Boolean.compare()` to sort unpaid clients (false) before paid clients (true).
+The sorting logic uses `Boolean.compare()` to sort unpaid clients (false) before paid clients (true):
+
+```java
+public void sortByPaid() {
+    internalList.sort((person1, person2) -> {
+        // Unpaid (false) comes first, paid (true) comes second
+        return Boolean.compare(person1.getPaymentStatus().value, person2.getPaymentStatus().value);
+    });
+}
+```
+
+#### Execution behaviour
+
+When the command is executed:
+
+1. **Validation**: The parser checks that no arguments follow `sortbypaid`. If arguments are found, a `ParseException` is thrown with the correct usage message.
+
+2. **Sorting**: The `UniquePersonList#sortByPaid()` method sorts the internal list in-place. The comparator uses `Boolean.compare()` which returns:
+   - Negative value when person1 is unpaid (false) and person2 is paid (true) → person1 comes first
+   - Positive value when person1 is paid (true) and person2 is unpaid (false) → person2 comes first
+   - Zero when both have the same status → order is preserved (stable sort)
+
+3. **UI Update**: Since `internalList` is an `ObservableList`, the UI automatically reflects the sorted order without requiring explicit update calls.
+
+#### Validation and error handling
+
+* **Extra arguments**: If any text follows `sortbypaid`, the parser throws a `ParseException` with the message: "Invalid command format! \n" + SortByPaidCommand.MESSAGE_USAGE
+
+* **Empty list**: If the client list is empty, the command still executes successfully but has no visible effect.
+
+* **All clients have same status**: If all clients are paid (or all unpaid), the command executes successfully but maintains the current order (stable sort).
+
+#### Design considerations
+
+**Aspect: Sorting order**
+
+* **Alternative 1 (current choice):** Unpaid clients first, paid clients second
+    * Pros: Helps trainers prioritize follow-up with unpaid clients
+    * Cons: None significant
+
+* **Alternative 2:** Paid clients first, unpaid clients second
+    * Pros: Shows satisfied clients first
+    * Cons: Less useful for trainers who need to track outstanding payments
+
+* **Decision:** Alternative 1 was chosen because trainers primarily use this feature to identify clients who need payment follow-up.
+
+**Aspect: Sorting algorithm**
+
+* **Alternative 1 (current choice):** Use `Boolean.compare()` with Java's built-in sort
+    * Pros: Simple, efficient, stable sort
+    * Cons: None
+
+* **Alternative 2:** Custom comparator with secondary sort (e.g., by name)
+    * Pros: More predictable ordering when payment statuses are equal
+    * Cons: Adds complexity; current implementation is sufficient
+
+* **Decision:** Alternative 1 was chosen for simplicity. The stable sort ensures consistent ordering when multiple clients share the same payment status.
 
 #### Class Diagram
 
@@ -208,41 +287,40 @@ The following activity diagram shows the workflow for sorting by paid status:
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* `VersionedAddressBook#commit()` - Saves the current address book state in its history.
+* `VersionedAddressBook#undo()` - Restores the previous address book state from its history.
+* `VersionedAddressBook#redo()` - Restores a previously undone address book state from its history.
 
 These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The trainer launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial FitBook state, and the `currentStatePointer` pointing to that single FitBook state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The trainer executes `paid 1` command to mark client 1 as paid. The `paid` command calls `Model#commitAddressBook()`, causing the modified state of FitBook after the `paid 1` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted FitBook state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The trainer executes `session 2 s/2025-12-25 10:00` to schedule a session for client 2. The `session` command also calls `Model#commitAddressBook()`, causing another modified FitBook state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the FitBook state will not be saved into the `addressBookStateList`.
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The trainer now realizes that scheduling the session was a mistake (wrong client or time), and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous FitBook state, and restores FitBook to that state (removing the session).
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial FitBook state, then there are no previous FitBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the trainer rather than attempting to perform the undo.
 
 </box>
 
@@ -260,23 +338,23 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores FitBook to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest FitBook state, then there are no undone FitBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the trainer rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The trainer then decides to execute the command `list`. Commands that do not modify FitBook, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The trainer executes `paid 3` to mark client 3 as paid, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all FitBook states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `session 2 s/2025-12-25 10:00` command that was undone. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
-The following activity diagram summarizes what happens when a user executes a new command:
+The following activity diagram summarizes what happens when a trainer executes a new command:
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
@@ -284,7 +362,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 **Aspect: How undo & redo executes:**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire FitBook.
     * Pros: Easy to implement.
     * Cons: May have performance issues in terms of memory usage.
 
@@ -293,11 +371,6 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -532,6 +605,55 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+#### **Use case: UC08 – Undo the last command**
+
+**MSS**
+
+1. Trainer executes a command that modifies FitBook data (e.g., `paid 1`, `session 2 s/2025-12-25 10:00`, `delete 3`).
+2. FitBook saves the state before the command and executes the command.
+3. Trainer realizes the command was incorrect or unintended.
+4. Trainer enters the `undo` command.
+5. FitBook restores the previous state, reverting the last command.
+6. FitBook displays a confirmation message showing what was undone.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Trainer executes a command that does not modify data (e.g., `list`, `find`, `sortbypaid`).
+    * 1a1. FitBook does not save a state for undo.
+    * Use case ends.
+
+* 4a. There is no previous state to restore (no commands have been executed yet, or all previous commands have been undone).
+    * 4a1. FitBook shows an error message indicating that undo is not available.
+    * Use case ends.
+
+* 4b. Trainer executes a new modifying command after undoing.
+    * 4b1. FitBook purges all states after the current state (redo history is lost).
+    * Use case resumes at step 2.
+
+---
+
+#### **Use case: UC09 – Redo a previously undone command**
+
+**MSS**
+
+1. Trainer has previously executed the `undo` command.
+2. Trainer realizes they want to restore the undone action.
+3. Trainer enters the `redo` command.
+4. FitBook restores the previously undone state.
+5. FitBook displays a confirmation message showing what was redone.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Trainer has not executed any `undo` commands, or has executed a new modifying command after the last undo.
+    * 2a1. FitBook shows an error message indicating that redo is not available.
+    * Use case ends.
+
+---
+
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS with Java `17` or above installed.
@@ -593,7 +715,6 @@ testers are expected to do more *exploratory* testing.
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
 
 ### Deleting a person
 
@@ -610,13 +731,10 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
 
