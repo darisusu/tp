@@ -384,6 +384,31 @@ The following activity diagram summarizes what happens when a trainer executes a
 * [DevOps guide](DevOps.md)
 
 --------------------------------------------------------------------------------------------------------------------
+## **Appendix: Planned Enhancements**
+
+### 1. Clarify session slot conflicts for multi-slot commands
+When a user attempts to add or edit a session that spans multiple time slots, the current implementation only reports that "This session slot is already booked by another person." without clarifying which specific slot is clashing. We plan to enhance the conflict detection logic so that the error message clearly identifies the exact time slot (for example, `SAT-1300-1400`) that conflicts with an existing session. This improvement will reduce guesswork for tutors managing multi-slot sessions and align the feedback with user expectations.
+
+### 2. Support alternating-week biweekly scheduling
+Biweekly sessions are currently treated as occupying the specified day and time every week, even when two clients alternate attendance across different weeks. We plan to enhance conflict detection so the model can distinguish between alternating-week bookings, allowing two clients to share the same biweekly slot without being incorrectly flagged as clashes.
+
+### 3. Add confirmation warning before executing the `clear` command
+Currently, executing the `clear` command immediately deletes all client data without confirmation. To prevent accidental data loss, we plan to add a confirmation prompt that requires explicit user consent (for example, typing `clear confirm`) before proceeding with the deletion. This enhancement will safeguard user data integrity and align the app’s behaviour with common UX standards.
+
+### 4. Display error message for unknown or invalid prefixes in commands
+When users accidentally include an unrecognized prefix (for example, `xyz/`), the command parser silently ignores it. We plan to enhance the command parsing logic so that the system identifies and reports unknown prefixes with a clear error message (e.g., “Unknown prefix detected: xyz/”). This feedback will help users quickly identify and correct typos or misuse of prefixes, improving command discoverability and overall usability. Currently, it only works for `add` and `edit` commands
+
+### 5. Improve handling of optional fields during data storage
+Currently, when a person is added with optional fields (such as height, weight, or goal), these fields are not always saved correctly to the `addressbook.json` file in the `data` folder. As a result, the information may not be reflected when the user reloads the app. We plan to improve how optional fields are serialized and deserialized in the future so that all user-inputted data is consistently stored and retrieved across sessions.
+
+### 6. Improve error message clarity for missing tags in the `add` command
+Currently, when users execute the `add` command with missing parameters (for example, leaving out the `session` field), the error message displayed is too broad. This makes it difficult for users to identify which specific tag or prefix is missing, as they must manually compare their input against the example in the message or refer back to the User Guide. We plan to enhance the command parser so that the error message explicitly highlights only the missing or invalid prefixes (e.g., “Missing required prefix: s/”). This focused feedback will allow users to correct their input more efficiently and improve overall usability of the command-line interface.
+
+### 7. Fix GUI issues with window resizing and truncated fields.
+Currently, information is cut off or obstructed when the window size is minimised, leading to difficulty in usage. Furthermore, there are also currently issues with the UI components like the PersonCards cutting off long names. While this realistically should not be an issue for most users, it is still something we will fix down the line.
+
+### 8. Improve find command search to be less strict
+Currently, the find command requires the user to exactly remember names of the clients to work. There might be several cases where the user might not remember the name exactly, especially in situations where the client name has a rather unconventional spelling. It would be more useful for the find command to match the input string to the names with the matching sequence of characters as opposed to matching the full word.
 
 ## **Appendix: Requirements**
 
@@ -542,7 +567,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. Client name not found.
-    * 1a1. FitBook displays an error message.
+    * 1a1. FitBook displays a message saying no results found for that keyword.
     * Use case ends.
 
 ---
