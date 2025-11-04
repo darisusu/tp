@@ -147,7 +147,8 @@ This section lists all available commands and how to use them.
 > - Words in `UPPER_CASE` are parameters you should replace with your own values.
 > - Items in `[square brackets]` are optional.
 > - Items followed by `…` can be repeated multiple times.
-> - Commands that update clients use the `INDEX` from the displayed list (starting at 1).
+> - Commands that update clients use the `INDEX` from the **full client list** (starting at 1). It does NOT refer to
+the index of the dashboard lists.
 > - Prefixes such as `n/` for name let you provide parameters in **any order**.
 
 > ### ⚠️ Important Input Rule
