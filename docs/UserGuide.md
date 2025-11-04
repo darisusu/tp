@@ -172,7 +172,7 @@ add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 dl/2
 - Optional: `goal/`, `h/`, `w/`, `age/`, `g/`, `bf/`, `t/`
 - `PHONE` must contain exactly 8 digits (numbers only, no spaces or symbols)
 - Units: height (cm), weight (kg), age (years), body fat (%)
-- `GENDER` accepts: `male`, `female`, `other`, `non-binary`, `prefer not to say`
+- `GENDER` accepts: `male`, `female`, `other`, `non-binary`, `prefer not to say` (case-insensitive, e.g., `Male`, `FEMALE`, `Non-Binary` are all accepted)
 - `PAID` accepts `true` or `false`
 - `DEADLINE` format: `yyyy-MM-dd`
 - Automatically saves data after successful addition
@@ -395,6 +395,8 @@ ATTRIBUTE INDEX PREFIX/VALUE
 - age 1 age/26
 - bodyfat 1 bf/17.2
 - gender 5 g/non-binary
+- gender 1 g/Male        (case-insensitive: accepts Male, male, MALE, etc.)
+- gender 2 g/FEMALE      (case-insensitive: accepts FEMALE, Female, female, etc.)
 ```
 
 **Guidance:**
@@ -402,9 +404,9 @@ ATTRIBUTE INDEX PREFIX/VALUE
 - Weight: Numeric value greater than 20 and less than 500 (decimals allowed)
 - Age: Integer between 1 and 120 (inclusive)
 - Bodyfat: Numeric value between 5.0 and 60.0 (inclusive, up to one decimal place)
-- Gender: Accepts any one of the following: (case-insensitive)
-  - `male`, `female`, `other`, `non-binary`, `prefer not to say`
-  -  Short forms: `m`, `f`, `o`, `nb`, `pns` 
+- Gender: Accepts any one of the following (case-insensitive):
+  - `male`, `female`, `other`, `non-binary`, `prefer not to say` (or `Male`, `FEMALE`, `Non-Binary`, etc.)
+  - Short forms: `m`, `f`, `o`, `nb`, `pns` (also case-insensitive, e.g., `M`, `F`, `NB`) 
 
 ---
 
