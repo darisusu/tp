@@ -334,6 +334,9 @@ Currently, when users execute the `add` command with missing parameters (for exa
 ### 7. Fix GUI issues with window resizing and truncated fields.
 Currently, information is cut off or obstructed when the window size is minimised, leading to difficulty in usage. Furthermore, there are also currently issues with the UI components like the PersonCards cutting off long names. While this realistically should not be an issue for most users, it is still something we will fix down the line.
 
+### 8. Improve find command search to be less strict
+Currently, the find command requires the user to exactly remember names of the clients to work. There might be several cases where the user might not remember the name exactly, especially in situations where the client name has a rather unconventional spelling. It would be more useful for the find command to match the input string to the names with the matching sequence of characters as opposed to matching the full word.
+
 ## **Appendix: Requirements**
 
 ### Product scope
