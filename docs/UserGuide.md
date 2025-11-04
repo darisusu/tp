@@ -19,7 +19,7 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 - **Track progress** – Record and update height, weight, body fat percentage, age, and gender data over time.
 - **Set goals** – Assign and monitor fitness goals with deadlines for each client.
 - **Organize efficiently** – Use tags to categorize clients and sort lists by payment status or deadlines.
-- **Stay secure and portable** – Your data is stored locally in JSON format, allowing easy backup and transfer across devices.
+- **Stay secure and portable** – Your data is stored locally in JavaScript Object Notation (JSON) format, allowing easy backup and transfer across devices.
 - **Boost productivity** – With automated saving and intuitive command structure, trainers can manage 50+ clients effortlessly.
 
 
@@ -57,7 +57,7 @@ This is all done through a simple Command Line Interface (CLI) with a clean Grap
 
 5. Try these example commands for starters:
     - `client` or `list` - Switches from the dashboard to the full client list view
-    - `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 h/170 w/70 age/25 g/male dl/2025-11-10 paid/false` - Adds a new client with basic information
+    - `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 goal/Build muscle h/170 w/70 age/25 g/male dl/2025-11-10 paid/false s/WEEKLY:MON-1800-1930-TUE-1800-1900 bf/18.5 t/friends t/owesMoney` - Adds a new client with basic information
     - `delete 1` – Deletes the first client in the list
     - `exit` – Exits the application
 
@@ -214,10 +214,10 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 **Format:**
 
 Use either of the following commands:
-```
-list
-client
-```
+
+`list` or
+`client`
+
 **Guidance:**
 - Both commands display the full client list view.
 - If the user is currently on the dashboard, these commands switch the view to the client list tab.
@@ -273,7 +273,7 @@ delete 3
 ```
 clear
 ```
-> ⚠️ **Warning:** This action **cannot be undone**.
+> ⚠️ **Warning:** This action **cannot be undone**. Think twice!
 
 
 
@@ -315,7 +315,7 @@ sortbydeadline [asc/desc]
 sortbysession
 ```
 **Guidance:**
-- Clients with nearest upcoming sessions will appear first
+- Clients with nearest upcoming sessions will appear first.
 - Will switch back to client list to display sorted list.
 ---
 
@@ -376,6 +376,9 @@ deadline INDEX dl/DATE
 ```
 deadline 4 dl/2025-12-31
 ```
+**Guidance:**
+- Use `dl/` with no text to clear the deadline.
+- You can key in a date that is in the **past** or **more than one year from now**, but a warning message will pop up
 
 ---
 
@@ -474,32 +477,112 @@ Advanced users may edit the JSON file directly.
 
 ---
 
-## FAQ
+# FAQ
 
-**Q:** How do I transfer my data to another computer?<br>
-**A:** Copy the entire FitBook home folder (including the `data` folder) to the other computer and run the same `.jar` file there.
+**Q: Where is my data stored?**
+**A:** In `data/FitBook.json`. You can change the path via `preferences.json` or by launching with `--data <path>`.
+
+**Q: How do I back up or migrate my data?**
+**A:** Copy the entire app folder (including `data/` and `preferences.json`) to the new machine, or copy just `FitBook.json` and keep your current `preferences.json`.
+
+**Q: Can I rename `FitBook.json`?**
+**A:** Yes—also update `preferences.json → addressBookFilePath`, or launch once with:
+
+```bash
+java -jar tp.jar --data data/FitBook.json
+```
+
+**Q: Why does `deadline` accept past dates?**
+**A:** For backfilling/record-keeping. A warning appears if the date is in the past or unusually far in the future.
+
+**Q: What happens if I set the same deadline again?**
+**A:** The command is idempotent—FitBook shows “Payment deadline unchanged” and doesn’t write data.
+
+**Q: How do I clear an optional field?**
+**A:** Provide the prefix with no value, e.g., `goal/` clears the goal.
+
+**Q: Can I sort or filter unpaid clients?**
+**A:** Yes—use `sortbypaid`, `sortbydeadline`, and check the Dashboard panels (“Unpaid Clients”, “Upcoming Sessions”).
+
+**Q: Why did my command fail with “Unknown prefix: x/”?**
+**A:** A mistyped prefix (e.g., `w/70 x/hello`) was detected before parsing. Fix the typo or remove the extra prefix.
+
+**Q: How do I resolve session conflicts?**
+**A:** FitBook prevents overlapping sessions. Edit or delete the conflicting client’s session, or reschedule the new one.
+
+**Q: Can I import from JSON/CSV?**
+**A:** Not directly. Convert to FitBook’s schema or add via commands. *(Roadmap: CSV import helper.)*
+
+**Q: How do I change the theme or window size?**
+**A:** Adjust via Settings (GUI) or edit `preferences.json → guiSettings` (width/height/coordinates).
+
+**Q: Is there undo/redo?**
+**A:** Not yet. Back up `FitBook.json` before bulk edits.
 
 [↑ Back to top](#fitbook-user-guide)
 
 ---
 
+# Known Issues
 
-## Known Issues
+1. **Old file recreated (`addressbook.json` reappears).**
+   *Cause:* `preferences.json` still points to the old name.
+   *Fix:* Update `addressBookFilePath` to `data/FitBook.json` or delete `preferences.json` and relaunch.
 
-1. **Multiple screens:**
-   Moving FitBook to another monitor and reopening may cause it to appear off-screen.<br>
-   **Fix:** Delete `preferences.json` and relaunch.
+2. **Unknown prefix typos.**
+   *Symptom:* `w/70 x/abc` used to look like a weight error.
+   *Fix:* Now reported as `Unknown prefix: x/`. Correct the prefix.
 
-2. **Minimized Help window:**
-   Running `help` again will not reopen a minimized window.<br>
-   **Fix:** Restore it manually from your taskbar.
+3. **Locale-specific date parsing.**
+   *Symptom:* Dates misread on non-`en-SG` locales.
+   *Fix:* Use `yyyy-MM-dd` or set system locale to English (Singapore).
 
-3. **Locale-specific date formats:**
-   If your system locale is not `en-SG`, date parsing errors may occur.<br>
-   **Fix:** Set your system locale to English (Singapore) or use the `yyyy-MM-dd` format.
+4. **Help window minimized won’t reopen with `help`.**
+   *Fix:* Restore it from the taskbar (JavaFX quirk).
+
+5. **Window opens off-screen after monitor changes.**
+   *Fix:* Delete `preferences.json` (resets window coordinates) and relaunch.
+
+6. **Pasting from rich text adds hidden characters.**
+   *Symptom:* Parser errors despite correct-looking text.
+   *Fix:* Paste via a plain-text editor; ensure ASCII spaces.
+
+7. **Session parsing rejects malformed schedules.**
+   *Symptom:* `s/MONTHLY:05 05` or missing separators.
+   *Fix:* Use `FREQ:DAY-HHMM-HHMM-...` (e.g., `WEEKLY:MON-1800-1930-TUE-1800-1900`).
+
+8. **Slow on network drives.**
+   *Cause:* Frequent JSON writes on network FS.
+   *Fix:* Run locally, then copy `FitBook.json` back.
+
+9. **Emoji/non-ASCII tags render oddly.**
+   *Fix:* Prefer alphanumeric tags or ensure system fonts support them.
+
+10. **Large data file slows startup (>10–20 MB).**
+    *Fix:* Archive old clients (export/remove), or split files and switch via `--data`.
+
+11. **Past-dated deadlines warn on “no-change” edits.**
+    *Expected:* Informational warning even if unchanged.
+
+12. **Case-sensitive tag duplicates (`friends` vs `Friends`).**
+    *Fix:* Standardize casing; merge via `find tag/` + `edit`.
+
+13. **Accidentally cleared a field (e.g., `goal/`).**
+    *Fix:* Re-set the value; there’s no undo stack.
+
+14. **Packaged JAR missing help assets.**
+    *Symptom:* Help/Docs don’t open after shading.
+    *Fix:* Ensure resources are on classpath and included by `shadowJar`.
+
+15. **Git credential warning on Windows (`credential-manager-core`).**
+    *Fix:*
+
+    ```bash
+    git config --global credential.helper manager
+    # or: manager-core
+    ```
 
 [↑ Back to top](#fitbook-user-guide)
-
 
 ---
 *End of User Guide.*
