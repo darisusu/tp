@@ -331,6 +331,9 @@ Currently, when a person is added with optional fields (such as height, weight, 
 ### 6. Improve error message clarity for missing tags in the `add` command
 Currently, when users execute the `add` command with missing parameters (for example, leaving out the `session` field), the error message displayed is too broad. This makes it difficult for users to identify which specific tag or prefix is missing, as they must manually compare their input against the example in the message or refer back to the User Guide. We plan to enhance the command parser so that the error message explicitly highlights only the missing or invalid prefixes (e.g., “Missing required prefix: s/”). This focused feedback will allow users to correct their input more efficiently and improve overall usability of the command-line interface.
 
+### 7. Fix GUI issues with window resizing and truncated fields.
+Currently, information is cut off or obstructed when the window size is minimised, leading to difficulty in usage. Furthermore, there are also currently issues with the UI components like the PersonCards cutting off long names. While this realistically should not be an issue for most users, it is still something we will fix down the line.
+
 ## **Appendix: Requirements**
 
 ### Product scope
