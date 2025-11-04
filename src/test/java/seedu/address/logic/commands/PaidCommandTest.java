@@ -28,7 +28,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class PaidCommandTest {
 
-    private static final String PAID_STUB = "true";
+    private static final String PAID_STUB = "false";
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -64,6 +64,17 @@ public class PaidCommandTest {
         expectedModel.setPerson(firstPerson, editedPerson);
 
         assertCommandSuccess(paidCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_paidStatusUnchanged_failure() {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Paid existingStatus = firstPerson.getPaymentStatus();
+        PaidCommand paidCommand = new PaidCommand(INDEX_FIRST_PERSON, existingStatus);
+
+        String expectedMessage = String.format(PaidCommand.MESSAGE_PAID_STATUS_UNCHANGED, existingStatus);
+
+        assertCommandFailure(paidCommand, model, expectedMessage);
     }
 
     @Test

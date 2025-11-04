@@ -31,6 +31,7 @@ public class PaidCommand extends Command {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Paid: %2$s";
 
     public static final String MESSAGE_EDIT_PAID_SUCCESS = "Updated paid status of Person: %1$s";
+    public static final String MESSAGE_PAID_STATUS_UNCHANGED = "Paid status unchanged. Already set to %1$s.";
 
     private final Index index;
     private final Paid paid;
@@ -54,6 +55,9 @@ public class PaidCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+        if (personToEdit.getPaymentStatus().equals(paid)) {
+            throw new CommandException(String.format(MESSAGE_PAID_STATUS_UNCHANGED, paid));
+        }
         Person editedPerson = new Person(
                 personToEdit.getName(),
                 personToEdit.getPhone(),

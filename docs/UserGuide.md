@@ -211,31 +211,31 @@ edit 2 p/91234567 e/alex@example.com goal/Run a half marathon
 
 ### `list` or `client` - View all clients
 
-**Format:** 
+**Format:**
 
 Use either of the following commands:
 ```
 list
 client
-``` 
+```
 **Guidance:**
 - Both commands display the full client list view.
 - If the user is currently on the dashboard, these commands switch the view to the client list tab.
 - They do **not** modify any data — only change the displayed view.
 - You can use either command interchangeably.
 
-> 💡 **Design Note:**  
-> `list` is provided for users familiar with traditional CLI syntax,  
->  While `client` offers a more intuitive, context-based option consistent with `dashboard`.  
+> 💡 **Design Note:**
+> `list` is provided for users familiar with traditional CLI syntax,
+>  While `client` offers a more intuitive, context-based option consistent with `dashboard`.
 > Both are retained to improve accessibility and user experience.
 ---
 
 ### `find` - Search clients by name
-**Format:** 
+**Format:**
 ```
 find KEYWORD [MORE_KEYWORDS]…
 ```
-**Example:** 
+**Example:**
 ```
 find alex bernice
 ```
@@ -257,7 +257,7 @@ find alex bernice
 ```
 delete INDEX
 ```
-**Example:** 
+**Example:**
 ```
 delete 3
 ```
@@ -269,7 +269,7 @@ delete 3
 ---
 
 ### `clear` - Delete all clients
-**Format:** 
+**Format:**
 ```
 clear
 ```
@@ -280,7 +280,7 @@ clear
 ---
 
 ### `sortbypaid` - Sort clients by payment status
-**Format:** 
+**Format:**
 ```
 sortbypaid
 ```
@@ -293,7 +293,7 @@ sortbypaid
 ---
 
 ### `sortbydeadline` - Sort clients by payment deadline
-**Format:** 
+**Format:**
 ```
 sortbydeadline [asc/desc]
 ```
@@ -310,7 +310,7 @@ sortbydeadline [asc/desc]
 ---
 
 ### `sortbysession` - Sort clients by upcoming session
-**Format:** 
+**Format:**
 ```
 sortbysession
 ```
@@ -320,11 +320,11 @@ sortbysession
 ---
 
 ### `session` - Update a client’s scheduled session
-**Format:** 
+**Format:**
 ```
 session INDEX s/SESSION
 ```
-**Example:** 
+**Example:**
 ```
 session 1 s/WEEKLY:MON-1800-1930
 ```
@@ -343,34 +343,36 @@ session 1 s/WEEKLY:MON-1800-1930
 | **Monthly** | `MONTHLY:DD HH:MM` | `monthly:15 10:00` |
 
 **Additional Notes:**
+- FitBook is optimised for same-day training sessions and therefore rejects unrealistic overnight ranges where the end time is earlier than the start time (e.g., `23:00-01:00`). Schedule these as two separate slots so each range stays within a single calendar day
 - `DAY` accepts: mon, tue, wed, thu, fri, sat, sun
 - Time uses 24-hour format (`HHmm` or `HH:MM`)
 - Multi-slot sessions list multiple day–time ranges sequentially
 - All times are interpreted in local time
+- Biweekly sessions assume the same weekday and time range is occupied for every occurrence. FitBook will block another client from taking that slot even on the assumption they would attend on alternate weeks, so coordinate such arrangements outside the app for now
 
 ---
 
 ### `goal` - Set or clear a fitness goal
-**Format:** 
+**Format:**
 ```
 goal INDEX goal/GOAL
 ```
-**Example:** 
+**Example:**
 ```
 goal 1 goal/Complete a triathlon
 ```
 **Guidance:**
-- Use `goal/` with no text to clear the goal. 
+- Use `goal/` with no text to clear the goal.
 - There is a limit of 100 characters for the goal field.
 
 ---
 
 ### `deadline` - Update a payment deadline
-**Format:** 
+**Format:**
 ```
 deadline INDEX dl/DATE
 ```
-**Example:** 
+**Example:**
 ```
 deadline 4 dl/2025-12-31
 ```
@@ -378,16 +380,16 @@ deadline 4 dl/2025-12-31
 ---
 
 ### `paid` - Record payment status
-**Format:** 
+**Format:**
 ```
 paid INDEX paid/STATUS
 ```
-**Example:** 
+**Example:**
 ```
 paid 3 paid/true
 ```
 **Guidance:**
-- Use `true` if the client has paid, or `false` otherwise. 
+- Use `true` if the client has paid, or `false` otherwise.
 - Clients with paid status of `false` will be displayed in the dashboard under Unpaid Clients.
 
 ---
@@ -395,11 +397,11 @@ paid 3 paid/true
 ### `height`, `weight`, `age`, `bodyfat`, `gender` - Update individual attributes
 Each of these commands updates one attribute using the same format:
 
-**Format:** 
+**Format:**
 ```
 ATTRIBUTE INDEX PREFIX/VALUE
 ```
-**Examples:** 
+**Examples:**
 ```
 - height 2 h/168
 - weight 2 w/68.5
@@ -422,7 +424,7 @@ ATTRIBUTE INDEX PREFIX/VALUE
 ---
 
 ### `dashboard` - Switch to dashboard view
-**Format:** 
+**Format:**
 ```
 dashboard
 ```
@@ -430,11 +432,11 @@ dashboard
 ---
 
 ### `help` - Open help window
-**Format:** 
+**Format:**
 ```
 help
 ```
-**Guidance:** 
+**Guidance:**
 
 Displays a new window with a link to the user guide.
 
@@ -444,7 +446,7 @@ Displays a new window with a link to the user guide.
 ---
 
 ### `exit` - Close the program
-**Format:** 
+**Format:**
 ```
 exit
 ```
