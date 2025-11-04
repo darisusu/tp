@@ -328,6 +328,9 @@ When users accidentally include an unrecognized prefix (for example, `xyz/`), th
 ### 5. Improve handling of optional fields during data storage
 Currently, when a person is added with optional fields (such as height, weight, or goal), these fields are not always saved correctly to the `addressbook.json` file in the `data` folder. As a result, the information may not be reflected when the user reloads the app. We plan to improve how optional fields are serialized and deserialized in the future so that all user-inputted data is consistently stored and retrieved across sessions.
 
+### 6. Improve error message clarity for missing tags in the `add` command
+Currently, when users execute the `add` command with missing parameters (for example, leaving out the `session` field), the error message displayed is too broad. This makes it difficult for users to identify which specific tag or prefix is missing, as they must manually compare their input against the example in the message or refer back to the User Guide. We plan to enhance the command parser so that the error message explicitly highlights only the missing or invalid prefixes (e.g., “Missing required prefix: s/”). This focused feedback will allow users to correct their input more efficiently and improve overall usability of the command-line interface.
+
 ## **Appendix: Requirements**
 
 ### Product scope
